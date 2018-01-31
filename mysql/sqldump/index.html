@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title>My New Hugo Site</title>
+  <title>mysqldump备份工具的简单使用 &middot; My New Hugo Site</title>
 
   
   <link rel="stylesheet" href="https://mojiajuzi.github.io/css/print.css" media="print">
@@ -22,7 +22,7 @@
   <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="https://mojiajuzi.github.io/index.xml" rel="alternate" type="application/rss+xml" title="My New Hugo Site" />
+  <link href="" rel="alternate" type="application/rss+xml" title="My New Hugo Site" />
 </head>
 
   <body class=" ">
@@ -45,28 +45,39 @@
 </div>
 
     <div class="content container">
-    <div class="posts">
-<div class="post">
-  <h1 class="post-title">
-    <a href="https://mojiajuzi.github.io/mysql/sqldump/">mysqldump备份工具的简单使用</a>
-  </h1>
+    <div class="post">
+  <h1>mysqldump备份工具的简单使用</h1>
   <span class="post-date">Wed, Jan 31, 2018</span>
-   导出某个数据库中的所有数据表,不包含表中的数据
-mysqldump -hlocalhost -utest -p -P3306 -d database_name &gt; /path  导出数据库中某张表的结构,不包含表中的数据
-mysqldump -hlocalhost -utest -p -P3306 -d database_name table_name &gt; /path  导出数据库中的所有数据表及表中所包含的数据
-mysqldump -hlocalhost -utest -p -P13306 database_name &gt; /path  导出数据表的结构以及所有的数据
-mysqldump -hlocalhost -utest -p -P13306 database_name table_name &gt; /path  导出数据表结构以及部分数据
-mysqldump -hlocalhost -utest -p -P13306 database_name table --where=&quot;where_condition&quot; &gt; /path   
-  
-</div><div class="post">
-  <h1 class="post-title">
-    <a href="https://mojiajuzi.github.io/laravel/laradoc/">Laradoc</a>
-  </h1>
-  <span class="post-date">Wed, Jan 31, 2018</span>
-  how to use laradoc
-  
+  <ol>
+<li><p>导出某个数据库中的所有数据表,不包含表中的数据</p>
+
+<pre><code class="language-mysql">mysqldump -hlocalhost -utest -p -P3306 -d database_name &gt; /path
+</code></pre></li>
+
+<li><p>导出数据库中某张表的结构,不包含表中的数据</p>
+
+<pre><code class="language-mysql">mysqldump -hlocalhost -utest -p -P3306 -d database_name table_name &gt; /path
+</code></pre></li>
+
+<li><p>导出数据库中的所有数据表及表中所包含的数据</p>
+
+<pre><code class="language-mysql">mysqldump -hlocalhost -utest -p -P13306 database_name &gt; /path
+</code></pre></li>
+
+<li><p>导出数据表的结构以及所有的数据</p>
+
+<pre><code class="language-mysql">mysqldump -hlocalhost -utest -p -P13306 database_name table_name &gt; /path
+</code></pre></li>
+
+<li><p>导出数据表结构以及部分数据</p>
+
+<pre><code>mysqldump -hlocalhost -utest -p -P13306 database_name table --where=&quot;where_condition&quot; &gt; /path
+</code></pre></li>
+</ol>
+
 </div>
-</div>
+
+
     </div>
 
     

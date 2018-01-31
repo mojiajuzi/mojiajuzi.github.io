@@ -3,12 +3,35 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://mojiajuzi.github.io/mysql/sqldump/</loc>
+    <lastmod>2018-01-31T20:40:58+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/laravel/laradoc/</loc>
+    <lastmod>2018-01-31T00:21:12+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://mojiajuzi.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>https://mojiajuzi.github.io/laravel/</loc>
+    <lastmod>2018-01-31T00:21:12+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://mojiajuzi.github.io/</loc>
+    <lastmod>2018-01-31T20:40:58+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/mysql/</loc>
+    <lastmod>2018-01-31T20:40:58+08:00</lastmod>
     <priority>0</priority>
   </url>
   

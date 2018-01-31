@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My New Hugo Site</title>
-    <link>https://mojiajuzi.github.io/</link>
-    <description>Recent content on My New Hugo Site</description>
+    <title>Mysqls on My New Hugo Site</title>
+    <link>https://mojiajuzi.github.io/mysql/</link>
+    <description>Recent content in Mysqls on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 31 Jan 2018 20:40:58 +0800</lastBuildDate>
     
-	<atom:link href="https://mojiajuzi.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://mojiajuzi.github.io/mysql/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -23,15 +23,6 @@ mysqldump -hlocalhost -utest -p -P3306 -d database_name table_name &amp;gt; /pat
 mysqldump -hlocalhost -utest -p -P13306 database_name &amp;gt; /path  导出数据表的结构以及所有的数据
 mysqldump -hlocalhost -utest -p -P13306 database_name table_name &amp;gt; /path  导出数据表结构以及部分数据
 mysqldump -hlocalhost -utest -p -P13306 database_name table --where=&amp;quot;where_condition&amp;quot; &amp;gt; /path   </description>
-    </item>
-    
-    <item>
-      <title>Laradoc</title>
-      <link>https://mojiajuzi.github.io/laravel/laradoc/</link>
-      <pubDate>Wed, 31 Jan 2018 00:21:12 +0800</pubDate>
-      
-      <guid>https://mojiajuzi.github.io/laravel/laradoc/</guid>
-      <description>how to use laradoc</description>
     </item>
     
   </channel>
