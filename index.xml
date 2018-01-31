@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My New Hugo Site</title>
+    <title>实话先生</title>
     <link>https://mojiajuzi.github.io/</link>
-    <description>Recent content on My New Hugo Site</description>
+    <description>Recent content on 实话先生</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Jan 2018 20:40:58 +0800</lastBuildDate>
+    <copyright>Copyright (c) 2017, Mo JingHua</copyright>
+    <lastBuildDate>Wed, 31 Jan 2018 20:58:44 +0800</lastBuildDate>
     
 	<atom:link href="https://mojiajuzi.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Composer</title>
+      <link>https://mojiajuzi.github.io/laravel/composer/</link>
+      <pubDate>Wed, 31 Jan 2018 20:58:44 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/laravel/composer/</guid>
+      <description> 安装 参考composer官方的安装文档
+依赖声明 使用包名:版本的形式
+{ &amp;quot;require&amp;quot;:{ &amp;quot;monolog/monolog&amp;quot;: &amp;quot;1.0.*&amp;quot; }, //required_dev中的包只会在开发环境中使用，正式环境中将会无效，安装时只需要在后面加上`--dev` &amp;quot;required_dev&amp;quot;:{ &amp;quot;fzaninotto/faker&amp;quot;: &amp;quot;~1.4&amp;quot;, &amp;quot;mockery/mockery&amp;quot;: &amp;quot;0.9.*&amp;quot;, &amp;quot;phpunit/phpunit&amp;quot;: &amp;quot;~4.0&amp;quot;, &amp;quot;symfony/css-selector&amp;quot;: &amp;quot;2.8.*|3.0.*&amp;quot;, &amp;quot;symfony/dom-crawler&amp;quot;: &amp;quot;2.8.*|3.0.*&amp;quot; } }  依赖安装 composer install  执行完该语句后会在项目的根目录下面的vendord文件夹中产生相对应的目录
+ vendord/monolog/monolog  包的使用 在需要使用的文件中引入自动加载的文件即可：
+require &#39;vendor/autoload.php&#39;;  然后就可以使用安装的依赖包
+使用自己的包 在json文件中添加如下字段，就可以使用自己的autoloader
+&amp;quot;autoload&amp;quot;: { &amp;quot;psr-4&amp;quot;: {&amp;quot;Acme\\&amp;quot;: &amp;quot;src/&amp;quot;} }  此时，composer将会注册一个PSR-4 autoloader到Acme命名空间，
+src:表示的命名空间到目录的映射，与vendor同级，再次运行
+composer install  当再一次使用
+require &#39;vendor/autoload.php&#39;;  的时候，返回的自动加载的实例中就会包含autoloader实例，当然我们也可以使用classmap来加载不符合我psr-4规范的类库
+classmap数据中表示的是：类文件所在的目录
+&amp;quot;autoload&amp;quot;: { &amp;quot;psr-4&amp;quot;: {&amp;quot;Acme\\&amp;quot;: &amp;quot;src/&amp;quot;}, &amp;quot;classmap&amp;quot;:[&amp;quot;src/&amp;quot;, &amp;quot;lib/&amp;quot;, &amp;quot;Something.php&amp;quot;] }  </description>
+    </item>
     
     <item>
       <title>mysqldump备份工具的简单使用</title>
@@ -23,15 +44,6 @@ mysqldump -hlocalhost -utest -p -P3306 -d database_name table_name &amp;gt; /pat
 mysqldump -hlocalhost -utest -p -P13306 database_name &amp;gt; /path  导出数据表的结构以及所有的数据
 mysqldump -hlocalhost -utest -p -P13306 database_name table_name &amp;gt; /path  导出数据表结构以及部分数据
 mysqldump -hlocalhost -utest -p -P13306 database_name table --where=&amp;quot;where_condition&amp;quot; &amp;gt; /path   </description>
-    </item>
-    
-    <item>
-      <title>Laradoc</title>
-      <link>https://mojiajuzi.github.io/laravel/laradoc/</link>
-      <pubDate>Wed, 31 Jan 2018 00:21:12 +0800</pubDate>
-      
-      <guid>https://mojiajuzi.github.io/laravel/laradoc/</guid>
-      <description>how to use laradoc</description>
     </item>
     
   </channel>
