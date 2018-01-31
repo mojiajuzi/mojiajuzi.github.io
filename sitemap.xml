@@ -3,17 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://mojiajuzi/mojiajuzi.github.io/categories/</loc>
+    <loc>https://mojiajuzi.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://mojiajuzi/mojiajuzi.github.io/</loc>
+    <loc>https://mojiajuzi.github.io/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://mojiajuzi/mojiajuzi.github.io/tags/</loc>
+    <loc>https://mojiajuzi.github.io/tags/</loc>
     <priority>0</priority>
   </url>
   
