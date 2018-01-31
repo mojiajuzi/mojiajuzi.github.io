@@ -2,22 +2,43 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>实话先生</title>
-    <link>https://mojiajuzi.github.io/</link>
+    <link>http://mojiajuzi.github.io/</link>
     <description>Recent content on 实话先生</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Mo JingHua</copyright>
-    <lastBuildDate>Wed, 31 Jan 2018 20:58:44 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 31 Jan 2018 23:07:05 +0800</lastBuildDate>
     
-	<atom:link href="https://mojiajuzi.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://mojiajuzi.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Caddyfile</title>
+      <link>http://mojiajuzi.github.io/service/caddyfile/</link>
+      <pubDate>Wed, 31 Jan 2018 23:07:05 +0800</pubDate>
+      
+      <guid>http://mojiajuzi.github.io/service/caddyfile/</guid>
+      <description>该文章将会向你展示使用Caddyfile配置Caddy是一件十分简单的事情
+Caddyfile是一个文本文件，用来配置Caddy如何运行
+该文件的第一行永远是服务站点的地址，比如:
+localhost:8080  当你保存以后，一旦启动caddy服务器，那么将会自动查找Caddyfile文件，并加载其中的配置 默认情况会在当前的目录下面查找Caddyfile文件，如果将配置文件放置在其他的地方，那么在 启动的时候，需要指明Caddyfile文件所在的路径
+caddy -conf ../path/to/Caddyfile  紧跟着站点地址的下一行则是指令，Caddy提供了丰富的指令 比如: gzip则是一个HTTP指令
+localhost:8080 gzip log ../access.log  有一些指令需要使用多行进行配置，这个时候需要使用{}进行配置，而且{必须在指令的行尾
+localhost:8080 gzip log ..access.log markwodn /blog { css /blog.css js /scripts.js }  如果{}里面不进行设置，那么则应该省略 如果配置参数的值包含空白符，那么则应该使用&amp;quot;&amp;quot;进行包裹
+当然caddyfile文件中也可以以#开头，添加注释
+# 注释可以单独作为一行 foobar #也可以放在配置的末尾  如果需要在一个caddyfile文件中对多个站点进行配置，那么则必须使用{}对每一个站点进行分割
+mysite.com { root /www/mysite.com } sub.mysite.com { root /www/sub.mysite.com gzip log ../access.log }  {}的使用规则，与多个参数的指令规则一样，多余多站点，所有的配置都必须包含在站点的{}之内，不允许嵌套
+对于多个站点使用共同的配置，可以使用如下的方式
+localhost:8080, https://site.com, http://mysite.com { ... }  另外站点的地址可以是特殊的地址或以及使用通配符
+example.com/static, *.example.com { .</description>
+    </item>
+    
+    <item>
       <title>Composer</title>
-      <link>https://mojiajuzi.github.io/laravel/composer/</link>
+      <link>http://mojiajuzi.github.io/laravel/composer/</link>
       <pubDate>Wed, 31 Jan 2018 20:58:44 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/laravel/composer/</guid>
+      <guid>http://mojiajuzi.github.io/laravel/composer/</guid>
       <description> 安装 参考composer官方的安装文档
 依赖声明 使用包名:版本的形式
 { &amp;quot;require&amp;quot;:{ &amp;quot;monolog/monolog&amp;quot;: &amp;quot;1.0.*&amp;quot; }, //required_dev中的包只会在开发环境中使用，正式环境中将会无效，安装时只需要在后面加上`--dev` &amp;quot;required_dev&amp;quot;:{ &amp;quot;fzaninotto/faker&amp;quot;: &amp;quot;~1.4&amp;quot;, &amp;quot;mockery/mockery&amp;quot;: &amp;quot;0.9.*&amp;quot;, &amp;quot;phpunit/phpunit&amp;quot;: &amp;quot;~4.0&amp;quot;, &amp;quot;symfony/css-selector&amp;quot;: &amp;quot;2.8.*|3.0.*&amp;quot;, &amp;quot;symfony/dom-crawler&amp;quot;: &amp;quot;2.8.*|3.0.*&amp;quot; } }  依赖安装 composer install  执行完该语句后会在项目的根目录下面的vendord文件夹中产生相对应的目录
@@ -34,10 +55,10 @@ classmap数据中表示的是：类文件所在的目录
     
     <item>
       <title>mysqldump备份工具的简单使用</title>
-      <link>https://mojiajuzi.github.io/mysql/sqldump/</link>
+      <link>http://mojiajuzi.github.io/mysql/sqldump/</link>
       <pubDate>Wed, 31 Jan 2018 20:40:58 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/mysql/sqldump/</guid>
+      <guid>http://mojiajuzi.github.io/mysql/sqldump/</guid>
       <description> 导出某个数据库中的所有数据表,不包含表中的数据
 mysqldump -hlocalhost -utest -p -P3306 -d database_name &amp;gt; /path  导出数据库中某张表的结构,不包含表中的数据
 mysqldump -hlocalhost -utest -p -P3306 -d database_name table_name &amp;gt; /path  导出数据库中的所有数据表及表中所包含的数据

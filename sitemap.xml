@@ -3,40 +3,51 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://mojiajuzi.github.io/laravel/composer/</loc>
+    <loc>http://mojiajuzi.github.io/service/caddyfile/</loc>
+    <lastmod>2018-01-31T23:07:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://mojiajuzi.github.io/laravel/composer/</loc>
     <lastmod>2018-01-31T20:58:44+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://mojiajuzi.github.io/mysql/sqldump/</loc>
+    <loc>http://mojiajuzi.github.io/mysql/sqldump/</loc>
     <lastmod>2018-01-31T20:40:58+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://mojiajuzi.github.io/categories/</loc>
+    <loc>http://mojiajuzi.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://mojiajuzi.github.io/laravel/</loc>
+    <loc>http://mojiajuzi.github.io/laravel/</loc>
     <lastmod>2018-01-31T20:58:44+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://mojiajuzi.github.io/mysql/</loc>
+    <loc>http://mojiajuzi.github.io/mysql/</loc>
     <lastmod>2018-01-31T20:40:58+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://mojiajuzi.github.io/tags/</loc>
+    <loc>http://mojiajuzi.github.io/service/</loc>
+    <lastmod>2018-01-31T23:07:05+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://mojiajuzi.github.io/</loc>
-    <lastmod>2018-01-31T20:58:44+08:00</lastmod>
+    <loc>http://mojiajuzi.github.io/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://mojiajuzi.github.io/</loc>
+    <lastmod>2018-01-31T23:07:05+08:00</lastmod>
     <priority>0</priority>
   </url>
   
