@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Mysqls on 实话先生</title>
-    <link>http://mojiajuzi.github.io/mysql/</link>
+    <link>https://mojiajuzi.github.io/mysql/</link>
     <description>Recent content in Mysqls on 实话先生</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Mo JingHua</copyright>
     <lastBuildDate>Wed, 31 Jan 2018 20:40:58 +0800</lastBuildDate>
     
-	<atom:link href="http://mojiajuzi.github.io/mysql/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://mojiajuzi.github.io/mysql/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>mysqldump备份工具的简单使用</title>
-      <link>http://mojiajuzi.github.io/mysql/sqldump/</link>
+      <link>https://mojiajuzi.github.io/mysql/sqldump/</link>
       <pubDate>Wed, 31 Jan 2018 20:40:58 +0800</pubDate>
       
-      <guid>http://mojiajuzi.github.io/mysql/sqldump/</guid>
+      <guid>https://mojiajuzi.github.io/mysql/sqldump/</guid>
       <description> 导出某个数据库中的所有数据表,不包含表中的数据
 mysqldump -hlocalhost -utest -p -P3306 -d database_name &amp;gt; /path  导出数据库中某张表的结构,不包含表中的数据
 mysqldump -hlocalhost -utest -p -P3306 -d database_name table_name &amp;gt; /path  导出数据库中的所有数据表及表中所包含的数据
