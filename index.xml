@@ -7,9 +7,81 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2018, 湘ICP备18001813</copyright>
+    <lastBuildDate>Tue, 06 Feb 2018 23:30:40 +0800</lastBuildDate>
     
 	<atom:link href="https://www.tsecloud.club/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Golang Middleware Part 1</title>
+      <link>https://www.tsecloud.club/golang/middleware_part1/</link>
+      <pubDate>Tue, 06 Feb 2018 23:30:40 +0800</pubDate>
+      
+      <guid>https://www.tsecloud.club/golang/middleware_part1/</guid>
+      <description>如何在Golang中实现中间件-Part 1 当使用net/http包实现服务的时候，一般使用的是如下的两中处理方式:
+ http.HandleFunc http.Handle  http.HandleFunc 分析 当使用这种方式的时候，其接受两个参数，一个是字符串格式的匹配符(pattern),另外一个就是func(ResponWrite, *Request), 因此只要我们的中间件中返回该类型，那么中间件就是可以实现的
+func main(){ http.HandleFunc(&amp;#34;/&amp;#34;, Hello) http.ListenAndServe(&amp;#34;:8080&amp;#34;, nil) } func Hello(w http.ResponseWriter, r *http.Request) { fmt.Print(&amp;#34;hello&amp;#34;) } 当我们运行如上的程序的时候，就会打印出hello这个结果，说明我们的写法是没有问题的
+实现 接下来，我们需要定义我们的中间件，它需要接收一个｀ http.HandlerFunc｀类型，并且返回一个http.HandlerFunc这样才能被使用
+func MyMiddleware(next http.HandlerFunc)http.HandlerFunc { return func(w http.ResponseWriter, r *http.Request) { fmt.Println(&amp;#34;middleware&amp;#34;) //doSomethinds 	next.ServeHTTP(w,r) } } 由于调用next.ServeHTTP(w, r)等效于调用next(w, r),处理完后会返回响应w,最终相应会传递到最外层的匿名函数，从而最终会返回到客户端
+http.Handle 分析 http.Handle接受两个参数，一个是匹配符，另外一个是http.Handler，当我们查看源码的时候，发现其是一个接口类型
+type Handler interface { ServeHTTP(ResponseWriter, *Request) } 因此我们最终得返回一个实现了该接口的类型，假设我们首先定义一个新的结构体,并为其添加一个｀ServiceHTTP｀
+解决 type MyResponse struct { next http.Handle Code int64 Msg string Errors []string Data map[string]interface{} } func (res *MyResponse)ServeHTTP(w http.</description>
+    </item>
+    
+    <item>
+      <title>Caddyfile</title>
+      <link>https://www.tsecloud.club/service/caddyfile/</link>
+      <pubDate>Wed, 31 Jan 2018 23:07:05 +0800</pubDate>
+      
+      <guid>https://www.tsecloud.club/service/caddyfile/</guid>
+      <description>该文章将会向你展示使用Caddyfile配置Caddy是一件十分简单的事情
+Caddyfile是一个文本文件，用来配置Caddy如何运行
+该文件的第一行永远是服务站点的地址，比如:
+localhost:8080  当你保存以后，一旦启动caddy服务器，那么将会自动查找Caddyfile文件，并加载其中的配置 默认情况会在当前的目录下面查找Caddyfile文件，如果将配置文件放置在其他的地方，那么在 启动的时候，需要指明Caddyfile文件所在的路径
+caddy -conf ../path/to/Caddyfile  紧跟着站点地址的下一行则是指令，Caddy提供了丰富的指令 比如: gzip则是一个HTTP指令
+localhost:8080 gzip log ../access.log  有一些指令需要使用多行进行配置，这个时候需要使用{}进行配置，而且{必须在指令的行尾
+localhost:8080 gzip log ..access.log markwodn /blog { css /blog.css js /scripts.js }  如果{}里面不进行设置，那么则应该省略 如果配置参数的值包含空白符，那么则应该使用&amp;quot;&amp;quot;进行包裹
+当然caddyfile文件中也可以以#开头，添加注释
+# 注释可以单独作为一行 foobar #也可以放在配置的末尾  如果需要在一个caddyfile文件中对多个站点进行配置，那么则必须使用{}对每一个站点进行分割
+mysite.com { root /www/mysite.com } sub.mysite.com { root /www/sub.mysite.com gzip log ../access.log }  {}的使用规则，与多个参数的指令规则一样，多余多站点，所有的配置都必须包含在站点的{}之内，不允许嵌套
+对于多个站点使用共同的配置，可以使用如下的方式
+localhost:8080, https://site.com, http://mysite.com { ... }  另外站点的地址可以是特殊的地址或以及使用通配符
+example.com/static, *.example.com { .</description>
+    </item>
+    
+    <item>
+      <title>Composer</title>
+      <link>https://www.tsecloud.club/laravel/composer/</link>
+      <pubDate>Wed, 31 Jan 2018 20:58:44 +0800</pubDate>
+      
+      <guid>https://www.tsecloud.club/laravel/composer/</guid>
+      <description> 安装 参考composer官方的安装文档
+依赖声明 使用包名:版本的形式
+{ &amp;quot;require&amp;quot;:{ &amp;quot;monolog/monolog&amp;quot;: &amp;quot;1.0.*&amp;quot; }, //required_dev中的包只会在开发环境中使用，正式环境中将会无效，安装时只需要在后面加上`--dev` &amp;quot;required_dev&amp;quot;:{ &amp;quot;fzaninotto/faker&amp;quot;: &amp;quot;~1.4&amp;quot;, &amp;quot;mockery/mockery&amp;quot;: &amp;quot;0.9.*&amp;quot;, &amp;quot;phpunit/phpunit&amp;quot;: &amp;quot;~4.0&amp;quot;, &amp;quot;symfony/css-selector&amp;quot;: &amp;quot;2.8.*|3.0.*&amp;quot;, &amp;quot;symfony/dom-crawler&amp;quot;: &amp;quot;2.8.*|3.0.*&amp;quot; } }  依赖安装 composer install  执行完该语句后会在项目的根目录下面的vendord文件夹中产生相对应的目录
+ vendord/monolog/monolog  包的使用 在需要使用的文件中引入自动加载的文件即可：
+require &#39;vendor/autoload.php&#39;;  然后就可以使用安装的依赖包
+使用自己的包 在json文件中添加如下字段，就可以使用自己的autoloader
+&amp;quot;autoload&amp;quot;: { &amp;quot;psr-4&amp;quot;: {&amp;quot;Acme\\&amp;quot;: &amp;quot;src/&amp;quot;} }  此时，composer将会注册一个PSR-4 autoloader到Acme命名空间，
+src:表示的命名空间到目录的映射，与vendor同级，再次运行
+composer install  当再一次使用
+require &#39;vendor/autoload.php&#39;;  的时候，返回的自动加载的实例中就会包含autoloader实例，当然我们也可以使用classmap来加载不符合我psr-4规范的类库
+classmap数据中表示的是：类文件所在的目录
+&amp;quot;autoload&amp;quot;: { &amp;quot;psr-4&amp;quot;: {&amp;quot;Acme\\&amp;quot;: &amp;quot;src/&amp;quot;}, &amp;quot;classmap&amp;quot;:[&amp;quot;src/&amp;quot;, &amp;quot;lib/&amp;quot;, &amp;quot;Something.php&amp;quot;] }  </description>
+    </item>
+    
+    <item>
+      <title>mysqldump备份工具的简单使用</title>
+      <link>https://www.tsecloud.club/mysql/sqldump/</link>
+      <pubDate>Wed, 31 Jan 2018 20:40:58 +0800</pubDate>
+      
+      <guid>https://www.tsecloud.club/mysql/sqldump/</guid>
+      <description> 导出某个数据库中的所有数据表,不包含表中的数据
+mysqldump -hlocalhost -utest -p -P3306 -d database_name &amp;gt; /path  导出数据库中某张表的结构,不包含表中的数据
+mysqldump -hlocalhost -utest -p -P3306 -d database_name table_name &amp;gt; /path  导出数据库中的所有数据表及表中所包含的数据
+mysqldump -hlocalhost -utest -p -P13306 database_name &amp;gt; /path  导出数据表的结构以及所有的数据
+mysqldump -hlocalhost -utest -p -P13306 database_name table_name &amp;gt; /path  导出数据表结构以及部分数据
+mysqldump -hlocalhost -utest -p -P13306 database_name table --where=&amp;quot;where_condition&amp;quot; &amp;gt; /path   </description>
+    </item>
     
   </channel>
 </rss>
