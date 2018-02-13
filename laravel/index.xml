@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Laravels on 实话先生</title>
-    <link>https://www.tsecloud.club/laravel/</link>
+    <link>https://mojiajuzi.github.io/laravel/</link>
     <description>Recent content in Laravels on 实话先生</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2018, 湘ICP备18001813</copyright>
     <lastBuildDate>Wed, 31 Jan 2018 20:58:44 +0800</lastBuildDate>
     
-	<atom:link href="https://www.tsecloud.club/laravel/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://mojiajuzi.github.io/laravel/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Composer</title>
-      <link>https://www.tsecloud.club/laravel/composer/</link>
+      <link>https://mojiajuzi.github.io/laravel/composer/</link>
       <pubDate>Wed, 31 Jan 2018 20:58:44 +0800</pubDate>
       
-      <guid>https://www.tsecloud.club/laravel/composer/</guid>
+      <guid>https://mojiajuzi.github.io/laravel/composer/</guid>
       <description> 安装 参考composer官方的安装文档
 依赖声明 使用包名:版本的形式
 { &amp;quot;require&amp;quot;:{ &amp;quot;monolog/monolog&amp;quot;: &amp;quot;1.0.*&amp;quot; }, //required_dev中的包只会在开发环境中使用，正式环境中将会无效，安装时只需要在后面加上`--dev` &amp;quot;required_dev&amp;quot;:{ &amp;quot;fzaninotto/faker&amp;quot;: &amp;quot;~1.4&amp;quot;, &amp;quot;mockery/mockery&amp;quot;: &amp;quot;0.9.*&amp;quot;, &amp;quot;phpunit/phpunit&amp;quot;: &amp;quot;~4.0&amp;quot;, &amp;quot;symfony/css-selector&amp;quot;: &amp;quot;2.8.*|3.0.*&amp;quot;, &amp;quot;symfony/dom-crawler&amp;quot;: &amp;quot;2.8.*|3.0.*&amp;quot; } }  依赖安装 composer install  执行完该语句后会在项目的根目录下面的vendord文件夹中产生相对应的目录

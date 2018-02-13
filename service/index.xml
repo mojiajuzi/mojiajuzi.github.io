@@ -2,22 +2,33 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Services on 实话先生</title>
-    <link>https://www.tsecloud.club/service/</link>
+    <link>https://mojiajuzi.github.io/service/</link>
     <description>Recent content in Services on 实话先生</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2018, 湘ICP备18001813</copyright>
-    <lastBuildDate>Wed, 31 Jan 2018 23:07:05 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Feb 2018 23:54:27 +0800</lastBuildDate>
     
-	<atom:link href="https://www.tsecloud.club/service/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://mojiajuzi.github.io/service/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>The HTTP Caddyfile</title>
+      <link>https://mojiajuzi.github.io/service/http-caddyfile/</link>
+      <pubDate>Tue, 06 Feb 2018 23:54:27 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/service/http-caddyfile/</guid>
+      <description>站点地址(Site Addresses) HTTP服务使用站点地址作为labels层，地址的形式为scheme://host:port/path,当你填写地址的时候，可以选择其中的 一部分进行使用
+host:port通常是localhost或者是站点的域名，如果使用默认的https模式(此时端口号为：443),那么默认的端口号是2015 在某种意义上来说，协议代表着所使用的端口号，比如：http代表使用80端口， https代表使用443端口，如果协议和端口号都进行 指定，那么指定的优先级将会高于协议所默认的端口号。如下表格假设使用了自动使用https模式下，指定不同的格式所使用的端口号
+:2015 # Host: (any), Port: 2015 localhost # Host: localhost; Port: 2015 localhost:8080 # Host: localhost; Port: 8080 example.com # Host: example.com; Ports: 80-&amp;gt;443 http://example.com # Host: example.com; Port: 80 https://example.com # Host: example.com; Ports: 80-&amp;gt;443 http://example.com:1234 # Host: example.com; Port: 1234 https://example.com:80 # Error! HTTPS on port 80 *.example.com # Hosts: *.example.com; Port: 2015 example.com/foo/ # Host: example.com; Ports: 80, 443; Path: /foo/ /foo/ # Host: (any), Port: 2015, Path: /foo/  需要注意的是，站点域名地址必须唯一，对同一个域名的配置，必须放在相同的语句块内</description>
+    </item>
+    
+    <item>
       <title>Caddyfile</title>
-      <link>https://www.tsecloud.club/service/caddyfile/</link>
+      <link>https://mojiajuzi.github.io/service/caddyfile/</link>
       <pubDate>Wed, 31 Jan 2018 23:07:05 +0800</pubDate>
       
-      <guid>https://www.tsecloud.club/service/caddyfile/</guid>
+      <guid>https://mojiajuzi.github.io/service/caddyfile/</guid>
       <description>该文章将会向你展示使用Caddyfile配置Caddy是一件十分简单的事情
 Caddyfile是一个文本文件，用来配置Caddy如何运行
 该文件的第一行永远是服务站点的地址，比如:

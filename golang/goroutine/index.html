@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.34" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Goroutine &middot; 实话先生</title>
+
+  
+  <link rel="stylesheet" href="https://mojiajuzi.github.io/css/print.css" media="print">
+  <link rel="stylesheet" href="https://mojiajuzi.github.io/css/poole.css">
+  <link rel="stylesheet" href="https://mojiajuzi.github.io/css/syntax.css">
+  <link rel="stylesheet" href="https://mojiajuzi.github.io/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="实话先生" />
+</head>
+
+  <body class=" ">
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://mojiajuzi.github.io/"><h1>实话先生</h1></a>
+      <p class="lead">
+       待我编码已成,少女嫁我可好 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="https://mojiajuzi.github.io/">Home</a> </li>
+      <li><a href="/golang/"> Golang </a></li><li><a href="/laravel/"> Laravel </a></li><li><a href="/mysql/"> Mysql </a></li><li><a href="/service/"> server </a></li>
+    </ul>
+
+    <p>Copyright (c) 2018, 湘ICP备18001813</p>
+  </div>
+</div>
+
+    <div class="content container">
+    <div class="post">
+  <h1>Goroutine</h1>
+  <span class="post-date">Tue, Feb 13, 2018</span>
+  
+
+<h2 id="goroutines">Goroutines</h2>
+
+<blockquote>
+<p>Goroutine是由Go runtime管理的轻量级线程，开启一个新的Goroutine只需要使用<code>go</code>关键字，由于Goroutine运行在相同的地址空间，因此需要通过共享内存实现同步，包<code>sync</code>提供了基本的同步操作</p>
+</blockquote>
+
+<h2 id="channels">Channels</h2>
+
+<blockquote>
+<p>Channel是一种管道类型，使用它可以通过箭头操作符(<code>&lt;-</code>)发送和接受数据</p>
+</blockquote>
+
+<p>默认情况下通过Channel发送、接收是阻塞的，也就是说，Channel的容量是1，举例来说，假设你通过channel发送一个值，如果另外一端不读取数据，那么再次发送数据就是阻塞的，必须等到另外一端接受数据后才能继续发送数据，该机制能够保证数据的同步不需要依赖于显示锁或者是状态值</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">3</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+        <span style="color:#a6e22e">signCapChan</span>(<span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">c</span>)
+    }
+    <span style="color:#a6e22e">y</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">c</span>
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">y</span>)
+}
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">signCapChan</span>(<span style="color:#a6e22e">x</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">ch</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>) {
+    <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">x</span>
+}</code></pre></div>
+
+<p>上面的程序将会提示<code>all goroutines are asleep - deadlock!</code></p>
+
+<p>为了解决这个容量问题，我们需要给channel引入缓存的概念，直接在初始化的时候，给定其容量的大小，因此上面的问题可以如下解决</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">...</span>.
+<span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">3</span>)
+<span style="color:#f92672">...</span>.</code></pre></div>
+
+<p>按照上面的调整以后，程序可以正常运行，但是如果将channel的容量变更为2,依旧会出现：<code>all goroutines are asleep - deadlock!</code>的错误,原因在于,对于一个有缓存的channel来说，当往其中写入数据的时候，如果容量满了以后，依旧会发生阻塞，在读取的情况下，如果channel为空的情况下依旧会发生阻塞</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">...</span>
+<span style="color:#a6e22e">y</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">c</span>
+<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">3</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">signCapChan</span>(<span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">c</span>)
+}
+<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">y</span>)
+<span style="color:#f92672">...</span></code></pre></div>
+
+<p>当然使用channel中的缓存在数据量比较小的时候还是非常有用的，如果数据量比较大的情况下，那么依旧采用设置缓存的方式将是不可取的，对于这个问题，以后再说明，先来理解channel的遍历和关闭</p>
+
+<h3 id="遍历">遍历</h3>
+
+<p>对于容度大于1的channel来说，发送到channel中的数据是一个类似于队列，因此要获取channel中的所有数据，那么就需要使用遍历</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">...</span>    
+<span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">3</span>)
+<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">3</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">signCapChan</span>(<span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">c</span>)
+}
+<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">c</span> {
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">ch</span>)
+}
+<span style="color:#f92672">...</span></code></pre></div>
+
+<h3 id="关闭">关闭</h3>
+
+<p>当不再发送数据到channel中时，发送者(发送数据到channel的对象)能够使用<code>close</code>方法显式的关闭channel，而一个接受者（从channel中获取数据的对象），能够通过如下方式检测channel是否被关闭</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#a6e22e">v</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">ch</span></code></pre></div>
+
+<p>如果<code>ok</code>接收的值为<code>false</code>时，表明channel已经被关闭了，对于channel的关闭，只能由发送者进行关闭，如果接受者试图关闭channel将会触发错误,与文件不一样的是通常情况下并不需要手动的去关闭channel，仅仅在需要告诉接受者不再发送数据的时候</p>
+
+<p>可以使用<code>Select</code>声明来等待一个Goroutine中多个通信操作的完成,例如如下的<a href="https://baike.baidu.com/item/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97"><em>斐波那契数列</em></a>的计算</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+    <span style="color:#a6e22e">quit</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+    <span style="color:#75715e">//开启一个goroutine
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">10</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+            <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">c</span>)
+        }
+        <span style="color:#a6e22e">quit</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">0</span>
+    }()
+    <span style="color:#75715e">//等待Goroutine的完成
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">fibonacci</span>(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">quit</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fibonacci</span>(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">quit</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>) {
+    <span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">for</span> {
+        <span style="color:#66d9ef">select</span> {
+        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">x</span>:
+            <span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> = <span style="color:#a6e22e">y</span>, <span style="color:#a6e22e">x</span><span style="color:#f92672">+</span><span style="color:#a6e22e">y</span>
+        <span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">quit</span>:
+            <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;quit&#34;</span>)
+            <span style="color:#66d9ef">return</span>
+        }
+    }
+}</code></pre></div>
+
+<p>分析：</p>
+
+<ol>
+<li>先声明两个channel</li>
+<li>开启一个goroutine</li>
+<li>创建函数，使用select声明来等待计算的结束</li>
+</ol>
+
+<p>以上充分使用channel的阻塞以及select声明的特性(满足case条件就执行对应的语句块)，不过这里有如下几点需要注意：</p>
+
+<p>select必须要有一个结束，否则会死锁，比如将如下语句注释掉</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">10</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+            <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">c</span>)
+        }
+    <span style="color:#75715e">// quit &lt;- 0
+</span><span style="color:#75715e"></span>    }()</code></pre></div>
+
+<p>那么将会造成一个死锁,因为<code>c &lt;- x</code>永远为true，<code>select</code>无法结束，造成一个死锁，在这种情况下，我们可以进行一下改造</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">select</span> {
+<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">x</span>:
+    <span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> = <span style="color:#a6e22e">y</span>, <span style="color:#a6e22e">x</span><span style="color:#f92672">+</span><span style="color:#a6e22e">y</span>
+<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">quit</span>:
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;quit&#34;</span>)
+    <span style="color:#66d9ef">return</span>
+<span style="color:#66d9ef">default</span>:
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;default&#34;</span>)
+    <span style="color:#66d9ef">return</span>
+}</code></pre></div>
+
+<p>在这种情况下，由于主goroutine(main函数所在的goroutine)会先执行完成，只会打印出<code>default</code>，因此我们可以取消<code>quit</code>,这样我们就可以获得这样的代码</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">10</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+            <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">c</span>)
+        }
+        close(<span style="color:#a6e22e">c</span>)
+    }()
+
+    <span style="color:#a6e22e">fibonacci</span>(<span style="color:#a6e22e">c</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fibonacci</span>(<span style="color:#a6e22e">c</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>) {
+    <span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">for</span> {
+        <span style="color:#66d9ef">select</span> {
+        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">x</span>:
+            <span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> = <span style="color:#a6e22e">y</span>, <span style="color:#a6e22e">x</span><span style="color:#f92672">+</span><span style="color:#a6e22e">y</span>
+        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">c</span>:
+            <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
+                <span style="color:#66d9ef">return</span>
+            }
+        }
+    }
+}</code></pre></div>
+
+<p>在这里我们利用了channel的关闭检测，当检测到channel关闭后，然后就退出循环</p>
+
+</div>
+
+
+    </div>
+
+    
+  </body>
+</html>
