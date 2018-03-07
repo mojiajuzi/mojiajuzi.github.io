@@ -7,10 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2018, 湘ICP备18001813</copyright>
-    <lastBuildDate>Wed, 31 Jan 2018 20:58:44 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 07 Mar 2018 21:48:05 +0800</lastBuildDate>
     
 	<atom:link href="https://mojiajuzi.github.io/laravel/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Laravel自带的登录注册组件简单说明</title>
+      <link>https://mojiajuzi.github.io/laravel/register/</link>
+      <pubDate>Wed, 07 Mar 2018 21:48:05 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/laravel/register/</guid>
+      <description>在这里我们需要理解Laravle中两个名词 - Guards:定义了对于每一个请求，如何对用户进行认证 - Providers: 定义了从哪里获取用户
+使用脚手架生成登录注册页面 php artisan make:auth 查看配置config/auth.php, 该文件用于配置如何登录,注册,重置密码 Providers Config &amp;#39;providers&amp;#39; =&amp;gt; [ &amp;#39;users&amp;#39; =&amp;gt; [ &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;eloquent&amp;#39;, &amp;#39;model&amp;#39; =&amp;gt; App\User::class, ], // &amp;#39;users&amp;#39; =&amp;gt; [ // &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;database&amp;#39;, // &amp;#39;table&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;, // ], ], 在Providers中，定义了两个数组,　一个是以Eloquent模型作为驱动，并且使用App\Users这个数据模型作为存储用户数据的载体，当然也可以使用database作为驱动,直接指明table作为存储载体
+指定了如何获取到用户数据以后，接下来就需要配置如何验证用户
+Guards Config &amp;#39;guards&amp;#39; =&amp;gt; [ &amp;#39;web&amp;#39; =&amp;gt; [ &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;session&amp;#39;, &amp;#39;provider&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;, ], &amp;#39;api&amp;#39; =&amp;gt; [ &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;token&amp;#39;, &amp;#39;provider&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;, ], ], 在Guards中,配置了两种的验证方式,一种是web,通过session来验证用户信息,另一种是通过令牌token来验证用户，这两种方式默认都使用以Eloquent类型的App\User模型作为存储用户信息的载体</description>
+    </item>
     
     <item>
       <title>Composer</title>

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://mojiajuzi.github.io/laravel/register/</loc>
+    <lastmod>2018-03-07T21:48:05+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://mojiajuzi.github.io/golang/goroutine/</loc>
     <lastmod>2018-02-13T21:52:57+08:00</lastmod>
   </url>
@@ -45,7 +50,7 @@
   
   <url>
     <loc>https://mojiajuzi.github.io/laravel/</loc>
-    <lastmod>2018-01-31T20:58:44+08:00</lastmod>
+    <lastmod>2018-03-07T21:48:05+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -68,7 +73,7 @@
   
   <url>
     <loc>https://mojiajuzi.github.io/</loc>
-    <lastmod>2018-02-13T21:52:57+08:00</lastmod>
+    <lastmod>2018-03-07T21:48:05+08:00</lastmod>
     <priority>0</priority>
   </url>
   
