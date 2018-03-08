@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Golangs on 实话先生</title>
-    <link>https://www.tsecloud.club/golang/</link>
+    <link>https://mojiajuzi.github.io/golang/</link>
     <description>Recent content in Golangs on 实话先生</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2018, 湘ICP备18001813</copyright>
     <lastBuildDate>Tue, 13 Feb 2018 21:52:57 +0800</lastBuildDate>
     
-	<atom:link href="https://www.tsecloud.club/golang/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://mojiajuzi.github.io/golang/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Goroutine</title>
-      <link>https://www.tsecloud.club/golang/goroutine/</link>
+      <link>https://mojiajuzi.github.io/golang/goroutine/</link>
       <pubDate>Tue, 13 Feb 2018 21:52:57 +0800</pubDate>
       
-      <guid>https://www.tsecloud.club/golang/goroutine/</guid>
+      <guid>https://mojiajuzi.github.io/golang/goroutine/</guid>
       <description>Goroutines  Goroutine是由Go runtime管理的轻量级线程，开启一个新的Goroutine只需要使用go关键字，由于Goroutine运行在相同的地址空间，因此需要通过共享内存实现同步，包sync提供了基本的同步操作
  Channels  Channel是一种管道类型，使用它可以通过箭头操作符(&amp;lt;-)发送和接受数据
  默认情况下通过Channel发送、接收是阻塞的，也就是说，Channel的容量是1，举例来说，假设你通过channel发送一个值，如果另外一端不读取数据，那么再次发送数据就是阻塞的，必须等到另外一端接受数据后才能继续发送数据，该机制能够保证数据的同步不需要依赖于显示锁或者是状态值
@@ -29,10 +29,10 @@ func main() { c := make(chan int) for i := 0; i &amp;lt; 3; i++ { signCapChan(i,
     
     <item>
       <title>Golang Middleware Part 1</title>
-      <link>https://www.tsecloud.club/golang/middleware_part1/</link>
+      <link>https://mojiajuzi.github.io/golang/middleware_part1/</link>
       <pubDate>Tue, 06 Feb 2018 23:30:40 +0800</pubDate>
       
-      <guid>https://www.tsecloud.club/golang/middleware_part1/</guid>
+      <guid>https://mojiajuzi.github.io/golang/middleware_part1/</guid>
       <description>如何在Golang中实现中间件-Part 1 当使用net/http包实现服务的时候，一般使用的是如下的两中处理方式:
  http.HandleFunc http.Handle  http.HandleFunc 分析 当使用这种方式的时候，其接受两个参数，一个是字符串格式的匹配符(pattern),另外一个就是func(ResponWrite, *Request), 因此只要我们的中间件中返回该类型，那么中间件就是可以实现的
 func main(){ http.HandleFunc(&amp;#34;/&amp;#34;, Hello) http.ListenAndServe(&amp;#34;:8080&amp;#34;, nil) } func Hello(w http.ResponseWriter, r *http.Request) { fmt.Print(&amp;#34;hello&amp;#34;) } 当我们运行如上的程序的时候，就会打印出hello这个结果，说明我们的写法是没有问题的
