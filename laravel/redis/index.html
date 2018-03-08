@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.34" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Laravel中安装和使用Redis作为会话和缓存的载体 &middot; 实话先生</title>
+
+  
+  <link rel="stylesheet" href="https://www.tsecloud.club/css/print.css" media="print">
+  <link rel="stylesheet" href="https://www.tsecloud.club/css/poole.css">
+  <link rel="stylesheet" href="https://www.tsecloud.club/css/syntax.css">
+  <link rel="stylesheet" href="https://www.tsecloud.club/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="实话先生" />
+</head>
+
+  <body class=" ">
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://www.tsecloud.club/"><h1>实话先生</h1></a>
+      <p class="lead">
+       待我编码已成,少女嫁我可好 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="https://www.tsecloud.club/">Home</a> </li>
+      <li><a href="/golang/"> Golang </a></li><li><a href="/laravel/"> Laravel </a></li><li><a href="/mysql/"> Mysql </a></li><li><a href="/service/"> server </a></li>
+    </ul>
+
+    <p>Copyright (c) 2018, 湘ICP备18001813</p>
+  </div>
+</div>
+
+    <div class="content container">
+    <div class="post">
+  <h1>Laravel中安装和使用Redis作为会话和缓存的载体</h1>
+  <span class="post-date">Thu, Mar 8, 2018</span>
+  
+
+<blockquote>
+<p>本人使用的是<a href="http://laradock.io/">Laradock</a> 作为开发环境</p>
+</blockquote>
+
+<h3 id="predis的安装">predis的安装</h3>
+
+<ol>
+<li>安装依赖包<code>predis/predis</code></li>
+</ol>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">composer require predis/predis</code></pre></div>
+
+<ol>
+<li>重新生成自动加载文件</li>
+</ol>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">composer dumpautoload</code></pre></div>
+
+<h3 id="修改配置">修改配置</h3>
+
+<h4 id="修改-env-文件中的缓存驱动-会话驱动-redis连接设置">修改<code>.env</code>文件中的缓存驱动,会话驱动,redis连接设置</h4>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">#缓存驱动
+#CACHE_DRIVER=array
+CACHE_DRIVER=redis
+
+#会话驱动
+#SESSION_DRIVER=file
+SESSION_DRIVER=redis
+
+#redis连接驱动
+REDIS_HOST=redis
+REDIS_PASSWORD=null
+REDIS_PORT=6379</code></pre></div>
+
+<h4 id="配置session和cache使用不同的数据库">配置session和cache使用不同的数据库</h4>
+
+<p>之所以这样做是避免清除缓存的时候，用户会话也一并清除</p>
+
+<ol>
+<li><p>修改<code>config/database.php</code>文件中的<code>redis</code>数组，复制一份<code>default</code>的配置，并依据需要修改其中的参数,这里最主要的两点是索引名称和<code>database</code>选项的修改</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    &#39;session&#39; =&gt; [
+        &#39;host&#39; =&gt; env(&#39;REDIS_HOST&#39;),
+        &#39;password&#39; =&gt; env(&#39;REDIS_PASSWORD&#39;, null),
+        &#39;port&#39; =&gt; env(&#39;REDIS_PORT&#39;, 6379),
+        &#39;database&#39; =&gt; 1,
+    ],
+    </code></pre></div></li>
+
+<li><p>修改<code>config/session.php</code>文件中<code>connection</code>为<code>session</code>,这里的值，就是上一步设置的索引名称</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    &#39;connection&#39; =&gt; &#34;session&#34;,
+    </code></pre></div></li>
+</ol>
+
+<h4 id="重新加载配置">重新加载配置</h4>
+
+<p>当配置完成以后，应该运行一下两条命令，重新加载配置，避免出现不必要的问题</p>
+
+<ol>
+<li>清除配置</li>
+</ol>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">php artisan config:clear</code></pre></div>
+
+<ol>
+<li>清空缓存</li>
+</ol>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">php artisan cache:clear</code></pre></div>
+
+<h4 id="简单使用">简单使用</h4>
+
+<p>Laravel提供<code>Cache</code>, <code>Redis</code>两种<code>Facade</code>来使用对redis进行操作,而这两种方式已存在一些区别</p>
+
+<h5 id="redis-facade">Redis　Facade</h5>
+
+<p>这种方式的使用通常是<code>Redis::redisCommandName</code>的形式，例如：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">Redis::set(&#34;hello&#34;, &#34;world&#34;);</code></pre></div></p>
+
+<p>当然<code>Redis::command(&quot;redisCommandName&quot;, params)</code>也是等价的</p>
+
+<p>完整的命令列表，可以查看<a href="https://redis.io/commands">redis commands</a>,
+在<code>\Illuminate\Redis\RedisManager</code>文件中，使用魔术方法调用redis的命令</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">public function __call($method, $parameters)
+{
+    return $this-&gt;connection()-&gt;{$method}(...$parameters);
+}</code></pre></div>
+
+<h5 id="cache">Cache</h5>
+
+<p>Cache对不同的缓存进行部分封装，在使用这种方式的时候，需要制定所需要的存储
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">Cache::store(&#34;redis)-&gt;put(&#34;hello&#34;, &#34;world&#34;);</code></pre></div>
+具体的封装列表，可以查看``,如果对于需要的缓存的操作不复杂的话，建议直接使用这种方式</p>
+
+<h5 id="注意事项">注意事项</h5>
+
+<p>首先注意以下例子：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">Route::get(&#34;cache&#34;, function(){
+    \Redis::setex(&#34;hello&#34;,10, &#34;world&#34;);
+    $res = \Redis::get(&#34;hello&#34;);
+    $re = \Cache::store(&#34;redis&#34;)-&gt;get(&#34;hello&#34;);
+    dd($res.&#39;-&#39;.$re);
+});</code></pre></div></p>
+
+<p>以上结果输入为</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#e6db74">&#34;world-&#34;</span></code></pre></div>
+
+<p>在redis-cli中，使用<code>KEYS *</code>进行查找结果如下，</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#ae81ff">127</span>.0.0.1:6379&gt; KEYS *
+<span style="color:#ae81ff">1</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;hello&#34;</span></code></pre></div>
+
+<p>可见<code>hello</code>这个key已经存在，那么<code>Cache</code>的形式为什么取不到值呢，不急我们反过来试一下</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">Route::get(&#34;cache&#34;, function(){
+    // \Redis::setex(&#34;hello&#34;,10, &#34;world&#34;);
+    \Cache::store(&#34;redis&#34;)-&gt;put(&#34;hello&#34;, &#34;world&#34;, 1);
+    $res = \Redis::get(&#34;hello&#34;);
+    $re = \Cache::store(&#34;redis&#34;)-&gt;get(&#34;hello&#34;);
+    dd($res.&#39;-&#39;.$re);
+});</code></pre></div>
+
+<p>以上结果输入为</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#ae81ff">127</span>.0.0.1:6379&gt; KEYS *
+<span style="color:#ae81ff">1</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;laravel_cache:hello&#34;</span></code></pre></div>
+
+<p>在redis-cli中，使用<code>KEYS *</code>进行查找可以发现，<code>hello</code>这个key并不存在，倒是有一个<code>laravel_cache:hello:</code>的前缀，
+而且通过在redis-cli中获取到的值如下：</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#ae81ff">127</span>.0.0.1:6379&gt; get laravel_cache:hello
+<span style="color:#e6db74">&#34;s:5:\&#34;world\&#34;;&#34;</span></code></pre></div>
+
+<p>显然是Cache对于其值进行了封装和转换，通过查找Cache相关文件，可以看到在<code>CacheManager.php</code>文件中，包含如下代码
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    /**
+     * Get the cache prefix.
+     *
+     * @param  array  $config
+     * @return string
+     */
+    protected function getPrefix(array $config)
+    {
+        return $config[&#39;prefix&#39;] ?? $this-&gt;app[&#39;config&#39;][&#39;cache.prefix&#39;];
+    }</code></pre></div></p>
+
+<p>根据以上代码，我们可以追溯到<code>config/cache.php</code>文件中，包含如下配置：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    &#39;prefix&#39; =&gt; env(
+        &#39;CACHE_PREFIX&#39;,
+        str_slug(env(&#39;APP_NAME&#39;, &#39;laravel&#39;), &#39;_&#39;).&#39;_cache&#39;
+    ),</code></pre></div></p>
+
+<p>这就解释了为什么在Laravle中，使用两种不同的方式的时候，需要特别注意，使用哪一种方式存储，就是用哪一种方式读取</p>
+
+<h4 id="参考文档">参考文档</h4>
+
+<ul>
+<li><p><a href="https://laravel-china.org/topics/2466/laravel-configuration-under-the-redis-so-that-the-cache-session-each-use-a-different-redis-database">Laravel 下配置 Redis 让缓存、Session 各自使用不同的 Redis 数据库 </a></p></li>
+
+<li><p><a href="http://laradock.io/">Laradock</a></p></li>
+</ul>
+
+</div>
+
+
+    </div>
+
+    
+  </body>
+</html>
