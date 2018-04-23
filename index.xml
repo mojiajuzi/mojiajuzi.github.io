@@ -1,139 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>实话先生</title>
+    <title>To Be A Betty Man</title>
     <link>https://mojiajuzi.github.io/</link>
-    <description>Recent content on 实话先生</description>
+    <description>Recent content on To Be A Betty Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>Copyright (c) 2018, 湘ICP备18001813</copyright>
-    <lastBuildDate>Thu, 08 Mar 2018 23:27:06 +0800</lastBuildDate>
     
 	<atom:link href="https://mojiajuzi.github.io/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Laravel中安装和使用Redis作为会话和缓存的载体</title>
-      <link>https://mojiajuzi.github.io/laravel/redis/</link>
-      <pubDate>Thu, 08 Mar 2018 23:27:06 +0800</pubDate>
-      
-      <guid>https://mojiajuzi.github.io/laravel/redis/</guid>
-      <description>本人使用的是Laradock 作为开发环境
- predis的安装  安装依赖包predis/predis  composer require predis/predis  重新生成自动加载文件  composer dumpautoload 修改配置 修改.env文件中的缓存驱动,会话驱动,redis连接设置 #缓存驱动 #CACHE_DRIVER=array CACHE_DRIVER=redis #会话驱动 #SESSION_DRIVER=file SESSION_DRIVER=redis #redis连接驱动 REDIS_HOST=redis REDIS_PASSWORD=null REDIS_PORT=6379 配置session和cache使用不同的数据库 之所以这样做是避免清除缓存的时候，用户会话也一并清除
- 修改config/database.php文件中的redis数组，复制一份default的配置，并依据需要修改其中的参数,这里最主要的两点是索引名称和database选项的修改
-&amp;#39;session&amp;#39; =&amp;gt; [ &amp;#39;host&amp;#39; =&amp;gt; env(&amp;#39;REDIS_HOST&amp;#39;), &amp;#39;password&amp;#39; =&amp;gt; env(&amp;#39;REDIS_PASSWORD&amp;#39;, null), &amp;#39;port&amp;#39; =&amp;gt; env(&amp;#39;REDIS_PORT&amp;#39;, 6379), &amp;#39;database&amp;#39; =&amp;gt; 1, ],  修改config/session.php文件中connection为session,这里的值，就是上一步设置的索引名称
-&amp;#39;connection&amp;#39; =&amp;gt; &amp;#34;session&amp;#34;,   重新加载配置 当配置完成以后，应该运行一下两条命令，重新加载配置，避免出现不必要的问题
- 清除配置  php artisan config:clear  清空缓存  php artisan cache:clear 简单使用 Laravel提供Cache, Redis两种Facade来使用对redis进行操作,而这两种方式已存在一些区别</description>
-    </item>
-    
-    <item>
-      <title>Laravel自带的登录注册组件简单说明</title>
-      <link>https://mojiajuzi.github.io/laravel/register/</link>
-      <pubDate>Wed, 07 Mar 2018 21:48:05 +0800</pubDate>
-      
-      <guid>https://mojiajuzi.github.io/laravel/register/</guid>
-      <description>在这里我们需要理解Laravle中两个名词 - Guards:定义了对于每一个请求，如何对用户进行认证 - Providers: 定义了从哪里获取用户
-使用脚手架生成登录注册页面 php artisan make:auth 查看配置config/auth.php, 该文件用于配置如何登录,注册,重置密码 Providers Config &amp;#39;providers&amp;#39; =&amp;gt; [ &amp;#39;users&amp;#39; =&amp;gt; [ &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;eloquent&amp;#39;, &amp;#39;model&amp;#39; =&amp;gt; App\User::class, ], // &amp;#39;users&amp;#39; =&amp;gt; [ // &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;database&amp;#39;, // &amp;#39;table&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;, // ], ], 在Providers中，定义了两个数组,　一个是以Eloquent模型作为驱动，并且使用App\Users这个数据模型作为存储用户数据的载体，当然也可以使用database作为驱动,直接指明table作为存储载体
-指定了如何获取到用户数据以后，接下来就需要配置如何验证用户
-Guards Config &amp;#39;guards&amp;#39; =&amp;gt; [ &amp;#39;web&amp;#39; =&amp;gt; [ &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;session&amp;#39;, &amp;#39;provider&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;, ], &amp;#39;api&amp;#39; =&amp;gt; [ &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;token&amp;#39;, &amp;#39;provider&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;, ], ], 在Guards中,配置了两种的验证方式,一种是web,通过session来验证用户信息,另一种是通过令牌token来验证用户，这两种方式默认都使用以Eloquent类型的App\User模型作为存储用户信息的载体</description>
-    </item>
-    
-    <item>
-      <title>Goroutine</title>
-      <link>https://mojiajuzi.github.io/golang/goroutine/</link>
-      <pubDate>Tue, 13 Feb 2018 21:52:57 +0800</pubDate>
-      
-      <guid>https://mojiajuzi.github.io/golang/goroutine/</guid>
-      <description>Goroutines  Goroutine是由Go runtime管理的轻量级线程，开启一个新的Goroutine只需要使用go关键字，由于Goroutine运行在相同的地址空间，因此需要通过共享内存实现同步，包sync提供了基本的同步操作
- Channels  Channel是一种管道类型，使用它可以通过箭头操作符(&amp;lt;-)发送和接受数据
- 默认情况下通过Channel发送、接收是阻塞的，也就是说，Channel的容量是1，举例来说，假设你通过channel发送一个值，如果另外一端不读取数据，那么再次发送数据就是阻塞的，必须等到另外一端接受数据后才能继续发送数据，该机制能够保证数据的同步不需要依赖于显示锁或者是状态值
-func main() { c := make(chan int) for i := 0; i &amp;lt; 3; i++ { signCapChan(i, c) } y := &amp;lt;-c fmt.Println(y) } func signCapChan(x int, ch chan int) { ch &amp;lt;- x } 上面的程序将会提示all goroutines are asleep - deadlock!
-为了解决这个容量问题，我们需要给channel引入缓存的概念，直接在初始化的时候，给定其容量的大小，因此上面的问题可以如下解决
-.... c := make(chan int, 3) .... 按照上面的调整以后，程序可以正常运行，但是如果将channel的容量变更为2,依旧会出现：all goroutines are asleep - deadlock!的错误,原因在于,对于一个有缓存的channel来说，当往其中写入数据的时候，如果容量满了以后，依旧会发生阻塞，在读取的情况下，如果channel为空的情况下依旧会发生阻塞
-... y := &amp;lt;-c for i := 0; i &amp;lt; 3; i++ { signCapChan(i, c) } fmt.</description>
-    </item>
-    
-    <item>
-      <title>The HTTP Caddyfile</title>
-      <link>https://mojiajuzi.github.io/service/http-caddyfile/</link>
-      <pubDate>Tue, 06 Feb 2018 23:54:27 +0800</pubDate>
-      
-      <guid>https://mojiajuzi.github.io/service/http-caddyfile/</guid>
-      <description>站点地址(Site Addresses) HTTP服务使用站点地址作为labels层，地址的形式为scheme://host:port/path,当你填写地址的时候，可以选择其中的 一部分进行使用
-host:port通常是localhost或者是站点的域名，如果使用默认的https模式(此时端口号为：443),那么默认的端口号是2015 在某种意义上来说，协议代表着所使用的端口号，比如：http代表使用80端口， https代表使用443端口，如果协议和端口号都进行 指定，那么指定的优先级将会高于协议所默认的端口号。如下表格假设使用了自动使用https模式下，指定不同的格式所使用的端口号
-:2015 # Host: (any), Port: 2015 localhost # Host: localhost; Port: 2015 localhost:8080 # Host: localhost; Port: 8080 example.com # Host: example.com; Ports: 80-&amp;gt;443 http://example.com # Host: example.com; Port: 80 https://example.com # Host: example.com; Ports: 80-&amp;gt;443 http://example.com:1234 # Host: example.com; Port: 1234 https://example.com:80 # Error! HTTPS on port 80 *.example.com # Hosts: *.example.com; Port: 2015 example.com/foo/ # Host: example.com; Ports: 80, 443; Path: /foo/ /foo/ # Host: (any), Port: 2015, Path: /foo/  需要注意的是，站点域名地址必须唯一，对同一个域名的配置，必须放在相同的语句块内</description>
-    </item>
-    
-    <item>
-      <title>Golang Middleware Part 1</title>
-      <link>https://mojiajuzi.github.io/golang/middleware_part1/</link>
-      <pubDate>Tue, 06 Feb 2018 23:30:40 +0800</pubDate>
-      
-      <guid>https://mojiajuzi.github.io/golang/middleware_part1/</guid>
-      <description>如何在Golang中实现中间件-Part 1 当使用net/http包实现服务的时候，一般使用的是如下的两中处理方式:
- http.HandleFunc http.Handle  http.HandleFunc 分析 当使用这种方式的时候，其接受两个参数，一个是字符串格式的匹配符(pattern),另外一个就是func(ResponWrite, *Request), 因此只要我们的中间件中返回该类型，那么中间件就是可以实现的
-func main(){ http.HandleFunc(&amp;#34;/&amp;#34;, Hello) http.ListenAndServe(&amp;#34;:8080&amp;#34;, nil) } func Hello(w http.ResponseWriter, r *http.Request) { fmt.Print(&amp;#34;hello&amp;#34;) } 当我们运行如上的程序的时候，就会打印出hello这个结果，说明我们的写法是没有问题的
-实现 接下来，我们需要定义我们的中间件，它需要接收一个｀ http.HandlerFunc｀类型，并且返回一个http.HandlerFunc这样才能被使用
-func MyMiddleware(next http.HandlerFunc)http.HandlerFunc { return func(w http.ResponseWriter, r *http.Request) { fmt.Println(&amp;#34;middleware&amp;#34;) //doSomethinds 	next.ServeHTTP(w,r) } } 由于调用next.ServeHTTP(w, r)等效于调用next(w, r),处理完后会返回响应w,最终相应会传递到最外层的匿名函数，从而最终会返回到客户端
-http.Handle 分析 http.Handle接受两个参数，一个是匹配符，另外一个是http.Handler，当我们查看源码的时候，发现其是一个接口类型
-type Handler interface { ServeHTTP(ResponseWriter, *Request) } 因此我们最终得返回一个实现了该接口的类型，假设我们首先定义一个新的结构体,并为其添加一个｀ServiceHTTP｀
-解决 type MyResponse struct { next http.Handle Code int64 Msg string Errors []string Data map[string]interface{} } func (res *MyResponse)ServeHTTP(w http.</description>
-    </item>
-    
-    <item>
-      <title>Caddyfile</title>
-      <link>https://mojiajuzi.github.io/service/caddyfile/</link>
-      <pubDate>Wed, 31 Jan 2018 23:07:05 +0800</pubDate>
-      
-      <guid>https://mojiajuzi.github.io/service/caddyfile/</guid>
-      <description>该文章将会向你展示使用Caddyfile配置Caddy是一件十分简单的事情
-Caddyfile是一个文本文件，用来配置Caddy如何运行
-该文件的第一行永远是服务站点的地址，比如:
-localhost:8080  当你保存以后，一旦启动caddy服务器，那么将会自动查找Caddyfile文件，并加载其中的配置 默认情况会在当前的目录下面查找Caddyfile文件，如果将配置文件放置在其他的地方，那么在 启动的时候，需要指明Caddyfile文件所在的路径
-caddy -conf ../path/to/Caddyfile  紧跟着站点地址的下一行则是指令，Caddy提供了丰富的指令 比如: gzip则是一个HTTP指令
-localhost:8080 gzip log ../access.log  有一些指令需要使用多行进行配置，这个时候需要使用{}进行配置，而且{必须在指令的行尾
-localhost:8080 gzip log ..access.log markwodn /blog { css /blog.css js /scripts.js }  如果{}里面不进行设置，那么则应该省略 如果配置参数的值包含空白符，那么则应该使用&amp;quot;&amp;quot;进行包裹
-当然caddyfile文件中也可以以#开头，添加注释
-# 注释可以单独作为一行 foobar #也可以放在配置的末尾  如果需要在一个caddyfile文件中对多个站点进行配置，那么则必须使用{}对每一个站点进行分割
-mysite.com { root /www/mysite.com } sub.mysite.com { root /www/sub.mysite.com gzip log ../access.log }  {}的使用规则，与多个参数的指令规则一样，多余多站点，所有的配置都必须包含在站点的{}之内，不允许嵌套
-对于多个站点使用共同的配置，可以使用如下的方式
-localhost:8080, https://site.com, http://mysite.com { ... }  另外站点的地址可以是特殊的地址或以及使用通配符
-example.com/static, *.example.com { .</description>
-    </item>
-    
-    <item>
-      <title>Composer</title>
-      <link>https://mojiajuzi.github.io/laravel/composer/</link>
-      <pubDate>Wed, 31 Jan 2018 20:58:44 +0800</pubDate>
-      
-      <guid>https://mojiajuzi.github.io/laravel/composer/</guid>
-      <description> 安装 参考composer官方的安装文档
-依赖声明 使用包名:版本的形式
-{ &amp;quot;require&amp;quot;:{ &amp;quot;monolog/monolog&amp;quot;: &amp;quot;1.0.*&amp;quot; }, //required_dev中的包只会在开发环境中使用，正式环境中将会无效，安装时只需要在后面加上`--dev` &amp;quot;required_dev&amp;quot;:{ &amp;quot;fzaninotto/faker&amp;quot;: &amp;quot;~1.4&amp;quot;, &amp;quot;mockery/mockery&amp;quot;: &amp;quot;0.9.*&amp;quot;, &amp;quot;phpunit/phpunit&amp;quot;: &amp;quot;~4.0&amp;quot;, &amp;quot;symfony/css-selector&amp;quot;: &amp;quot;2.8.*|3.0.*&amp;quot;, &amp;quot;symfony/dom-crawler&amp;quot;: &amp;quot;2.8.*|3.0.*&amp;quot; } }  依赖安装 composer install  执行完该语句后会在项目的根目录下面的vendord文件夹中产生相对应的目录
- vendord/monolog/monolog  包的使用 在需要使用的文件中引入自动加载的文件即可：
-require &#39;vendor/autoload.php&#39;;  然后就可以使用安装的依赖包
-使用自己的包 在json文件中添加如下字段，就可以使用自己的autoloader
-&amp;quot;autoload&amp;quot;: { &amp;quot;psr-4&amp;quot;: {&amp;quot;Acme\\&amp;quot;: &amp;quot;src/&amp;quot;} }  此时，composer将会注册一个PSR-4 autoloader到Acme命名空间，
-src:表示的命名空间到目录的映射，与vendor同级，再次运行
-composer install  当再一次使用
-require &#39;vendor/autoload.php&#39;;  的时候，返回的自动加载的实例中就会包含autoloader实例，当然我们也可以使用classmap来加载不符合我psr-4规范的类库
-classmap数据中表示的是：类文件所在的目录
-&amp;quot;autoload&amp;quot;: { &amp;quot;psr-4&amp;quot;: {&amp;quot;Acme\\&amp;quot;: &amp;quot;src/&amp;quot;}, &amp;quot;classmap&amp;quot;:[&amp;quot;src/&amp;quot;, &amp;quot;lib/&amp;quot;, &amp;quot;Something.php&amp;quot;] }  </description>
-    </item>
-    
-    <item>
-      <title>mysqldump备份工具的简单使用</title>
-      <link>https://mojiajuzi.github.io/mysql/sqldump/</link>
-      <pubDate>Wed, 31 Jan 2018 20:40:58 +0800</pubDate>
-      
-      <guid>https://mojiajuzi.github.io/mysql/sqldump/</guid>
-      <description> 导出某个数据库中的所有数据表,不包含表中的数据
-mysqldump -hlocalhost -utest -p -P3306 -d database_name &amp;gt; /path  导出数据库中某张表的结构,不包含表中的数据
-mysqldump -hlocalhost -utest -p -P3306 -d database_name table_name &amp;gt; /path  导出数据库中的所有数据表及表中所包含的数据
-mysqldump -hlocalhost -utest -p -P13306 database_name &amp;gt; /path  导出数据表的结构以及所有的数据
-mysqldump -hlocalhost -utest -p -P13306 database_name table_name &amp;gt; /path  导出数据表结构以及部分数据
-mysqldump -hlocalhost -utest -p -P13306 database_name table --where=&amp;quot;where_condition&amp;quot; &amp;gt; /path   </description>
-    </item>
     
   </channel>
 </rss>
