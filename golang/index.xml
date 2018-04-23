@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Golangs on 实话先生</title>
+    <title>Golangs on To Be A Betty Man</title>
     <link>https://mojiajuzi.github.io/golang/</link>
-    <description>Recent content in Golangs on 实话先生</description>
+    <description>Recent content in Golangs on To Be A Betty Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>Copyright (c) 2018, 湘ICP备18001813</copyright>
     <lastBuildDate>Tue, 13 Feb 2018 21:52:57 +0800</lastBuildDate>
     
 	<atom:link href="https://mojiajuzi.github.io/golang/index.xml" rel="self" type="application/rss+xml" />
@@ -14,33 +13,38 @@
     
     <item>
       <title>Goroutine</title>
-      <link>https://mojiajuzi.github.io/golang/goroutine/</link>
+      <link>https://mojiajuzi.github.io/golang/goruotine/</link>
       <pubDate>Tue, 13 Feb 2018 21:52:57 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/golang/goroutine/</guid>
-      <description>Goroutines  Goroutine是由Go runtime管理的轻量级线程，开启一个新的Goroutine只需要使用go关键字，由于Goroutine运行在相同的地址空间，因此需要通过共享内存实现同步，包sync提供了基本的同步操作
- Channels  Channel是一种管道类型，使用它可以通过箭头操作符(&amp;lt;-)发送和接受数据
- 默认情况下通过Channel发送、接收是阻塞的，也就是说，Channel的容量是1，举例来说，假设你通过channel发送一个值，如果另外一端不读取数据，那么再次发送数据就是阻塞的，必须等到另外一端接受数据后才能继续发送数据，该机制能够保证数据的同步不需要依赖于显示锁或者是状态值
-func main() { c := make(chan int) for i := 0; i &amp;lt; 3; i++ { signCapChan(i, c) } y := &amp;lt;-c fmt.Println(y) } func signCapChan(x int, ch chan int) { ch &amp;lt;- x } 上面的程序将会提示all goroutines are asleep - deadlock!
-为了解决这个容量问题，我们需要给channel引入缓存的概念，直接在初始化的时候，给定其容量的大小，因此上面的问题可以如下解决
-.... c := make(chan int, 3) .... 按照上面的调整以后，程序可以正常运行，但是如果将channel的容量变更为2,依旧会出现：all goroutines are asleep - deadlock!的错误,原因在于,对于一个有缓存的channel来说，当往其中写入数据的时候，如果容量满了以后，依旧会发生阻塞，在读取的情况下，如果channel为空的情况下依旧会发生阻塞
-... y := &amp;lt;-c for i := 0; i &amp;lt; 3; i++ { signCapChan(i, c) } fmt.</description>
+      <guid>https://mojiajuzi.github.io/golang/goruotine/</guid>
+      <description>Goroutines Goroutine是由Go runtime管理的轻量级线程，开启一个新的Goroutine只需要使用go关键字，由于Goroutine运行在</description>
+    </item>
+    
+    <item>
+      <title>The HTTP Caddyfile</title>
+      <link>https://mojiajuzi.github.io/golang/http-caddyfile/</link>
+      <pubDate>Tue, 06 Feb 2018 23:54:27 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/golang/http-caddyfile/</guid>
+      <description>站点地址(Site Addresses) HTTP服务使用站点地址作为labels层，地址的形式为scheme://host:port/path,当你填写地址的时</description>
     </item>
     
     <item>
       <title>Golang Middleware Part 1</title>
-      <link>https://mojiajuzi.github.io/golang/middleware_part1/</link>
+      <link>https://mojiajuzi.github.io/golang/middleware_part_1/</link>
       <pubDate>Tue, 06 Feb 2018 23:30:40 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/golang/middleware_part1/</guid>
-      <description>如何在Golang中实现中间件-Part 1 当使用net/http包实现服务的时候，一般使用的是如下的两中处理方式:
- http.HandleFunc http.Handle  http.HandleFunc 分析 当使用这种方式的时候，其接受两个参数，一个是字符串格式的匹配符(pattern),另外一个就是func(ResponWrite, *Request), 因此只要我们的中间件中返回该类型，那么中间件就是可以实现的
-func main(){ http.HandleFunc(&amp;#34;/&amp;#34;, Hello) http.ListenAndServe(&amp;#34;:8080&amp;#34;, nil) } func Hello(w http.ResponseWriter, r *http.Request) { fmt.Print(&amp;#34;hello&amp;#34;) } 当我们运行如上的程序的时候，就会打印出hello这个结果，说明我们的写法是没有问题的
-实现 接下来，我们需要定义我们的中间件，它需要接收一个｀ http.HandlerFunc｀类型，并且返回一个http.HandlerFunc这样才能被使用
-func MyMiddleware(next http.HandlerFunc)http.HandlerFunc { return func(w http.ResponseWriter, r *http.Request) { fmt.Println(&amp;#34;middleware&amp;#34;) //doSomethinds 	next.ServeHTTP(w,r) } } 由于调用next.ServeHTTP(w, r)等效于调用next(w, r),处理完后会返回响应w,最终相应会传递到最外层的匿名函数，从而最终会返回到客户端
-http.Handle 分析 http.Handle接受两个参数，一个是匹配符，另外一个是http.Handler，当我们查看源码的时候，发现其是一个接口类型
-type Handler interface { ServeHTTP(ResponseWriter, *Request) } 因此我们最终得返回一个实现了该接口的类型，假设我们首先定义一个新的结构体,并为其添加一个｀ServiceHTTP｀
-解决 type MyResponse struct { next http.Handle Code int64 Msg string Errors []string Data map[string]interface{} } func (res *MyResponse)ServeHTTP(w http.</description>
+      <guid>https://mojiajuzi.github.io/golang/middleware_part_1/</guid>
+      <description>如何在Golang中实现中间件-Part 1 当使用net/http包实现服务的时候，一般使用的是如下的两中处理方式: http.HandleFunc http.Handle http.HandleFunc 分析 当使用这种方式的</description>
+    </item>
+    
+    <item>
+      <title>Caddyfile</title>
+      <link>https://mojiajuzi.github.io/golang/caddyfile/</link>
+      <pubDate>Wed, 31 Jan 2018 23:07:05 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/golang/caddyfile/</guid>
+      <description>该文章将会向你展示使用Caddyfile配置Caddy是一件十分简单的事情 Caddyfile是一个文本文件，用来配置Caddy如何运行 该文件</description>
     </item>
     
   </channel>

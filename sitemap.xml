@@ -3,7 +3,60 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://mojiajuzi.github.io/php/redis/</loc>
+    <lastmod>2018-03-08T23:27:06+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/php/register/</loc>
+    <lastmod>2018-03-07T21:48:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/golang/goruotine/</loc>
+    <lastmod>2018-02-13T21:52:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/golang/http-caddyfile/</loc>
+    <lastmod>2018-02-06T23:54:27+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/golang/middleware_part_1/</loc>
+    <lastmod>2018-02-06T23:30:40+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/golang/caddyfile/</loc>
+    <lastmod>2018-01-31T23:07:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/sql/sqldump/</loc>
+    <lastmod>2018-01-31T20:40:58+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://mojiajuzi.github.io/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/golang/</loc>
+    <lastmod>2018-02-13T21:52:57+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/php/</loc>
+    <lastmod>2018-03-08T23:27:06+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/sql/</loc>
+    <lastmod>2018-01-31T20:40:58+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -14,6 +67,7 @@
   
   <url>
     <loc>https://mojiajuzi.github.io/</loc>
+    <lastmod>2018-03-08T23:27:06+08:00</lastmod>
     <priority>0</priority>
   </url>
   
