@@ -43,7 +43,19 @@
   </url>
   
   <url>
+    <loc>https://mojiajuzi.github.io/tags/caddy/</loc>
+    <lastmod>2018-02-06T23:54:27+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://mojiajuzi.github.io/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/tags/go/</loc>
+    <lastmod>2018-02-13T21:52:57+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -54,8 +66,32 @@
   </url>
   
   <url>
+    <loc>https://mojiajuzi.github.io/tags/laravel/</loc>
+    <lastmod>2018-04-27T23:35:21+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/tags/middleware/</loc>
+    <lastmod>2018-02-06T23:30:40+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/tags/mysql/</loc>
+    <lastmod>2018-01-31T20:40:58+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://mojiajuzi.github.io/php/</loc>
     <lastmod>2018-04-27T23:35:21+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/tags/sql/</loc>
+    <lastmod>2018-01-31T20:40:58+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -67,6 +103,7 @@
   
   <url>
     <loc>https://mojiajuzi.github.io/tags/</loc>
+    <lastmod>2018-02-06T23:54:27+08:00</lastmod>
     <priority>0</priority>
   </url>
   

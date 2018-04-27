@@ -53,24 +53,16 @@
   <span class="post-date">Wed, Jan 31, 2018</span>
   <ol>
 <li><p>导出某个数据库中的所有数据表,不包含表中的数据</p>
-
-<pre><code class="language-mysql">mysqldump -hlocalhost -utest -p -P3306 -d database_name &gt; /path
-</code></pre></li>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-mysql" data-lang="mysql">mysqldump <span style="color:#f92672">-</span>hlocalhost <span style="color:#f92672">-</span>utest <span style="color:#f92672">-</span>p <span style="color:#f92672">-</span>P3306 <span style="color:#f92672">-</span>d database_name <span style="color:#f92672">&gt;</span> <span style="color:#f92672">/</span>path</code></pre></div></li>
 
 <li><p>导出数据库中某张表的结构,不包含表中的数据</p>
-
-<pre><code class="language-mysql">mysqldump -hlocalhost -utest -p -P3306 -d database_name table_name &gt; /path
-</code></pre></li>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-mysql" data-lang="mysql">mysqldump <span style="color:#f92672">-</span>hlocalhost <span style="color:#f92672">-</span>utest <span style="color:#f92672">-</span>p <span style="color:#f92672">-</span>P3306 <span style="color:#f92672">-</span>d database_name table_name <span style="color:#f92672">&gt;</span> <span style="color:#f92672">/</span>path</code></pre></div></li>
 
 <li><p>导出数据库中的所有数据表及表中所包含的数据</p>
-
-<pre><code class="language-mysql">mysqldump -hlocalhost -utest -p -P13306 database_name &gt; /path
-</code></pre></li>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-mysql" data-lang="mysql">mysqldump <span style="color:#f92672">-</span>hlocalhost <span style="color:#f92672">-</span>utest <span style="color:#f92672">-</span>p <span style="color:#f92672">-</span>P13306 database_name <span style="color:#f92672">&gt;</span> <span style="color:#f92672">/</span>path</code></pre></div></li>
 
 <li><p>导出数据表的结构以及所有的数据</p>
-
-<pre><code class="language-mysql">mysqldump -hlocalhost -utest -p -P13306 database_name table_name &gt; /path
-</code></pre></li>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-mysql" data-lang="mysql">mysqldump <span style="color:#f92672">-</span>hlocalhost <span style="color:#f92672">-</span>utest <span style="color:#f92672">-</span>p <span style="color:#f92672">-</span>P13306 database_name table_name <span style="color:#f92672">&gt;</span> <span style="color:#f92672">/</span>path</code></pre></div></li>
 
 <li><p>导出数据表结构以及部分数据</p>
 

@@ -6,9 +6,64 @@
     <description>Recent content in Tags on To Be A Betty Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Tue, 06 Feb 2018 23:54:27 +0800</lastBuildDate>
     
 	<atom:link href="https://mojiajuzi.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Caddy</title>
+      <link>https://mojiajuzi.github.io/tags/caddy/</link>
+      <pubDate>Tue, 06 Feb 2018 23:54:27 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/tags/caddy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Go</title>
+      <link>https://mojiajuzi.github.io/tags/go/</link>
+      <pubDate>Tue, 13 Feb 2018 21:52:57 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Laravel</title>
+      <link>https://mojiajuzi.github.io/tags/laravel/</link>
+      <pubDate>Fri, 27 Apr 2018 23:35:21 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/tags/laravel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Middleware</title>
+      <link>https://mojiajuzi.github.io/tags/middleware/</link>
+      <pubDate>Tue, 06 Feb 2018 23:30:40 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/tags/middleware/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mysql</title>
+      <link>https://mojiajuzi.github.io/tags/mysql/</link>
+      <pubDate>Wed, 31 Jan 2018 20:40:58 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/tags/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sql</title>
+      <link>https://mojiajuzi.github.io/tags/sql/</link>
+      <pubDate>Wed, 31 Jan 2018 20:40:58 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/tags/sql/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

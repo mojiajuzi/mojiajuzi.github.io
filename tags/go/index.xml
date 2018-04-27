@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go on To Be A Betty Man</title>
+    <link>https://mojiajuzi.github.io/tags/go/</link>
+    <description>Recent content in Go on To Be A Betty Man</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 13 Feb 2018 21:52:57 +0800</lastBuildDate>
+    
+	<atom:link href="https://mojiajuzi.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Goroutine</title>
+      <link>https://mojiajuzi.github.io/go/goruotine/</link>
+      <pubDate>Tue, 13 Feb 2018 21:52:57 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/go/goruotine/</guid>
+      <description>Goroutines Goroutine是由Go runtime管理的轻量级线程，开启一个新的Goroutine只需要使用go关键字，由于Goroutine运行在</description>
+    </item>
+    
+    <item>
+      <title>The HTTP Caddyfile</title>
+      <link>https://mojiajuzi.github.io/go/http-caddyfile/</link>
+      <pubDate>Tue, 06 Feb 2018 23:54:27 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/go/http-caddyfile/</guid>
+      <description>站点地址(Site Addresses) HTTP服务使用站点地址作为labels层，地址的形式为scheme://host:port/path,当你填写地址的时</description>
+    </item>
+    
+    <item>
+      <title>Golang Middleware Part 1</title>
+      <link>https://mojiajuzi.github.io/go/middleware_part_1/</link>
+      <pubDate>Tue, 06 Feb 2018 23:30:40 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/go/middleware_part_1/</guid>
+      <description>如何在Golang中实现中间件-Part 1 当使用net/http包实现服务的时候，一般使用的是如下的两中处理方式: http.HandleFunc http.Handle http.HandleFunc 分析 当使用这种方式的</description>
+    </item>
+    
+    <item>
+      <title>Caddyfile</title>
+      <link>https://mojiajuzi.github.io/go/caddyfile/</link>
+      <pubDate>Wed, 31 Jan 2018 23:07:05 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/go/caddyfile/</guid>
+      <description>该文章将会向你展示使用Caddyfile配置Caddy是一件十分简单的事情 Caddyfile是一个文本文件，用来配置Caddy如何运行 该文件</description>
+    </item>
+    
+  </channel>
+</rss>
