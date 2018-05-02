@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.39" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Laravel 队列使用-队列的同步与异步 &middot; To Be A Betty Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Betty Man" />
+  <link href="https://cdn.bootcss.com/highlight.js/9.1.0/styles/agate.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/php.min.js"></script>
+
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+  <body class=" ">
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://mojiajuzi.github.io/"><h1>To Be A Betty Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="https://mojiajuzi.github.io/">Home</a> </li>
+      <li><a href="/book"> Book </a></li><li><a href="/dart"> Dart/Flutter </a></li><li><a href="/go"> Golang </a></li><li><a href="/php"> PHP </a></li><li><a href="/sql"> SQL </a></li>
+    </ul>
+
+    <p>&copy;湘ICP备18001813</p>
+  </div>
+</div>
+
+    <div class="content container">
+    <div class="post">
+  <h1>Laravel 队列使用-队列的同步与异步</h1>
+  <span class="post-date">Wed, May 2, 2018</span>
+  
+
+<p>关于Laravle所支持的驱动类型以及对应驱动的配置,请查看<a href="https://laravel.com/docs/5.6/queues">Laravel Queue</a>, 在这里将会使用以数据库作为驱动来说明,Laravel队列的使用</p>
+
+<h4 id="准备工作">准备工作</h4>
+
+<ol>
+<li><p>设置驱动类型,修改<code>.env</code>文件中配置选项</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#a6e22e">QUEUE_DRIVER</span><span style="color:#f92672">=</span><span style="color:#e6db74">database</span></code></pre></div></li>
+
+<li><p>生成任务表并执行迁移</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ php artisan queue:table
+
+$ php artisan migrate</code></pre></div>
+<p>以上将会生成<code>jobs</code>和<code>failed_jobs</code>任务表,数据表字段我们随后再做解释</p></li>
+
+<li><p>创建两个不同类型任务</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ php artisan make:job HappybirdJob
+
+$ php artisan make:job --sync  HappybirdSyncJob</code></pre></div></li>
+
+<li><p>数据表结构</p>
+
+<pre><code>|id|queue|payload|attempts|reserved|reserved_at|available_at|created_at|
+</code></pre>
+
+<ul>
+<li>queue:队列名称</li>
+<li>payload:存储序列化之后的job模型</li>
+<li>attempts:重试次数</li>
+<li>reserved: 任务是否保留</li>
+<li>reserved_at: 保留时间</li>
+<li>available_at:执行时间</li>
+<li>created_at: 创建时间</li>
+</ul></li>
+</ol>
+
+<h4 id="结构">结构</h4>
+
+<ol>
+<li><p>HappybirdSyncJob</p>
+
+<p><code>App\Jobs\HappybirdSyncJob.php</code>文件的内容如下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">App\Jobs</span>;
+
+<span style="color:#66d9ef">use</span> <span style="color:#a6e22e">App\Jobs\Job</span>;
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HappybirdSyncJob</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Job</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct(){}
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">handle</span>(){}
+}
+</code></pre></div>
+<p>这个类包含了一个初始化函数,以及一个业务逻辑执行函数,并且继承了<code>Job</code>类,查看可以看到其只是使用了一个组合,</p>
+
+<p>通过查看使用的trait<code>Queueable</code>,其内容非常简单,也就是三个方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">// 设置连接的驱动
+public function onConnection(){}
+
+// 设置队列名称
+public function onQueue(){}
+
+// 设置连接的时间,单位为秒
+public function delay(){}</code></pre></div></li>
+
+<li><p>HappybirdJob
+在<code>App\Jobs\HappybirdJob.php</code>文件中,除了基本的初始化函数以及一个执行业务逻辑的函数之外,还使用了<code>ShouldQueue</code>这个空接口,并且引入了<code>InteractsWithQueue, SerializesModels</code>两个<code>traits</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">class HappybirdJob extends Job implements ShouldQueue
+{
+    use InteractsWithQueue, SerializesModels;
+   // .....
+}</code></pre></div>
+<p>在<code>InteractsWithQueue</code>的结构如下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">//获取执行的次数
+public function attempts(){}
+
+// 将任务从队列中删除
+public function delete(){}
+
+// 手动将任务置换成失败
+public function failed(){}
+    
+// 将任务重新放回队列,并设置其延迟执行时间,默认为立即执行
+public function release(int $delay){}
+
+// 设置任务
+public function setJob(JobContract $job){}</code></pre></div>
+<p><code>SerializesModels</code>主要是用来对<code>Job</code>模型进行操作,对外值暴露了两个方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">// 为实例的序列化做准备,并且返回实例的属性:`connection, queue,delay,job`以及用户自己在任务中设置的属性
+ public function __sleep(){}
+
+ // 在任务模型序列化之后,重新存储模型
+ public function __wakeup(){}</code></pre></div></li>
+</ol>
+
+<h4 id="差异">差异</h4>
+
+<p>对于<code>HappybirdSyncJob</code>而言,当创建一个任务以后会同步执行,并且任务并不会写入到数据库中,
+直到任务创建完成以后,才会返回结果,
+而对于<code>HappybirdJob</code>而言,将会立即返回结果,任务将会在后台执行</p>
+
+</div>
+
+
+    </div>
+
+    
+  </body>
+</html>
