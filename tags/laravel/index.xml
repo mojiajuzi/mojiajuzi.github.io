@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>Laravel 队列的使用-失败队列任务处理</title>
+      <title>Laravel 队列使用-队列失败任务处理</title>
       <link>https://mojiajuzi.github.io/php/laravel-job-fail/</link>
       <pubDate>Fri, 04 May 2018 21:57:38 +0800</pubDate>
       
