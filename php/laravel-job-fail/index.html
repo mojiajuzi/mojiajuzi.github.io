@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.39" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Laravel 队列的使用-失败队列任务处理 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+  <link href="https://cdn.bootcss.com/highlight.js/9.1.0/styles/agate.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/php.min.js"></script>
+
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+  <body class=" ">
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://mojiajuzi.github.io/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="https://mojiajuzi.github.io/">Home</a> </li>
+      <li><a href="/book"> Book </a></li><li><a href="/dart"> Dart/Flutter </a></li><li><a href="/go"> Golang </a></li><li><a href="/php"> PHP </a></li><li><a href="/sql"> SQL </a></li>
+    </ul>
+
+    <p>&copy;湘ICP备18001813</p>
+  </div>
+</div>
+
+    <div class="content container">
+    <div class="post">
+  <h1>Laravel 队列的使用-失败队列任务处理</h1>
+  <span class="post-date">Fri, May 4, 2018</span>
+  
+
+<p>在<code>config/queue.php</code>文件的<code>failed</code>字段里面,可以配置失败任务的连接以及数据的存储</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    &#39;failed&#39; =&gt; [
+        &#39;database&#39; =&gt; env(&#39;DB_CONNECTION&#39;, &#39;mysql&#39;),
+        &#39;table&#39; =&gt; &#39;failed_jobs&#39;,
+    ],</code></pre></div>
+<p>在使用<code>artisan</code>命令来执行队列任务的时候,如果没有指定任务失败的次数,那么任务将会一直尝试
+例如在<code>HappybirdJob</code>类的<code>handle</code>函数中添加如下代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    public function handle()
+    {
+        $data = [];
+        $data[3];
+    }</code></pre></div>
+<p>当执行的时候,将会一直不断的尝试执行而不会停止,如果指定了<code>--tries</code>次数,那么任务将会在执行指定的次数之后删除任务并将任务放置到失败的任务表中
+&gt; Note: 任务序列化存储的时候只会存储对应的上下文环境,但是不包括handle中的业务逻辑,所以测试的时候需要注意这一点</p>
+
+<h4 id="注册失败任务监听任务">注册失败任务监听任务</h4>
+
+<p>在<code>App\Providers\AppServiceProvider</code>这个文件的<code>AppServiceProvider</code>类中引入如下类:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">use Illuminate\Support\Facades\Queue;
+use Illuminate\Queue\Events\JobFailed;</code></pre></div>
+<p>然后在<code>boot</code>中做如下处理:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    Queue::failing(function(JobFailed $event){
+        // deal with the fail job
+    });</code></pre></div>
+<p>通过查看<code>JobFailed</code>可以看到,这个类没有任务方法,仅仅只是保存了任务的一下几个属性:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">public function __construct($connectionName, $job, $data, $failedId = null)
+{
+    $this-&gt;job = $job; //任务对象
+    $this-&gt;data = $data; // 传递给任务的数据
+    $this-&gt;failedId = $failedId; // 失败任务记录ID
+    $this-&gt;connectionName = $connectionName; //队列连接名称
+}</code></pre></div>
+<p>通过<code>job</code>对象,我们就可以获取到任务的所有详情,然后就可以针对任务进行处理</p>
+
+<h4 id="在任务类中处理">在任务类中处理</h4>
+
+<p>当任务失败的时候,可以在任务类中实现<code>failed</code>方法,这样就可以对失败的任务进行处理</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">public function failed(){
+    // deal with the fail job
+}</code></pre></div>
+</div>
+
+
+    </div>
+
+    
+  </body>
+</html>

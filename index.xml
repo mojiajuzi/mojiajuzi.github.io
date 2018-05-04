@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>To Be A Betty Man</title>
+    <title>To Be A Better Man</title>
     <link>https://mojiajuzi.github.io/</link>
-    <description>Recent content on To Be A Betty Man</description>
+    <description>Recent content on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 03 May 2018 23:07:15 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 04 May 2018 21:57:38 +0800</lastBuildDate>
     
 	<atom:link href="https://mojiajuzi.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Laravel 队列的使用-失败队列任务处理</title>
+      <link>https://mojiajuzi.github.io/php/laravel-job-fail/</link>
+      <pubDate>Fri, 04 May 2018 21:57:38 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/php/laravel-job-fail/</guid>
+      <description>在config/queue.php文件的failed字段里面,可以配置失败任务的连接以及数据的存储 &amp;#39;failed&amp;#39; =&amp;gt; [ &amp;#39;database&amp;#39; =&amp;gt; env(&amp;#39;DB_CONNECTION&amp;#39;, &amp;#39;mysql&amp;#39;), &amp;#39;table&amp;#39; =&amp;gt; &amp;#39;failed_jobs&amp;#39;, ], 在使用artisan</description>
+    </item>
     
     <item>
       <title>Laravel 队列使用-队列的触发与守护</title>
