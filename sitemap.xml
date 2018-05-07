@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://mojiajuzi.github.io/php/laravel-event-redis/</loc>
+    <lastmod>2018-05-07T22:23:05+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://mojiajuzi.github.io/php/laravel-job-fail/</loc>
     <lastmod>2018-05-04T21:57:38+08:00</lastmod>
   </url>
@@ -82,7 +87,7 @@
   
   <url>
     <loc>https://mojiajuzi.github.io/tags/laravel/</loc>
-    <lastmod>2018-05-04T21:57:38+08:00</lastmod>
+    <lastmod>2018-05-07T22:23:05+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -100,7 +105,7 @@
   
   <url>
     <loc>https://mojiajuzi.github.io/php/</loc>
-    <lastmod>2018-05-04T21:57:38+08:00</lastmod>
+    <lastmod>2018-05-07T22:23:05+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -124,7 +129,7 @@
   
   <url>
     <loc>https://mojiajuzi.github.io/</loc>
-    <lastmod>2018-05-04T21:57:38+08:00</lastmod>
+    <lastmod>2018-05-07T22:23:05+08:00</lastmod>
     <priority>0</priority>
   </url>
   
