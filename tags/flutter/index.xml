@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Flutter on To Be A Better Man</title>
+    <link>https://mojiajuzi.github.io/tags/flutter/</link>
+    <description>Recent content in Flutter on To Be A Better Man</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 10 May 2018 22:58:56 +0800</lastBuildDate>
+    
+	<atom:link href="https://mojiajuzi.github.io/tags/flutter/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Flutter 基础组件-容器</title>
+      <link>https://mojiajuzi.github.io/dart/flutter-widget-continer/</link>
+      <pubDate>Thu, 10 May 2018 22:58:56 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/dart/flutter-widget-continer/</guid>
+      <description>Container Widget 本文章主要翻译于Widgets: Container 特点 该组件常常用来包含子组件,同时其本身也包含一些样式属性, 如果没有包含子组件的时候,将会自动填充屏幕</description>
+    </item>
+    
+  </channel>
+</rss>
