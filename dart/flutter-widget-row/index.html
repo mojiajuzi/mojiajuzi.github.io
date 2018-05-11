@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.39" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Flutter 基础组件-行 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+  <link href="https://cdn.bootcss.com/highlight.js/9.1.0/styles/agate.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/php.min.js"></script>
+
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+  <body class=" ">
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://mojiajuzi.github.io/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="https://mojiajuzi.github.io/">Home</a> </li>
+      <li><a href="/book"> Book </a></li><li><a href="/dart"> Dart/Flutter </a></li><li><a href="/go"> Golang </a></li><li><a href="/php"> PHP </a></li><li><a href="/sql"> SQL </a></li>
+    </ul>
+
+    <p>&copy;湘ICP备18001813</p>
+  </div>
+</div>
+
+    <div class="content container">
+    <div class="post">
+  <h1>Flutter 基础组件-行</h1>
+  <span class="post-date">Fri, May 11, 2018</span>
+  
+
+<blockquote>
+<p>本文章主要翻译于<a href="https://flutterdoc.com/widgets-row-4ff6c5cfb9e0">Widgets: Row</a></p>
+</blockquote>
+
+<p>Row组件主要用来在水平方向显示其子组件， 当组件作为子组件被放置在Row中时，子组件不能滚动</p>
+
+<p>只显示在视图中可见的组件</p>
+
+<p>例如，可以像如下使用一个Row组件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#66d9ef">new</span> Row(
+    children: <span style="color:#f92672">&lt;</span>Widget<span style="color:#f92672">&gt;</span>[
+    <span style="color:#66d9ef">new</span> Text(<span style="color:#960050;background-color:#1e0010">‘</span>The first text widget<span style="color:#960050;background-color:#1e0010">’</span>, textAlign: TextAlign.center),
+    <span style="color:#66d9ef">new</span> Text(<span style="color:#960050;background-color:#1e0010">‘</span>The first text widget<span style="color:#960050;background-color:#1e0010">’</span>, textAlign: TextAlign.center),
+    <span style="color:#66d9ef">new</span> Text(<span style="color:#960050;background-color:#1e0010">‘</span>The first text widget<span style="color:#960050;background-color:#1e0010">’</span>, textAlign: TextAlign.center)
+ ],
+)</code></pre></div>
+<p>在Row中，子组件按照顺序逐个布局，再看一下下面这个例子</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#66d9ef">new</span> Row(
+    children: <span style="color:#f92672">&lt;</span>Widget<span style="color:#f92672">&gt;</span>[
+    <span style="color:#66d9ef">const</span> FlutterLogo(),
+    <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#34;This is a text widget to be   </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#e6db74">    displayed on the screen, as you can see it is a pretty long text widget, right?&#34;</span>),
+    <span style="color:#66d9ef">const</span> FlutterLogo()
+ ],
+)</code></pre></div>
+<p>这个组件的布局顺序如下：
+- 首先布局<code>FlutterLogo</code>，其占据其大小的屏幕空间</p>
+
+<ul>
+<li><p>然后是一个文本组件，这里存在的一个问题是，文本组件的字符长度太长了，以至于只能在水平方向上显示部分文字</p></li>
+
+<li><p>最后是第二个<code>FlutterLogo</code>,由于文本已经把剩下的空间全部占用了，因此该组件就无法显示了</p></li>
+</ul>
+
+<p>因此对于水平布局组件Row而言，其一个需要注意的问题就是屏幕空间大小的问题,</p>
+
+<p>为了解决这个问题，我们需要引入<code>Expanded</code>组件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#66d9ef">new</span> Row(
+  children: <span style="color:#f92672">&lt;</span>Widget<span style="color:#f92672">&gt;</span>[
+    <span style="color:#66d9ef">const</span> FlutterLogo(),
+    <span style="color:#66d9ef">const</span> Expanded(child: <span style="color:#66d9ef">const</span> Text(<span style="color:#e6db74">&#34;This is a text widget to be   </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#e6db74">    displayed on the screen, as you can see it is a pretty long text </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#e6db74">    widget, right?&#34;</span>)),
+    <span style="color:#66d9ef">const</span> FlutterLogo()
+  ],
+)</code></pre></div>
+<p>修改以后，其布局顺序也发生了改变，首先会计算两个<code>FlutterLogo</code>所占据的屏幕空间，</p>
+
+<p>然后再计算被<code>Expanded</code>包裹的文本组件</p>
+
+<h4 id="布局步骤">布局步骤</h4>
+
+<ol>
+<li><p>优先布局子组件为<code>null</code>以及不可伸缩组件(相对的可伸缩组件为:<code>Expanded</code>),
+对于这些组件在水平方向上没有做限制,在垂直方向上限制为屏幕的大小
+如果设定<code>crossAxisAlignment:CrossAxisAlignment.stretch</code>,在水平方向上将会匹配其宽度的最大值</p></li>
+
+<li><p>然后将可伸缩的组件布局于剩下的空间,在这一步的时候,子组件还没有被布局</p></li>
+
+<li><p>当布局可伸缩组件时,采用的规则与第一步的规则相似,只不过不会将已经布局的不可伸缩组件挤出屏幕之外,而是自身超出部分不可见</p></li>
+
+<li><p>Row的高度,子组件在水平方向的显示永远是安全的,也就是说水平方向永远可见</p></li>
+
+<li><p>Row的宽度取决于<code>mainAxisSize</code>属性</p></li>
+
+<li><p>子组件的位置确定,取决于<code>mainAxisAlignment</code>和<code>crossAxisAlignment</code>两个组件</p></li>
+</ol>
+
+<h4 id="属性">属性</h4>
+
+<ul>
+<li><p><strong>children</strong> 组件列表，被放置于Row中</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">children:<span style="color:#f92672">&lt;</span>widget<span style="color:#f92672">&gt;</span>[...]</code></pre></div></li>
+
+<li><p><strong>textBaseline</strong> 设置子组件对其的基准线</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">textBaseLine: TextBaseLine.alphabetic</code></pre></div></li>
+
+<li><p><strong>textDirection</strong> 设置子组件的排序方式</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">textDirection: TextDirection.ltr</code></pre></div></li>
+
+<li><p><strong>vertically</strong> 设置子组件垂直排列的方式以及开始和结束位置</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">verticalDirection: VerticalDirection.up</code></pre></div></li>
+
+<li><p><strong>mainAxisAligment</strong> 子组件如何沿主轴放置</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">mainAxisAligment: MaxAxisAligment.up</code></pre></div></li>
+
+<li><p><strong>maxAxisSize</strong> 子组件该如何分配主轴空间</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">mainAxisSize: MainAxisSize.max</code></pre></div></li>
+</ul>
+
+<h4 id="参考资料">参考资料</h4>
+
+<ul>
+<li><p><a href="https://flutterdoc.com/widgets-row-4ff6c5cfb9e0">Widgets: Row</a></p></li>
+
+<li><p><a href="https://docs.flutter.io/flutter/widgets/Row-class.html">Row Class</a></p></li>
+</ul>
+
+</div>
+
+
+    </div>
+
+    
+  </body>
+</html>

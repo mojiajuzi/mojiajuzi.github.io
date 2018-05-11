@@ -6,10 +6,19 @@
     <description>Recent content in Widget on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 May 2018 23:10:25 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 11 May 2018 23:17:47 +0800</lastBuildDate>
     
 	<atom:link href="https://mojiajuzi.github.io/tags/widget/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Flutter 基础组件-行</title>
+      <link>https://mojiajuzi.github.io/dart/flutter-widget-row/</link>
+      <pubDate>Fri, 11 May 2018 23:17:47 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/dart/flutter-widget-row/</guid>
+      <description>本文章主要翻译于Widgets: Row Row组件主要用来在水平方向显示其子组件， 当组件作为子组件被放置在Row中时，子组件不能滚动 只显示在视图中</description>
+    </item>
     
     <item>
       <title>Flutter 基础组件-列</title>
