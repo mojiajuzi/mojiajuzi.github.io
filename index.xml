@@ -6,10 +6,28 @@
     <description>Recent content on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 May 2018 23:17:47 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 14 May 2018 23:30:51 +0800</lastBuildDate>
     
 	<atom:link href="https://mojiajuzi.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Flutter 基础组件-图像</title>
+      <link>https://mojiajuzi.github.io/dart/flutter-widget-image/</link>
+      <pubDate>Mon, 14 May 2018 23:30:51 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/dart/flutter-widget-image/</guid>
+      <description>本文章主要翻译于Widgets: Image 对于图像组件而言,其提供了以下几种方式来获取图片 - Image,从一个图片提供者(ImageProvider</description>
+    </item>
+    
+    <item>
+      <title>MySQL中的约束</title>
+      <link>https://mojiajuzi.github.io/sql/mysql-constrait/</link>
+      <pubDate>Mon, 14 May 2018 23:28:26 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/sql/mysql-constrait/</guid>
+      <description>NOT NULL 约束 NOT NULL约束主要是对一个数据表的列做出约束，表示该列的值不能为NULL 首先我们创建一个articles的数据表 create table articles( id INT NOT NULL AUTO_INCREMENT, title VARCHAR(50)</description>
+    </item>
     
     <item>
       <title>Flutter 基础组件-行</title>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.39" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>MySQL中的约束 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+  <link href="https://cdn.bootcss.com/highlight.js/9.1.0/styles/agate.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/php.min.js"></script>
+
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+  <body class=" ">
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://mojiajuzi.github.io/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="https://mojiajuzi.github.io/">Home</a> </li>
+      <li><a href="/book"> Book </a></li><li><a href="/dart"> Dart/Flutter </a></li><li><a href="/go"> Golang </a></li><li><a href="/php"> PHP </a></li><li><a href="/sql"> SQL </a></li>
+    </ul>
+
+    <p>&copy;湘ICP备18001813</p>
+  </div>
+</div>
+
+    <div class="content container">
+    <div class="post">
+  <h1>MySQL中的约束</h1>
+  <span class="post-date">Mon, May 14, 2018</span>
+  
+
+<h4 id="not-null-约束">NOT NULL 约束</h4>
+
+<p>NOT NULL约束主要是对一个数据表的列做出约束，表示该列的值不能为<code>NULL</code></p>
+
+<p>首先我们创建一个<code>articles</code>的数据表</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> articles(
+    id INT <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> AUTO_INCREMENT,
+    title VARCHAR(<span style="color:#ae81ff">50</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+    abstract VARCHAR(<span style="color:#ae81ff">100</span>),
+    <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>(id)
+    )ENGINE<span style="color:#f92672">=</span>InnoDB <span style="color:#66d9ef">DEFAULT</span> CHARSET<span style="color:#f92672">=</span>utf8;</code></pre></div>
+<p>然后我们插入执行如下的语句进行插入数据</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mysql&gt; INSERT INTO articles<span style="color:#f92672">(</span>id, title, abstract<span style="color:#f92672">)</span> VALUES <span style="color:#f92672">(</span>NULL, <span style="color:#e6db74">&#34;hello MySQL&#34;</span>, <span style="color:#e6db74">&#34;mysql abstract&#34;</span><span style="color:#f92672">)</span>;
+Query OK, <span style="color:#ae81ff">1</span> row affected <span style="color:#f92672">(</span><span style="color:#ae81ff">0</span>.01 sec<span style="color:#f92672">)</span></code></pre></div>
+<p>然后再执行一条语句</p>
+
+<pre><code>mysql&gt; INSERT INTO articles(id, title, abstract) VALUES (NULL, &quot;hello PHP&quot;, NULL);
+Query OK, 1 row affected (0.00 sec)
+</code></pre>
+
+<p>接着我们再执行一条语句</p>
+
+<pre><code>mysql&gt; INSERT INTO articles(id, title, abstract) VALUES (NULL, NULL, &quot;nothing aabstract&quot;);
+ERROR 1048 (23000): Column 'title' cannot be null
+
+</code></pre>
+
+<ol>
+<li><p>对比第一条语句和第二条语句可知</p>
+
+<p>如果字段是<code>auto_increment</code>也就是自增长或者创建字段的时候没有显示声明<code>NOT NULL</code>的字段将可以插入<code>NULL</code>值</p></li>
+
+<li><p>对比第二和第三条语句可知</p>
+
+<p>如果显式的声明了<code>NOT NULL</code>,那么该字段值将不能插入<code>NULL</code>值</p></li>
+</ol>
+
+<h4 id="unique-唯一约束">Unique(唯一约束）</h4>
+
+<p>Unique约束，也就是我们常说的唯一约束
+首先我们对<code>articles</code>数据表插入一条与第一条一样的数据</p>
+
+<pre><code>mysql&gt; INSERT INTO articles(id, title, abstract) VALUES (NULL, &quot;hello MySQL&quot;, &quot;mysql abstract&quot;);                                                  Query OK, 1 row affected (0.00 sec)
+</code></pre>
+
+<p>竟然写入成功了，我们通过查询来验证</p>
+
+<pre><code>mysql&gt; select * from articles;
++----+-------------+----------------+
+| id | title       | abstract       |
++----+-------------+----------------+
+|  1 | hello MySQL | mysql abstract |
+|  2 | hello PHP   | NULL           |
+|  3 | hello MySQL | mysql abstract |
++----+-------------+----------------+
+3 rows in set (0.00 sec)
+</code></pre>
+
+<p>我们看到，<code>articles</code>数据表中包含两条一模一样的数据，这是非常不合理的，接下来我们将会对数据表进行调整</p>
+
+<ol>
+<li><p>首先删除后面加入的一条记录</p>
+
+<pre><code>mysql&gt; delete from articles where id = 3;
+Query OK, 1 row affected (0.00 sec)
+</code></pre></li>
+
+<li><p>修改<code>articles.title</code>字段，增加唯一性约束</p>
+
+<pre><code>mysql&gt; ALTER TABLE articles CHANGE title title  VARCHAR(50) NOT NULL UNIQUE;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+</code></pre></li>
+
+<li><p>然后再尝试插入一条于第一条一样的数据</p>
+
+<pre><code>mysql&gt; INSERT INTO articles(id, title, abstract) VALUES (NULL, &quot;hello MySQL&quot;, &quot;mysql abstract&quot;);
+ERROR 1062 (23000): Duplicate entry 'hello MySQL' for key 'title'
+mysql&gt; 
+</code></pre>
+
+<p>这样我们就可以保证在数据表<code>articles.title</code>的唯一性</p></li>
+</ol>
+
+<h4 id="primary-key-主键约束">Primary Key(主键约束)</h4>
+
+<p>主键约束于唯一约束的却别</p>
+
+<ol>
+<li><p>在一个数据表中，可以有多个唯一约束(unique)，但是有且只能有一个主键约束，</p></li>
+
+<li><p>唯一键可以为<code>NULL</code>但是主键不能</p></li>
+</ol>
+
+<h4 id="foreign-key-外键约束">Foreign Key(外键约束)</h4>
+
+<p>一个表中的外键指向另外一个表的主键</p>
+
+<ol>
+<li><p>首先创建一个新表<code>categories</code>，用来保存文章的类型</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> categories(
+id INT <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> AUTO_INCREMENT,
+name VARCHAR(<span style="color:#ae81ff">50</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">UNIQUE</span>,
+<span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>(id)
+)ENGINE<span style="color:#f92672">=</span>InnoDB <span style="color:#66d9ef">DEFAULT</span> CHARSET<span style="color:#f92672">=</span>utf8;</code></pre></div></li>
+
+<li><p>然后我们在<code>articles</code>中增加一个<code>category_id</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"> <span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> articles <span style="color:#66d9ef">ADD</span> <span style="color:#66d9ef">COLUMN</span> category_id INT <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>;</code></pre></div></li>
+
+<li><p>设置<code>category_id</code>作为<code>articles</code>的外键</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> articles <span style="color:#66d9ef">ADD</span> <span style="color:#66d9ef">CONSTRAINT</span> fk_category_id <span style="color:#66d9ef">FOREIGN</span> <span style="color:#66d9ef">KEY</span>(category_id) <span style="color:#66d9ef">REFERENCES</span> categories(id);</code></pre></div></li>
+
+<li><p>接着创建两条数据在<code>categories</code>中</p>
+
+<pre><code>mysql&gt; INSERT INTO categories VALUES(null, 'front-end'),(NULL, 'back_end');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+</code></pre></li>
+</ol>
+
+<p>假设我们先插入一条数据到<code>articles</code>中，指定一个不是<code>categories</code>主键id的值作为<code>articles.category_id</code>的值</p>
+
+<pre><code>mysql&gt; INSERT INTO articles VALUES(NULL, 'Js', NULL,3);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`myconstraint`.`articles`, CONSTRAINT `fk_category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`))
+</code></pre>
+
+<p>如果修改一下值，如下所示</p>
+
+<pre><code>mysql&gt; INSERT INTO articles VALUES(NULL, 'Js', NULL,1);
+Query OK, 1 row affected (0.00 sec)
+</code></pre>
+
+<p>由此可见，使用外键约束，可以保证数据的一致性</p>
+
+<h4 id="enum-枚举约束">ENUM (枚举约束)</h4>
+
+<p>通过枚举约束，可以限定表中列的值的范围</p>
+
+<ol>
+<li><p>修改<code>categories</code>表，增加一列<code>status</code>用来标示，该记录是否激活(<code>activ</code>, <code>inactive</code>)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> categories <span style="color:#66d9ef">ADD</span> <span style="color:#66d9ef">COLUMN</span> status ENUM(<span style="color:#e6db74">&#39;active&#39;</span>,<span style="color:#e6db74">&#39;inactive&#39;</span>) <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;active&#39;</span>;</code></pre></div></li>
+
+<li><p>然后尝试更新<code>status</code>的值为非范围内的值</p>
+
+<pre><code>mysql&gt; update categories set status='hello' where id = 1;
+ERROR 1265 (01000): Data truncated for column 'status' at row 1
+</code></pre></li>
+</ol>
+
+<h4 id="set">SET</h4>
+
+<p>一个SET列可以包含零个或多个值，但是每一个值都必须在<code>SET</code>指定的范围内</p>
+
+<ol>
+<li><p>首先创建一个学生表
+<code>
+mysql&gt; CREATE TABLE Students(Id INTEGER, Name VARCHAR(55), 
+-&gt; Certificates SET('A1', 'A2', 'B1', 'C1')); 
+</code>`</p></li>
+
+<li><p>然后执行以下操作</p>
+
+<pre><code>mysql&gt; INSERT INTO Students VALUES(1, 'Paul', 'A1,B1');
+mysql&gt; INSERT INTO Students VALUES(2, 'Jane', 'A1,B1,A2');
+mysql&gt; INSERT INTO Students VALUES(3, 'Mark', 'A1,A2,D1,D2');
+</code></pre></li>
+
+<li><p>其结果如下</p>
+
+<pre><code>mysql&gt; SELECT * FROM Students;
++------+------+--------------+
+| Id   | Name | Certificates |
++------+------+--------------+
+|    1 | Paul | A1,B1        |
+|    2 | Jane | A1,A2,B1     |
+|    3 | Mark | A1,A2        |
++------+------+--------------+
+</code></pre>
+
+<h4 id="参考资料">参考资料</h4>
+
+<ol>
+<li><p><a href="http://zetcode.com/databases/mysqltutorial/constraints/">Previous Next MySQL constraints</a></p></li>
+
+<li><p><a href="https://blog.csdn.net/wyswlp/article/details/8881103">mysql alter 语句用法,添加、修改、删除字段等</a></p></li>
+</ol></li>
+</ol>
+
+</div>
+
+
+    </div>
+
+    
+  </body>
+</html>
