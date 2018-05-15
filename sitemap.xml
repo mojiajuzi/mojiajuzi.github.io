@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://mojiajuzi.github.io/dart/flutter-widget-icon/</loc>
+    <lastmod>2018-05-15T10:48:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mojiajuzi.github.io/dart/flutter-widget-text/</loc>
+    <lastmod>2018-05-15T09:08:35+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://mojiajuzi.github.io/dart/flutter-widget-image/</loc>
     <lastmod>2018-05-14T23:30:51+08:00</lastmod>
   </url>
@@ -100,13 +110,13 @@
   
   <url>
     <loc>https://mojiajuzi.github.io/dart/</loc>
-    <lastmod>2018-05-14T23:30:51+08:00</lastmod>
+    <lastmod>2018-05-15T10:48:15+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://mojiajuzi.github.io/tags/flutter/</loc>
-    <lastmod>2018-05-14T23:30:51+08:00</lastmod>
+    <lastmod>2018-05-15T10:48:15+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -166,13 +176,13 @@
   
   <url>
     <loc>https://mojiajuzi.github.io/</loc>
-    <lastmod>2018-05-14T23:30:51+08:00</lastmod>
+    <lastmod>2018-05-15T10:48:15+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://mojiajuzi.github.io/tags/widget/</loc>
-    <lastmod>2018-05-14T23:30:51+08:00</lastmod>
+    <lastmod>2018-05-15T10:48:15+08:00</lastmod>
     <priority>0</priority>
   </url>
   

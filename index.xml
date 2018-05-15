@@ -6,10 +6,28 @@
     <description>Recent content on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 May 2018 23:30:51 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 15 May 2018 10:48:15 +0800</lastBuildDate>
     
 	<atom:link href="https://mojiajuzi.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Flutter 基础组件-图标</title>
+      <link>https://mojiajuzi.github.io/dart/flutter-widget-icon/</link>
+      <pubDate>Tue, 15 May 2018 10:48:15 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/dart/flutter-widget-icon/</guid>
+      <description>对于图标组件来说其不存在交互性,如果需要使用交互性,需要使用IconButton组件 Icon 组件 new Icon( Icons.star, // 图标数据 size: 40.0, //大小 color: Colors.red, //颜色 semanticLabel: &amp;#39;Hello&amp;#39;, // 图标</description>
+    </item>
+    
+    <item>
+      <title>Flutter 基础组件-文本</title>
+      <link>https://mojiajuzi.github.io/dart/flutter-widget-text/</link>
+      <pubDate>Tue, 15 May 2018 09:08:35 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/dart/flutter-widget-text/</guid>
+      <description>文本组件,常常用来显示显示文本文字,当文字长度超过父组件时是截断还是显示多行,这个取决于属性的限制 样式规则 对于文本的样式是可选的,如果忽略将</description>
+    </item>
     
     <item>
       <title>Flutter 基础组件-图像</title>
