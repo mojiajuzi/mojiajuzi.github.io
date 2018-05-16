@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title>Sqls &middot; To Be A Better Man</title>
+  <title>MySQL 中的事务编程 &middot; To Be A Better Man</title>
 
   
   <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/print.css" media="print">
@@ -23,7 +23,7 @@
   <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="https://mojiajuzi.github.io/sql/index.xml" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
   <link href="https://cdn.bootcss.com/highlight.js/9.1.0/styles/agate.min.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/php.min.js"></script>
@@ -51,15 +51,37 @@
 </div>
 
     <div class="content container">
-    <ul class="posts">
-<li>
-    <span><a href="https://mojiajuzi.github.io/sql/mysql-transaction/">MySQL 中的事务编程</a> <time class="pull-right post-list">Tue, May 15, 2018</time></span>
-  </li><li>
-    <span><a href="https://mojiajuzi.github.io/sql/mysql-constrait/">MySQL中的约束</a> <time class="pull-right post-list">Mon, May 14, 2018</time></span>
-  </li><li>
-    <span><a href="https://mojiajuzi.github.io/sql/sqldump/">mysqldump备份工具的简单使用</a> <time class="pull-right post-list">Wed, Jan 31, 2018</time></span>
-  </li>
+    <div class="post">
+  <h1>MySQL 中的事务编程</h1>
+  <span class="post-date">Tue, May 15, 2018</span>
+  
+
+<h3 id="事务的acid特性">事务的ACID特性</h3>
+
+<ul>
+<li><p>A(atomicity)原子性:</p>
+
+<blockquote>
+<p>原子性指的是整个数据库事务作为一个不可分割的最小工作单位，在这个最小单位的工程中的所有步骤都当做是一个整体</p>
+</blockquote></li>
+
+<li><p>C(consistency)一致性
+&gt; 事务将数据库从一种状态变更为另外一种一直的状态 ，事务开始前后数据库的完整性没有被破坏</p></li>
+
+<li><p>I(isolation)隔离性
+&gt; 隔离性也叫做：并发控制，可串行化，锁，也就是说事务在提交前对其他的事务不可见，通常隔离性的实现是使用锁机制</p></li>
+
+<li><p>D(durability)持久性
+&gt; 事务一旦提交，那么其改变将会是永久的</p></li>
 </ul>
+
+<h3 id="事务的分类">事务的分类</h3>
+
+<h4 id="扁平事务">扁平事务</h4>
+
+</div>
+
+
     </div>
 
     

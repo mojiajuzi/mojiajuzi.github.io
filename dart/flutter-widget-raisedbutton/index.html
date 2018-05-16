@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.39" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Flutter 基础组件-按钮 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+  <link href="https://cdn.bootcss.com/highlight.js/9.1.0/styles/agate.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/php.min.js"></script>
+
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+  <body class=" ">
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://mojiajuzi.github.io/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="https://mojiajuzi.github.io/">Home</a> </li>
+      <li><a href="/book"> Book </a></li><li><a href="/dart"> Dart/Flutter </a></li><li><a href="/go"> Golang </a></li><li><a href="/php"> PHP </a></li><li><a href="/sql"> SQL </a></li>
+    </ul>
+
+    <p>&copy;湘ICP备18001813</p>
+  </div>
+</div>
+
+    <div class="content container">
+    <div class="post">
+  <h1>Flutter 基础组件-按钮</h1>
+  <span class="post-date">Wed, May 16, 2018</span>
+  <p>在<code>RaisedButton</code>组件中,有两种方式认为其是不可用的</p>
+
+<ul>
+<li><p>通过设置<code>enabled</code>属性为<code>false</code>(在beta3.0中已经去掉该属性)</p></li>
+
+<li><p>通过设置<code>onPressed</code>属性值为<code>null</code>,来禁用组件</p></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;package:flutter/material.dart&#39;</span>;
+
+<span style="color:#66d9ef">void</span> main() <span style="color:#f92672">=&gt;</span> runApp(<span style="color:#66d9ef">new</span> HomePage());
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HomePage</span> <span style="color:#66d9ef">extends</span> StatefulWidget {
+  <span style="color:#960050;background-color:#1e0010">@</span>override
+  _HomePageState createState() <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> _HomePageState();
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">_HomePageState</span> <span style="color:#66d9ef">extends</span> State<span style="color:#f92672">&lt;</span>HomePage<span style="color:#f92672">&gt;</span> {
+  ShapeBorder myShape;
+
+  _changeShape() {
+    setState(() {
+      myShape <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> StadiumBorder();
+    });
+  }
+
+  <span style="color:#960050;background-color:#1e0010">@</span>override
+  Widget build(BuildContext context) {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> MaterialApp(
+        title: <span style="color:#e6db74">&#39;Flutter Demo&#39;</span>,
+        home: <span style="color:#66d9ef">new</span> Scaffold(
+            appBar: <span style="color:#66d9ef">new</span> AppBar(
+              title: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;Flutter Container&#39;</span>),
+            ),
+            body: <span style="color:#66d9ef">new</span> Center(
+              child: <span style="color:#66d9ef">new</span> RaisedButton(
+                onPressed: _changeShape,
+                color: Colors.blue, <span style="color:#75715e">// 颜色
+</span><span style="color:#75715e"></span>                colorBrightness: Brightness.dark, <span style="color:#75715e">//亮度
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// disabledColor: Colors.deepOrangeAccent, //不可用时的颜色
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// disabledTextColor: Colors.lightGreen, // 不可用时文字颜色
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// elevation: 1.0, // 按钮阴影大小
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// highlightColor: Colors.indigo, //点击时的高亮色
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// highlightElevation: 1.0,  // 点击时的阴影大小
+</span><span style="color:#75715e"></span>                shape: myShape, <span style="color:#75715e">//变更按钮形状
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// splashColor: Colors.red, //点击时波纹扩散色
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// textColor: Colors.yellow, // 文本色
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// textTheme: ButtonTextTheme.normal, //定制化按钮色彩
+</span><span style="color:#75715e"></span>                animationDuration: <span style="color:#66d9ef">new</span> Duration(
+                    hours: <span style="color:#ae81ff">0</span>, minutes: <span style="color:#ae81ff">0</span>, seconds: <span style="color:#ae81ff">3</span>), <span style="color:#75715e">//定义图标完成变换时所需要的时间
+</span><span style="color:#75715e"></span>                child: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;Hello Button&#39;</span>), <span style="color:#75715e">//子组件
+</span><span style="color:#75715e"></span>              ),
+            )));
+  }
+}</code></pre></div>
+</div>
+
+
+    </div>
+
+    
+  </body>
+</html>

@@ -6,10 +6,19 @@
     <description>Recent content in Sqls on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 May 2018 23:28:26 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 15 May 2018 22:44:53 +0800</lastBuildDate>
     
 	<atom:link href="https://mojiajuzi.github.io/sql/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MySQL 中的事务编程</title>
+      <link>https://mojiajuzi.github.io/sql/mysql-transaction/</link>
+      <pubDate>Tue, 15 May 2018 22:44:53 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/sql/mysql-transaction/</guid>
+      <description>事务的ACID特性 A(atomicity)原子性: 原子性指的是整个数据库事务作为一个不可分割的最小工作单位，在这个最小单位的工程中的所有步骤</description>
+    </item>
     
     <item>
       <title>MySQL中的约束</title>
