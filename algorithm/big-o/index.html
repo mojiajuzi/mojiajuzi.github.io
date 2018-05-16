@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.39" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>算法-大O表示法 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://mojiajuzi.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+  <link href="https://cdn.bootcss.com/highlight.js/9.1.0/styles/agate.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/php.min.js"></script>
+
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+  <body class=" ">
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://mojiajuzi.github.io/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="https://mojiajuzi.github.io/">Home</a> </li>
+      <li><a href="/algorithm"> Algorithm </a></li><li><a href="/book"> Book </a></li><li><a href="/dart"> Dart/Flutter </a></li><li><a href="/go"> Golang </a></li><li><a href="/php"> PHP </a></li><li><a href="/sql"> SQL </a></li>
+    </ul>
+
+    <p>&copy;湘ICP备18001813</p>
+  </div>
+</div>
+
+    <div class="content container">
+    <div class="post">
+  <h1>算法-大O表示法</h1>
+  <span class="post-date">Thu, May 17, 2018</span>
+  
+
+<h3 id="算法-大o表示法">算法-大O表示法</h3>
+
+<blockquote>
+<p>大O表示法通常用来表示一个算法的执行效率，
+  而算法的执行效率则以相对于输入N的操作步骤来衡量，而这些步骤则考虑的是最坏情况下执行情况</p>
+</blockquote>
+
+<h3 id="规则">规则</h3>
+
+<ul>
+<li><p>忽略常量，这是因为当输入N足够大时，常量的影响则可以忽略不计， 例如： <code>5n-&gt;O(n)</code></p></li>
+
+<li><p>耗时长的步骤将占主导地位,
+<code>O(1) &lt; O(logn) &lt; O(n) &lt; O(nlogn) &lt; O(n^2) &lt; O(2^n) &lt; O(n!)</code></p></li>
+</ul>
+
+<h3 id="实例">实例</h3>
+
+<ul>
+<li><p>常量时间(O(1))</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span>)
+
+x <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">+</span> (<span style="color:#ae81ff">10</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">12</span>)</code></pre></div>
+<p>以上代码的运行总时间为:<code>total time = O(1) + 0(1) = 2 * O(1) = O(1)</code>,
+这是因为我们忽略常量</p></li>
+
+<li><p>线性时间(O(n))</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range (<span style="color:#ae81ff">0</span>, n):
+    <span style="color:#66d9ef">print</span> x; <span style="color:#f92672">//</span> O(<span style="color:#ae81ff">1</span>)</code></pre></div>
+<p>尽管在循环中的时间复杂度为常量，但是由于执行了n次，所以其执行总时间为：<code>total time = N * O(1) = O(n)</code></p></li>
+
+<li><p>二次时间(O(n ^ 2))</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range (<span style="color:#ae81ff">0</span>, n):
+    <span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> range (<span style="color:#ae81ff">0</span>, n):
+        <span style="color:#66d9ef">print</span> x <span style="color:#f92672">*</span> y; <span style="color:#f92672">//</span> O(<span style="color:#ae81ff">1</span>)</code></pre></div>
+<p>由于是一个嵌套循环，每一个外层循环一次内层就需要循环n次，因此需要的总时间为：<code>total time = N * N = N(n^2)</code></p></li>
+
+<li><p>当一个算法中包含多个时间复杂度时，以最耗时的为主</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range (<span style="color:#ae81ff">0</span>, n):
+    <span style="color:#66d9ef">print</span> x; <span style="color:#f92672">//</span> O(<span style="color:#ae81ff">1</span>)
+
+<span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range (<span style="color:#ae81ff">0</span>, n):
+    <span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> range (<span style="color:#ae81ff">0</span>, n):
+        <span style="color:#66d9ef">print</span> x <span style="color:#f92672">*</span> y; <span style="color:#f92672">//</span> O(<span style="color:#ae81ff">1</span>)</code></pre></div>
+<p>以上代码的耗时时间为： <code>total time = O(n) + O(n^2) = O(n^2)</code></p>
+
+<p>同样的</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> x <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+    <span style="color:#f92672">//</span> O(<span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+    <span style="color:#f92672">//</span> O(log n)
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#f92672">//</span> O(n<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>)</code></pre></div>
+<p>则以上算法的时间复杂度为<code>O(n^2)</code>，这是因为时间的复杂度以耗时最长的来计算</p></li>
+</ul>
+
+<h3 id="常用算法与大o表示法">常用算法与大O表示法</h3>
+
+<table>
+<thead>
+<tr>
+<th align="left">大O表示法</th>
+<th align="left">别称</th>
+<th align="left">经典算法</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">O(log n)</td>
+<td align="left">对数时间</td>
+<td align="left">二分查找</td>
+</tr>
+
+<tr>
+<td align="left">O(n)</td>
+<td align="left">线性时间</td>
+<td align="left">简单查找</td>
+</tr>
+
+<tr>
+<td align="left">O(n * log n)</td>
+<td align="left">-</td>
+<td align="left">快速排序</td>
+</tr>
+
+<tr>
+<td align="left">O(n ^ 2)</td>
+<td align="left">二次时间</td>
+<td align="left">选择排序</td>
+</tr>
+
+<tr>
+<td align="left">O(n!)</td>
+<td align="left">-</td>
+<td align="left">商旅问题</td>
+</tr>
+</tbody>
+</table>
+
+<p>下面这张图表示了各种表示法随N变化的增量</p>
+
+<p><img src="/static/images/bigo.png" alt="big-o" /></p>
+
+</div>
+
+
+    </div>
+
+    
+  </body>
+</html>

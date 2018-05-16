@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Algorithms on To Be A Better Man</title>
+    <link>https://mojiajuzi.github.io/algorithm/</link>
+    <description>Recent content in Algorithms on To Be A Better Man</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 17 May 2018 00:21:51 +0800</lastBuildDate>
+    
+	<atom:link href="https://mojiajuzi.github.io/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>算法-大O表示法</title>
+      <link>https://mojiajuzi.github.io/algorithm/big-o/</link>
+      <pubDate>Thu, 17 May 2018 00:21:51 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/algorithm/big-o/</guid>
+      <description>算法-大O表示法 大O表示法通常用来表示一个算法的执行效率， 而算法的执行效率则以相对于输入N的操作步骤来衡量，而这些步骤则考虑的是最坏情况下执</description>
+    </item>
+    
+  </channel>
+</rss>
