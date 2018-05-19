@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Middleware on To Be A Better Man</title>
-    <link>https://mojiajuzi.github.io/tags/middleware/</link>
+    <link>https://gru.tsecloud.club/tags/middleware/</link>
     <description>Recent content in Middleware on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 06 Feb 2018 23:30:40 +0800</lastBuildDate>
     
-	<atom:link href="https://mojiajuzi.github.io/tags/middleware/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://gru.tsecloud.club/tags/middleware/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Golang Middleware Part 1</title>
-      <link>https://mojiajuzi.github.io/go/middleware_part_1/</link>
+      <link>https://gru.tsecloud.club/go/middleware_part_1/</link>
       <pubDate>Tue, 06 Feb 2018 23:30:40 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/go/middleware_part_1/</guid>
+      <guid>https://gru.tsecloud.club/go/middleware_part_1/</guid>
       <description>如何在Golang中实现中间件-Part 1 当使用net/http包实现服务的时候，一般使用的是如下的两中处理方式: http.HandleFunc http.Handle http.HandleFunc 分析 当使用这种方式的</description>
     </item>
     

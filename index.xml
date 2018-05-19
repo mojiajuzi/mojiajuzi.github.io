@@ -2,210 +2,210 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>To Be A Better Man</title>
-    <link>https://mojiajuzi.github.io/</link>
+    <link>https://gru.tsecloud.club/</link>
     <description>Recent content on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 17 May 2018 00:21:51 +0800</lastBuildDate>
     
-	<atom:link href="https://mojiajuzi.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://gru.tsecloud.club/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>算法-大O表示法</title>
-      <link>https://mojiajuzi.github.io/algorithm/big-o/</link>
+      <link>https://gru.tsecloud.club/algorithm/big-o/</link>
       <pubDate>Thu, 17 May 2018 00:21:51 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/algorithm/big-o/</guid>
+      <guid>https://gru.tsecloud.club/algorithm/big-o/</guid>
       <description>算法-大O表示法 大O表示法通常用来表示一个算法的执行效率， 而算法的执行效率则以相对于输入N的操作步骤来衡量，而这些步骤则考虑的是最坏情况下执</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-按钮</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-widget-raisedbutton/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-raisedbutton/</link>
       <pubDate>Wed, 16 May 2018 09:37:39 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-widget-raisedbutton/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-raisedbutton/</guid>
       <description>在RaisedButton组件中,有两种方式认为其是不可用的 通过设置enabled属性为false(在beta3.0中已经去掉该属性) 通过设</description>
     </item>
     
     <item>
       <title>MySQL 中的事务编程</title>
-      <link>https://mojiajuzi.github.io/sql/mysql-transaction/</link>
+      <link>https://gru.tsecloud.club/sql/mysql-transaction/</link>
       <pubDate>Tue, 15 May 2018 22:44:53 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/sql/mysql-transaction/</guid>
+      <guid>https://gru.tsecloud.club/sql/mysql-transaction/</guid>
       <description>事务的ACID特性 A(atomicity)原子性: 原子性指的是整个数据库事务作为一个不可分割的最小工作单位，在这个最小单位的工程中的所有步骤</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-图标</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-widget-icon/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-icon/</link>
       <pubDate>Tue, 15 May 2018 10:48:15 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-widget-icon/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-icon/</guid>
       <description>对于图标组件来说其不存在交互性,如果需要使用交互性,需要使用IconButton组件 Icon 组件 new Icon( Icons.star, // 图标数据 size: 40.0, //大小 color: Colors.red, //颜色 semanticLabel: &amp;#39;Hello&amp;#39;, // 图标</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-文本</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-widget-text/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-text/</link>
       <pubDate>Tue, 15 May 2018 09:08:35 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-widget-text/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-text/</guid>
       <description>文本组件,常常用来显示显示文本文字,当文字长度超过父组件时是截断还是显示多行,这个取决于属性的限制 样式规则 对于文本的样式是可选的,如果忽略将</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-图像</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-widget-image/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-image/</link>
       <pubDate>Mon, 14 May 2018 23:30:51 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-widget-image/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-image/</guid>
       <description>本文章主要翻译于Widgets: Image 对于图像组件而言,其提供了以下几种方式来获取图片 - Image,从一个图片提供者(ImageProvider</description>
     </item>
     
     <item>
       <title>MySQL中的约束</title>
-      <link>https://mojiajuzi.github.io/sql/mysql-constrait/</link>
+      <link>https://gru.tsecloud.club/sql/mysql-constrait/</link>
       <pubDate>Mon, 14 May 2018 23:28:26 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/sql/mysql-constrait/</guid>
+      <guid>https://gru.tsecloud.club/sql/mysql-constrait/</guid>
       <description>NOT NULL 约束 NOT NULL约束主要是对一个数据表的列做出约束，表示该列的值不能为NULL 首先我们创建一个articles的数据表 create table articles( id INT NOT NULL AUTO_INCREMENT, title VARCHAR(50)</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-行</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-widget-row/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-row/</link>
       <pubDate>Fri, 11 May 2018 23:17:47 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-widget-row/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-row/</guid>
       <description>本文章主要翻译于Widgets: Row Row组件主要用来在水平方向显示其子组件， 当组件作为子组件被放置在Row中时，子组件不能滚动 只显示在视图中</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-列</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-wdiget-column/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-wdiget-column/</link>
       <pubDate>Fri, 11 May 2018 23:10:25 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-wdiget-column/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-wdiget-column/</guid>
       <description>本文章主要翻译于Widgets: Column Column组件常用来显示垂直方向的子组件列表,与Row组件一样,该组件只会显示其可见范围内的子组件,并不</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-容器</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-widget-continer/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-continer/</link>
       <pubDate>Thu, 10 May 2018 22:58:56 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-widget-continer/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-continer/</guid>
       <description>Container Widget 本文章主要翻译于Widgets: Container 特点 该组件常常用来包含子组件,同时其本身也包含一些样式属性, 如果没有包含子组件的时候,将会自动填充屏幕</description>
     </item>
     
     <item>
       <title>Laravel 队列使用-Redis作为驱动</title>
-      <link>https://mojiajuzi.github.io/php/laravel-event-redis/</link>
+      <link>https://gru.tsecloud.club/php/laravel-event-redis/</link>
       <pubDate>Mon, 07 May 2018 22:23:05 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/php/laravel-event-redis/</guid>
+      <guid>https://gru.tsecloud.club/php/laravel-event-redis/</guid>
       <description>准备工作 安装相对应的Redis包 $ composer require composer require predis/predis 修改配置文件.env,设置驱动 QUEUE_DRIVER=redis REDIS_HOST=redis REDIS_PASSWORD=null REDIS_PORT=6379 修改config/queue.php文件中redis队列连</description>
     </item>
     
     <item>
       <title>Laravel 队列使用-队列失败任务处理</title>
-      <link>https://mojiajuzi.github.io/php/laravel-job-fail/</link>
+      <link>https://gru.tsecloud.club/php/laravel-job-fail/</link>
       <pubDate>Fri, 04 May 2018 21:57:38 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/php/laravel-job-fail/</guid>
+      <guid>https://gru.tsecloud.club/php/laravel-job-fail/</guid>
       <description>在config/queue.php文件的failed字段里面,可以配置失败任务的连接以及数据的存储 &amp;#39;failed&amp;#39; =&amp;gt; [ &amp;#39;database&amp;#39; =&amp;gt; env(&amp;#39;DB_CONNECTION&amp;#39;, &amp;#39;mysql&amp;#39;), &amp;#39;table&amp;#39; =&amp;gt; &amp;#39;failed_jobs&amp;#39;, ], 在使用artisan</description>
     </item>
     
     <item>
       <title>Laravel 队列使用-队列的触发与守护</title>
-      <link>https://mojiajuzi.github.io/php/laravel-job-triger/</link>
+      <link>https://gru.tsecloud.club/php/laravel-job-triger/</link>
       <pubDate>Thu, 03 May 2018 23:07:15 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/php/laravel-job-triger/</guid>
+      <guid>https://gru.tsecloud.club/php/laravel-job-triger/</guid>
       <description>触发 任务的触发,主要的实现是在Illuminate\Foundation\Bus\DispatchesJobs这个trait中实现的,其只包</description>
     </item>
     
     <item>
       <title>Laravel 队列使用-队列的同步与异步</title>
-      <link>https://mojiajuzi.github.io/php/laravel-job-part1/</link>
+      <link>https://gru.tsecloud.club/php/laravel-job-part1/</link>
       <pubDate>Wed, 02 May 2018 22:42:46 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/php/laravel-job-part1/</guid>
+      <guid>https://gru.tsecloud.club/php/laravel-job-part1/</guid>
       <description>关于Laravle所支持的驱动类型以及对应驱动的配置,请查看Laravel Queue, 在这里将会使用以数据库作为驱动来说明,Laravel队列的使用 准</description>
     </item>
     
     <item>
       <title>Laravel 事件监听简单使用</title>
-      <link>https://mojiajuzi.github.io/php/laravel-event/</link>
+      <link>https://gru.tsecloud.club/php/laravel-event/</link>
       <pubDate>Fri, 27 Apr 2018 23:35:21 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/php/laravel-event/</guid>
+      <guid>https://gru.tsecloud.club/php/laravel-event/</guid>
       <description>定义事件与事件监听器, 在App\Providers\EventServiceProvider.php类的$listen中定义事件与事件监听者</description>
     </item>
     
     <item>
       <title>Laravel中安装和使用Redis作为会话和缓存的载体</title>
-      <link>https://mojiajuzi.github.io/php/redis/</link>
+      <link>https://gru.tsecloud.club/php/redis/</link>
       <pubDate>Thu, 08 Mar 2018 23:27:06 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/php/redis/</guid>
+      <guid>https://gru.tsecloud.club/php/redis/</guid>
       <description>本人使用的是Laradock 作为开发环境 predis的安装 安装依赖包predis/predis composer require predis/predis 重新生成自动加载文件 composer dumpautoload 修改配置 修改.e</description>
     </item>
     
     <item>
       <title>Laravel自带的登录注册组件简单说明</title>
-      <link>https://mojiajuzi.github.io/php/register/</link>
+      <link>https://gru.tsecloud.club/php/register/</link>
       <pubDate>Wed, 07 Mar 2018 21:48:05 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/php/register/</guid>
+      <guid>https://gru.tsecloud.club/php/register/</guid>
       <description>在这里我们需要理解Laravle中两个名词 - Guards:定义了对于每一个请求，如何对用户进行认证 - Providers: 定义了从哪里获取用户 使用脚手架生成登录</description>
     </item>
     
     <item>
       <title>Goroutine</title>
-      <link>https://mojiajuzi.github.io/go/goruotine/</link>
+      <link>https://gru.tsecloud.club/go/goruotine/</link>
       <pubDate>Tue, 13 Feb 2018 21:52:57 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/go/goruotine/</guid>
+      <guid>https://gru.tsecloud.club/go/goruotine/</guid>
       <description>Goroutines Goroutine是由Go runtime管理的轻量级线程，开启一个新的Goroutine只需要使用go关键字，由于Goroutine运行在</description>
     </item>
     
     <item>
       <title>The HTTP Caddyfile</title>
-      <link>https://mojiajuzi.github.io/go/http-caddyfile/</link>
+      <link>https://gru.tsecloud.club/go/http-caddyfile/</link>
       <pubDate>Tue, 06 Feb 2018 23:54:27 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/go/http-caddyfile/</guid>
+      <guid>https://gru.tsecloud.club/go/http-caddyfile/</guid>
       <description>站点地址(Site Addresses) HTTP服务使用站点地址作为labels层，地址的形式为scheme://host:port/path,当你填写地址的时</description>
     </item>
     
     <item>
       <title>Golang Middleware Part 1</title>
-      <link>https://mojiajuzi.github.io/go/middleware_part_1/</link>
+      <link>https://gru.tsecloud.club/go/middleware_part_1/</link>
       <pubDate>Tue, 06 Feb 2018 23:30:40 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/go/middleware_part_1/</guid>
+      <guid>https://gru.tsecloud.club/go/middleware_part_1/</guid>
       <description>如何在Golang中实现中间件-Part 1 当使用net/http包实现服务的时候，一般使用的是如下的两中处理方式: http.HandleFunc http.Handle http.HandleFunc 分析 当使用这种方式的</description>
     </item>
     
     <item>
       <title>Caddyfile</title>
-      <link>https://mojiajuzi.github.io/go/caddyfile/</link>
+      <link>https://gru.tsecloud.club/go/caddyfile/</link>
       <pubDate>Wed, 31 Jan 2018 23:07:05 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/go/caddyfile/</guid>
+      <guid>https://gru.tsecloud.club/go/caddyfile/</guid>
       <description>该文章将会向你展示使用Caddyfile配置Caddy是一件十分简单的事情 Caddyfile是一个文本文件，用来配置Caddy如何运行 该文件</description>
     </item>
     
     <item>
       <title>mysqldump备份工具的简单使用</title>
-      <link>https://mojiajuzi.github.io/sql/sqldump/</link>
+      <link>https://gru.tsecloud.club/sql/sqldump/</link>
       <pubDate>Wed, 31 Jan 2018 20:40:58 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/sql/sqldump/</guid>
+      <guid>https://gru.tsecloud.club/sql/sqldump/</guid>
       <description>导出某个数据库中的所有数据表,不包含表中的数据 mysqldump -hlocalhost -utest -p -P3306 -d database_name &amp;gt; /path 导出数据库中某张表的结构,不包含表中的数据 mysqldump -hlocalhost -utest -p -P3306 -d database_name table_name &amp;gt; /path 导出数据库中的</description>
     </item>
     

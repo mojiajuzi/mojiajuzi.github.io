@@ -2,39 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sqls on To Be A Better Man</title>
-    <link>https://mojiajuzi.github.io/sql/</link>
+    <link>https://gru.tsecloud.club/sql/</link>
     <description>Recent content in Sqls on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 15 May 2018 22:44:53 +0800</lastBuildDate>
     
-	<atom:link href="https://mojiajuzi.github.io/sql/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://gru.tsecloud.club/sql/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>MySQL 中的事务编程</title>
-      <link>https://mojiajuzi.github.io/sql/mysql-transaction/</link>
+      <link>https://gru.tsecloud.club/sql/mysql-transaction/</link>
       <pubDate>Tue, 15 May 2018 22:44:53 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/sql/mysql-transaction/</guid>
+      <guid>https://gru.tsecloud.club/sql/mysql-transaction/</guid>
       <description>事务的ACID特性 A(atomicity)原子性: 原子性指的是整个数据库事务作为一个不可分割的最小工作单位，在这个最小单位的工程中的所有步骤</description>
     </item>
     
     <item>
       <title>MySQL中的约束</title>
-      <link>https://mojiajuzi.github.io/sql/mysql-constrait/</link>
+      <link>https://gru.tsecloud.club/sql/mysql-constrait/</link>
       <pubDate>Mon, 14 May 2018 23:28:26 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/sql/mysql-constrait/</guid>
+      <guid>https://gru.tsecloud.club/sql/mysql-constrait/</guid>
       <description>NOT NULL 约束 NOT NULL约束主要是对一个数据表的列做出约束，表示该列的值不能为NULL 首先我们创建一个articles的数据表 create table articles( id INT NOT NULL AUTO_INCREMENT, title VARCHAR(50)</description>
     </item>
     
     <item>
       <title>mysqldump备份工具的简单使用</title>
-      <link>https://mojiajuzi.github.io/sql/sqldump/</link>
+      <link>https://gru.tsecloud.club/sql/sqldump/</link>
       <pubDate>Wed, 31 Jan 2018 20:40:58 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/sql/sqldump/</guid>
+      <guid>https://gru.tsecloud.club/sql/sqldump/</guid>
       <description>导出某个数据库中的所有数据表,不包含表中的数据 mysqldump -hlocalhost -utest -p -P3306 -d database_name &amp;gt; /path 导出数据库中某张表的结构,不包含表中的数据 mysqldump -hlocalhost -utest -p -P3306 -d database_name table_name &amp;gt; /path 导出数据库中的</description>
     </item>
     

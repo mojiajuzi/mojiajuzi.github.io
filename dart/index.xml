@@ -2,75 +2,75 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Darts on To Be A Better Man</title>
-    <link>https://mojiajuzi.github.io/dart/</link>
+    <link>https://gru.tsecloud.club/dart/</link>
     <description>Recent content in Darts on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 16 May 2018 09:37:39 +0800</lastBuildDate>
     
-	<atom:link href="https://mojiajuzi.github.io/dart/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://gru.tsecloud.club/dart/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Flutter 基础组件-按钮</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-widget-raisedbutton/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-raisedbutton/</link>
       <pubDate>Wed, 16 May 2018 09:37:39 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-widget-raisedbutton/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-raisedbutton/</guid>
       <description>在RaisedButton组件中,有两种方式认为其是不可用的 通过设置enabled属性为false(在beta3.0中已经去掉该属性) 通过设</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-图标</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-widget-icon/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-icon/</link>
       <pubDate>Tue, 15 May 2018 10:48:15 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-widget-icon/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-icon/</guid>
       <description>对于图标组件来说其不存在交互性,如果需要使用交互性,需要使用IconButton组件 Icon 组件 new Icon( Icons.star, // 图标数据 size: 40.0, //大小 color: Colors.red, //颜色 semanticLabel: &amp;#39;Hello&amp;#39;, // 图标</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-文本</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-widget-text/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-text/</link>
       <pubDate>Tue, 15 May 2018 09:08:35 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-widget-text/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-text/</guid>
       <description>文本组件,常常用来显示显示文本文字,当文字长度超过父组件时是截断还是显示多行,这个取决于属性的限制 样式规则 对于文本的样式是可选的,如果忽略将</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-图像</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-widget-image/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-image/</link>
       <pubDate>Mon, 14 May 2018 23:30:51 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-widget-image/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-image/</guid>
       <description>本文章主要翻译于Widgets: Image 对于图像组件而言,其提供了以下几种方式来获取图片 - Image,从一个图片提供者(ImageProvider</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-行</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-widget-row/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-row/</link>
       <pubDate>Fri, 11 May 2018 23:17:47 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-widget-row/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-row/</guid>
       <description>本文章主要翻译于Widgets: Row Row组件主要用来在水平方向显示其子组件， 当组件作为子组件被放置在Row中时，子组件不能滚动 只显示在视图中</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-列</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-wdiget-column/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-wdiget-column/</link>
       <pubDate>Fri, 11 May 2018 23:10:25 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-wdiget-column/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-wdiget-column/</guid>
       <description>本文章主要翻译于Widgets: Column Column组件常用来显示垂直方向的子组件列表,与Row组件一样,该组件只会显示其可见范围内的子组件,并不</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-容器</title>
-      <link>https://mojiajuzi.github.io/dart/flutter-widget-continer/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-continer/</link>
       <pubDate>Thu, 10 May 2018 22:58:56 +0800</pubDate>
       
-      <guid>https://mojiajuzi.github.io/dart/flutter-widget-continer/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-continer/</guid>
       <description>Container Widget 本文章主要翻译于Widgets: Container 特点 该组件常常用来包含子组件,同时其本身也包含一些样式属性, 如果没有包含子组件的时候,将会自动填充屏幕</description>
     </item>
     
