@@ -24,9 +24,14 @@
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
-  <link href="https://cdn.bootcss.com/highlight.js/9.1.0/styles/agate.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/python.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/sql.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/bash.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/dart.min.js"></script>
 
   <script>hljs.initHighlightingOnLoad();</script>
 </head>
@@ -58,15 +63,11 @@
 
 <ol>
 <li><p>定义事件与事件监听器, 在<code>App\Providers\EventServiceProvider.php</code>类的$listen中定义事件与事件监听者的关系</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#75715e">&lt;?php</span>
-        <span style="color:#66d9ef">protected</span> $listen <span style="color:#f92672">=</span> [
-            <span style="color:#e6db74">&#39;App\Events\HappybirdEvent&#39;</span> <span style="color:#f92672">=&gt;</span> [
-                <span style="color:#e6db74">&#39;App\Listeners\HappybirdListener&#39;</span>,
-            ],
-        ];
-    
-</code></pre></div></li>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    protected $listen = [
+        &#39;App\Events\HappybirdEvent&#39; =&gt; [
+            &#39;App\Listeners\HappybirdListener&#39;,
+        ],
+    ];</code></pre></div></li>
 
 <li><p>创建事件和事件监听器, 在终端中执行artisan命令来创建</p>
 
