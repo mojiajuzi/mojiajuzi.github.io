@@ -6,10 +6,19 @@
     <description>Recent content in Algorithms on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 May 2018 00:21:51 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 29 May 2018 23:38:46 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/algorithm/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>算法-二分查找法</title>
+      <link>https://gru.tsecloud.club/algorithm/binary_search/</link>
+      <pubDate>Tue, 29 May 2018 23:38:46 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/algorithm/binary_search/</guid>
+      <description>前提，被查找的列表必须是有序的,对于二分查找而言，其时间的复杂度为对数时间(O(log n)) function binary_search(array $list, int $item):int { $low = 0; $high = count($list) - 1; // 判断数组是否为空 if($high &amp;lt; 0)</description>
+    </item>
     
     <item>
       <title>算法-大O表示法</title>
