@@ -17,7 +17,7 @@
       <pubDate>Tue, 29 May 2018 23:38:46 +0800</pubDate>
       
       <guid>https://gru.tsecloud.club/algorithm/binary_search/</guid>
-      <description>前提，被查找的列表必须是有序的,对于二分查找而言，其时间的复杂度为对数时间(O(log n)) function binary_search(array $list, int $item):int { $low = 0; $high = count($list) - 1; // 判断数组是否为空 if($high &amp;lt; 0)</description>
+      <description>前提，被查找的列表必须是有序的,对于二分查找而言，其时间的复杂度为对数时间(O(log n)) &amp;lt;?php function binary_search(array $list, int $item):int { $low = 0; $high = count($list) - 1; // 判断数组是否为空 if($high &amp;lt;</description>
     </item>
     
     <item>
