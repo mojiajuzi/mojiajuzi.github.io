@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.39" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Flutter 基础组件-表单 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+  <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/python.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/sql.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/bash.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/dart.min.js"></script>
+
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+  <body class=" ">
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+      <li><a href="/algorithm"> Algorithm </a></li><li><a href="/book"> Book </a></li><li><a href="/dart"> Dart/Flutter </a></li><li><a href="/go"> Golang </a></li><li><a href="/php"> PHP </a></li><li><a href="/sql"> SQL </a></li>
+    </ul>
+
+    <p>&copy;湘ICP备18001813</p>
+  </div>
+</div>
+
+    <div class="content container">
+    <div class="post">
+  <h1>Flutter 基础组件-表单</h1>
+  <span class="post-date">Tue, May 29, 2018</span>
+  
+
+<h4 id="textfield-formfield">TextField, FormField</h4>
+
+<p>对于<code>TextField</code>和<code>FormField</code>而言,只要用来接收用户的输入,以及用户输入的事件处理,
+因此,可以将其分解为三个部分来说明</p>
+
+<h5 id="样式属性">样式属性</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">child: <span style="color:#66d9ef">new</span> TextField(
+autocorrect: <span style="color:#66d9ef">false</span>, <span style="color:#75715e">// 是否自动校正
+</span><span style="color:#75715e"></span>autofocus: <span style="color:#66d9ef">false</span>, <span style="color:#75715e">//自动获取焦点
+</span><span style="color:#75715e"></span>enabled: <span style="color:#66d9ef">true</span>, <span style="color:#75715e">// 是否启用
+</span><span style="color:#75715e"></span>inputFormatters: [], <span style="color:#75715e">//对输入的文字进行限制和校验
+</span><span style="color:#75715e"></span>keyboardType: TextInputType.text, <span style="color:#75715e">//获取焦点时,启用的键盘类型
+</span><span style="color:#75715e"></span>maxLines: <span style="color:#ae81ff">2</span>, <span style="color:#75715e">// 输入框最大的显示行数
+</span><span style="color:#75715e"></span>maxLength: <span style="color:#ae81ff">3</span>, <span style="color:#75715e">//允许输入的字符长度/
+</span><span style="color:#75715e"></span>maxLengthEnforced: <span style="color:#66d9ef">false</span>, <span style="color:#75715e">//是否允许输入的字符长度超过限定的字符长度
+</span><span style="color:#75715e"></span>obscureText: <span style="color:#66d9ef">true</span>, <span style="color:#75715e">// 是否隐藏输入的内容
+</span><span style="color:#75715e"></span>onChanged: (newValue) {
+    <span style="color:#75715e">// print(newValue); // 当输入内容变更时,如何处理
+</span><span style="color:#75715e"></span>},
+onSubmitted: (value) {
+    <span style="color:#75715e">// print(&#34;whar&#34;); // 当用户确定已经完成编辑时触发
+</span><span style="color:#75715e"></span>},
+style: <span style="color:#66d9ef">new</span> TextStyle(
+    color: <span style="color:#66d9ef">new</span> Color(Colors.amberAccent.green)), <span style="color:#75715e">// 设置字体样式
+</span><span style="color:#75715e"></span>textAlign: TextAlign.center, <span style="color:#75715e">//输入的内容在水平方向如何显示
+</span><span style="color:#75715e"></span>decoration: <span style="color:#66d9ef">new</span> InputDecoration(
+    labelText: <span style="color:#e6db74">&#34;城市&#34;</span>,
+    icon: <span style="color:#66d9ef">new</span> Icon(Icons.location_city),
+    border: <span style="color:#66d9ef">new</span> OutlineInputBorder(), <span style="color:#75715e">// 边框样式
+</span><span style="color:#75715e"></span>    helperText: <span style="color:#e6db74">&#39;required&#39;</span>,
+    hintText: <span style="color:#e6db74">&#39;请选择你要投保的城市&#39;</span>,
+    prefixIcon: <span style="color:#66d9ef">new</span> Icon(Icons.android),
+    prefixText: <span style="color:#e6db74">&#39;Hello&#39;</span>),
+),</code></pre></div>
+<h5 id="输入处理">输入处理</h5>
+
+<p>在<code>TextField</code>中,有两个事件是我们应该关注的<code>onChanged</code>,<code>onSubmitted</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">child: <span style="color:#66d9ef">new</span> TextField(
+controller: _controller,
+decoration: <span style="color:#66d9ef">new</span> InputDecoration(labelText: <span style="color:#e6db74">&#39;Your Name&#39;</span>),
+onChanged: (val) {
+    print(val);
+},
+onSubmitted: (<span style="color:#66d9ef">String</span> v) {
+    print(v);
+},
+),</code></pre></div>
+<p>顾名思义:
+- <code>onChanged</code>事件,在输入内容发生变化的时候触发
+- <code>onSubmitted</code>事件,则是在输入结束,点击完成的时候触发</p>
+
+<p>然而在<code>TextFormField</code>中没有这两个事件,取而代之的是<code>validator</code>, <code>onSaved</code>,<code>onFieldSubmitted</code> 他们都接受三个函数,并且将其值作为参数传递到函数里面</p>
+
+<ul>
+<li><p>validator,如果开启<code>autovalidate: true,</code>那么将会自动检验输入的值,如果没有则会在表单提交的时候检验
+该函数只允许返回验证失败的错误信息以及验证通过时返回<code>null</code></p></li>
+
+<li><p>onSaved, 当调用<code>FormState.save</code>方法的时候调用</p></li>
+
+<li><p>onFieldSubmitted, 与<code>onSubmitted</code>一样,则是在输入结束,点击完成的时候触发</p></li>
+</ul>
+
+<h5 id="编辑控制">编辑控制</h5>
+
+<p>无论是在<code>TextField</code>还是<code>TextFormField</code>中,都有一个重要的属性<code>controller</code>,该属性可用来对输入框内容进行控制</p>
+
+<p>先创建一个控制对象</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">  TextEditingController _controller <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> TextEditingController();
+  TextEditingController _formFieldController <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> TextEditingController();</code></pre></div>
+<p>为输入框初始化值以及注册一个监听事件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">  <span style="color:#960050;background-color:#1e0010">@</span>override
+  <span style="color:#66d9ef">void</span> initState() {
+    <span style="color:#75715e">// TODO: implement initState
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">super</span>.initState();
+    _controller.value <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> TextEditingValue(text: <span style="color:#e6db74">&#39;Hello&#39;</span>);
+    _formFieldController.addListener(() {
+      print(<span style="color:#e6db74">&#39;listener&#39;</span>);
+    });
+  }</code></pre></div>
+<p>触发一个监听事件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">  <span style="color:#66d9ef">void</span> _textFieldAction() {
+    <span style="color:#75715e">// print(_formFieldController.selection);
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// print(_formFieldController.text); //获取输入内容
+</span><span style="color:#75715e"></span>    print(_formFieldController.hasListeners); <span style="color:#75715e">//判断是否注册监听事件
+</span><span style="color:#75715e"></span>    _formFieldController.notifyListeners(); <span style="color:#75715e">//触发监听事件
+</span><span style="color:#75715e"></span>  }</code></pre></div>
+<h4 id="form">Form</h4>
+
+<p>对于表单而言,其就像是一个容器,里面包含了<code>TextFormField</code>的一个列表
+下面通过一个例子说明表单的一些特性</p>
+
+<ol>
+<li>布局</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"> <span style="color:#960050;background-color:#1e0010">@</span>override
+  Widget build(BuildContext context) {
+    <span style="color:#75715e">// TODO: implement build
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> MaterialApp(
+      title: <span style="color:#e6db74">&#39;Flutter data&#39;</span>,
+      home: <span style="color:#66d9ef">new</span> Scaffold(
+        appBar: <span style="color:#66d9ef">new</span> AppBar(
+          title: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;Flutter Form&#39;</span>),
+        ),
+        floatingActionButton: <span style="color:#66d9ef">new</span> FloatingActionButton(
+          onPressed: _forSubmitted,
+          child: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;提交&#39;</span>),
+        ),
+        body: <span style="color:#66d9ef">new</span> Container(
+          padding: <span style="color:#66d9ef">const</span> EdgeInsets.all(<span style="color:#ae81ff">16.0</span>),
+          child: <span style="color:#66d9ef">new</span> Form(
+            key: _formKey,
+            child: <span style="color:#66d9ef">new</span> Column(
+              children: <span style="color:#f92672">&lt;</span>Widget<span style="color:#f92672">&gt;</span>[
+                <span style="color:#66d9ef">new</span> TextFormField(
+                  decoration: <span style="color:#66d9ef">new</span> InputDecoration(
+                    labelText: <span style="color:#e6db74">&#39;Your Name&#39;</span>,
+                  ),
+                  onSaved: (val) {
+                    _name <span style="color:#f92672">=</span> val;
+                  },
+                ),
+                <span style="color:#66d9ef">new</span> TextFormField(
+                  decoration: <span style="color:#66d9ef">new</span> InputDecoration(
+                    labelText: <span style="color:#e6db74">&#39;Password&#39;</span>,
+                  ),
+                  obscureText: <span style="color:#66d9ef">true</span>,
+                  validator: (val) {
+                    <span style="color:#66d9ef">return</span> val.length <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#34;密码长度错误&#34;</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>;
+                  },
+                  onSaved: (val) {
+                    _password <span style="color:#f92672">=</span> val;
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );</code></pre></div>
+<p>以上,我们使用一个<code>Form</code>包裹着两个<code>TextFormField</code>组件,在这里为了简便,我们只设置了一些必要的元素,先暂时忽略<code>TextFormField</code>中的事件</p>
+
+<p>为了获取表单的实例,我们需要设置一个全局类型的key,通过这个key的属性,来获取表单对象</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">  GlobalKey<span style="color:#f92672">&lt;</span>FormState<span style="color:#f92672">&gt;</span> _formKey <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> GlobalKey<span style="color:#f92672">&lt;</span>FormState<span style="color:#f92672">&gt;</span>();
+
+  <span style="color:#66d9ef">String</span> _name;
+
+  <span style="color:#66d9ef">String</span> _password;</code></pre></div>
+<p>同时也设置了<code>_name</code>,<code>_password</code>两个变量来存储用户的输入值,在<code>TextFormField</code>组件的<code>onSaved</code>方法中,将输入框的值赋值到设定的变量中</p>
+
+<p>我们通过<code>FloatingActionButton</code>来触发表单提交事件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">floatingActionButton: <span style="color:#66d9ef">new</span> FloatingActionButton(
+    onPressed: _forSubmitted,
+    child: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;提交&#39;</span>),
+),</code></pre></div>
+<p>在<code>_forSubmitted</code>中我们使用key的<code>currentState</code>属性来获取表单的实例对象</p>
+
+<pre><code>  void _forSubmitted() {
+    var _form = _formKey.currentState;
+
+    if (_form.validate()) {
+      _form.save();
+      print(_name);
+      print(_password);
+    }
+  }
+</code></pre>
+
+<p>对于表单对象来说,其有一些非常实用的方法比如:
+- <code>reset</code> 重置表单内容
+- <code>validate</code>, 调用<code>TextFormField</code>的<code>validator</code>方法
+- <code>save</code>, 表单保存</p>
+
+<p>完整示例</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;package:flutter/material.dart&#39;</span>;
+
+<span style="color:#66d9ef">void</span> main() <span style="color:#f92672">=&gt;</span> runApp(<span style="color:#66d9ef">new</span> HomePage());
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HomePage</span> <span style="color:#66d9ef">extends</span> StatefulWidget {
+  <span style="color:#960050;background-color:#1e0010">@</span>override
+  _HomePageState createState() <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> _HomePageState();
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">_HomePageState</span> <span style="color:#66d9ef">extends</span> State<span style="color:#f92672">&lt;</span>HomePage<span style="color:#f92672">&gt;</span> {
+  GlobalKey<span style="color:#f92672">&lt;</span>FormState<span style="color:#f92672">&gt;</span> _formKey <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> GlobalKey<span style="color:#f92672">&lt;</span>FormState<span style="color:#f92672">&gt;</span>();
+
+  <span style="color:#66d9ef">String</span> _name;
+
+  <span style="color:#66d9ef">String</span> _password;
+
+  <span style="color:#66d9ef">void</span> _forSubmitted() {
+    <span style="color:#66d9ef">var</span> _form <span style="color:#f92672">=</span> _formKey.currentState;
+
+    <span style="color:#66d9ef">if</span> (_form.validate()) {
+      _form.save();
+      print(_name);
+      print(_password);
+    }
+  }
+
+  <span style="color:#960050;background-color:#1e0010">@</span>override
+  Widget build(BuildContext context) {
+    <span style="color:#75715e">// TODO: implement build
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> MaterialApp(
+      title: <span style="color:#e6db74">&#39;Flutter data&#39;</span>,
+      home: <span style="color:#66d9ef">new</span> Scaffold(
+        appBar: <span style="color:#66d9ef">new</span> AppBar(
+          title: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;Flutter Form&#39;</span>),
+        ),
+        floatingActionButton: <span style="color:#66d9ef">new</span> FloatingActionButton(
+          onPressed: _forSubmitted,
+          child: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;提交&#39;</span>),
+        ),
+        body: <span style="color:#66d9ef">new</span> Container(
+          padding: <span style="color:#66d9ef">const</span> EdgeInsets.all(<span style="color:#ae81ff">16.0</span>),
+          child: <span style="color:#66d9ef">new</span> Form(
+            key: _formKey,
+            child: <span style="color:#66d9ef">new</span> Column(
+              children: <span style="color:#f92672">&lt;</span>Widget<span style="color:#f92672">&gt;</span>[
+                <span style="color:#66d9ef">new</span> TextFormField(
+                  decoration: <span style="color:#66d9ef">new</span> InputDecoration(
+                    labelText: <span style="color:#e6db74">&#39;Your Name&#39;</span>,
+                  ),
+                  onSaved: (val) {
+                    _name <span style="color:#f92672">=</span> val;
+                  },
+                ),
+                <span style="color:#66d9ef">new</span> TextFormField(
+                  decoration: <span style="color:#66d9ef">new</span> InputDecoration(
+                    labelText: <span style="color:#e6db74">&#39;Password&#39;</span>,
+                  ),
+                  obscureText: <span style="color:#66d9ef">true</span>,
+                  validator: (val) {
+                    <span style="color:#66d9ef">return</span> val.length <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#34;密码长度错误&#34;</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>;
+                  },
+                  onSaved: (val) {
+                    _password <span style="color:#f92672">=</span> val;
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}</code></pre></div>
+<h4 id="参考资料">参考资料</h4>
+
+<ul>
+<li><p><a href="https://docs.flutter.io/flutter/widgets/FormState-class.html">FormState class</a></p></li>
+
+<li><p><a href="https://docs.flutter.io/flutter/widgets/Form-class.html">Form Class</a></p></li>
+
+<li><p><a href="https://docs.flutter.io/flutter/material/TextField-class.html">TextField class</a></p></li>
+
+<li><p><a href="https://docs.flutter.io/flutter/material/TextFormField-class.html">TextFormField</a></p></li>
+</ul>
+
+</div>
+
+
+    </div>
+
+    
+  </body>
+</html>

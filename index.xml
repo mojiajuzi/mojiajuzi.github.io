@@ -6,10 +6,19 @@
     <description>Recent content on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 May 2018 00:21:51 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 29 May 2018 17:35:50 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Flutter 基础组件-表单</title>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-form/</link>
+      <pubDate>Tue, 29 May 2018 17:35:50 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-form/</guid>
+      <description>TextField, FormField 对于TextField和FormField而言,只要用来接收用户的输入,以及用户输入的事件处理, 因此,可以将其分解为三个部分来说明 样式属</description>
+    </item>
     
     <item>
       <title>算法-大O表示法</title>
