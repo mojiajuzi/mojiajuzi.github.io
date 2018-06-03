@@ -6,10 +6,19 @@
     <description>Recent content in Darts on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 29 May 2018 17:35:50 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 31 May 2018 00:31:23 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/dart/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Flutter 路由</title>
+      <link>https://gru.tsecloud.club/dart/route/</link>
+      <pubDate>Thu, 31 May 2018 00:31:23 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/dart/route/</guid>
+      <description>基本概念 路由(Route),路由在Flutter中是屏幕或者页面的抽象 导航(Navigator),导航是一个用来管理路由的组件 Navigat</description>
+    </item>
     
     <item>
       <title>Flutter 基础组件-表单</title>

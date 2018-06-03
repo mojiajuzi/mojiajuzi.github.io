@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title>Algorithms &middot; To Be A Better Man</title>
+  <title>Flutter 路由 &middot; To Be A Better Man</title>
 
   
   <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
@@ -23,7 +23,7 @@
   <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="https://gru.tsecloud.club/algorithm/index.xml" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
   <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/php.min.js"></script>
@@ -56,15 +56,48 @@
 </div>
 
     <div class="content container">
-    <ul class="posts">
-<li>
-    <span><a href="https://gru.tsecloud.club/algorithm/select_sort/">基础算法-选择排序</a> <time class="pull-right post-list">Fri, Jun 1, 2018</time></span>
-  </li><li>
-    <span><a href="https://gru.tsecloud.club/algorithm/binary_search/">基础算法-二分查找</a> <time class="pull-right post-list">Tue, May 29, 2018</time></span>
-  </li><li>
-    <span><a href="https://gru.tsecloud.club/algorithm/big-o/">算法-大O表示法</a> <time class="pull-right post-list">Thu, May 17, 2018</time></span>
-  </li>
+    <div class="post">
+  <h1>Flutter 路由</h1>
+  <span class="post-date">Thu, May 31, 2018</span>
+  
+
+<h3 id="基本概念">基本概念</h3>
+
+<ul>
+<li><p>路由(Route),路由在Flutter中是屏幕或者页面的抽象</p></li>
+
+<li><p>导航(Navigator),导航是一个用来管理路由的组件</p></li>
+
+<li><p>Navigator通过栈的形式来管理路由对象，
+由于栈有出栈和入栈两个操作，相对应的Navigator也通过<code>pop</code>和<code>push</code>来与之对应</p></li>
 </ul>
+
+<h3 id="路由的定义">路由的定义</h3>
+
+<ol>
+<li><p>作为<code>MaterialApp</code>的属性</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> MaterialApp(
+  title: <span style="color:#e6db74">&#39;Flutter Demo&#39;</span>,
+  routes:<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">String</span>, WidgetBuilder<span style="color:#f92672">&gt;</span>{
+    <span style="color:#e6db74">&#39;/home&#39;</span><span style="color:#f92672">:</span>(BuildContext context) <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> HomePage(),
+    <span style="color:#e6db74">&#39;/detail&#39;</span><span style="color:#f92672">:</span>(BuildContext context) <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> DetailPage(),
+  },
+);</code></pre></div></li>
+
+<li><p>TransitionRoute</p></li>
+
+<li><p>ModalRoute</p></li>
+
+<li><p>MaterialPageRoute(动画基于特定的平台，也就是说不同的平台动画效果可能不一样)</p></li>
+
+<li><p>PopupRoute</p></li>
+
+<li><p>PageRoute</p></li>
+</ol>
+
+</div>
+
+
     </div>
 
     
