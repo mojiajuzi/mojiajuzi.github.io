@@ -87,17 +87,190 @@
   },
 );</code></pre></div></li>
 
-<li><p>TransitionRoute</p></li>
-
-<li><p>ModalRoute</p></li>
-
-<li><p>MaterialPageRoute(动画基于特定的平台，也就是说不同的平台动画效果可能不一样)</p></li>
-
-<li><p>PopupRoute</p></li>
-
-<li><p>PageRoute</p></li>
+<li><p>直接在组件中定义</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">  body: <span style="color:#66d9ef">new</span> Center(
+    child: <span style="color:#66d9ef">new</span> RaisedButton(
+      child: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;Launch new screen&#39;</span>),
+      onPressed: () {
+        Navigator.of(context).push(
+              <span style="color:#66d9ef">new</span> MaterialPageRoute(builder: (context) <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> SecondPage()),
+            );
+      },
+    ),
+  ),</code></pre></div></li>
 </ol>
 
+<p>对于作为属性的的路由来说,其缺乏传递动态参数的能力,对于直接在组件中定义的路由而言,对于其管理又存在一些不便</p>
+
+<h4 id="参数传递">参数传递</h4>
+
+<h5 id="发送数据到其他页面">发送数据到其他页面</h5>
+
+<p>为了传递参数到其他的页面，只需要在定义其他页面的时候添加初始化的方法声明需要的参数类型即可，比如:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SecondPage</span> <span style="color:#66d9ef">extends</span> StatelessWidget {
+  
+  <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> backAccount;
+
+  SecondPage({Key key, <span style="color:#960050;background-color:#1e0010">@</span>required <span style="color:#66d9ef">this</span>.backAccount})<span style="color:#f92672">:</span><span style="color:#66d9ef">super</span>(key:key);
+
+  <span style="color:#960050;background-color:#1e0010">@</span>override
+  Widget build(BuildContext context) {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Scaffold(
+      appBar: <span style="color:#66d9ef">new</span> AppBar(title: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;Second&#39;</span>),),
+      body: <span style="color:#66d9ef">new</span> Center(
+        child: <span style="color:#66d9ef">new</span> RaisedButton(
+          child: <span style="color:#66d9ef">new</span> Text(backAccount.toString()),
+          onPressed: (){
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
+    );
+  }
+}</code></pre></div>
+<p>在这里初始化的时候，需要限定传递参数，并且使用<code>@required</code>(注意：这里需要引入<code>import 'package:flutter/foundation.dart';</code>)注释<code>backAccount</code>参数为必需</p>
+
+<p>然后我们只需要在实例化的时候传递必需的参数即可</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">  <span style="color:#66d9ef">int</span> _backCount <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+  <span style="color:#960050;background-color:#1e0010">@</span>override
+  Widget build(BuildContext context) {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> MaterialApp(title: <span style="color:#e6db74">&#39;First Page&#39;</span>,home: <span style="color:#66d9ef">new</span> Scaffold(
+      appBar: <span style="color:#66d9ef">new</span> AppBar(title: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;First Page&#39;</span>),),
+      body: <span style="color:#66d9ef">new</span> Builder(
+        builder: (BuildContext context){
+          <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Center(
+              child: <span style="color:#66d9ef">new</span> RaisedButton(
+                child: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;GO To Second&#39;</span>),
+                onPressed: (){
+                  Navigator.push(
+                    context,
+                    <span style="color:#66d9ef">new</span> MaterialPageRoute(builder: (context) <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> SecondPage(backAccount: _backCount,)),
+                  );
+                },
+              ),
+          );
+        },
+      ),
+    ),);
+  }
+}</code></pre></div>
+<p>在这里只是传递一个返回的次数统计,然而这里的功能并不齐全，因为我们还没有返回参数，并对返回的结果进行处理</p>
+
+<h5 id="接受其他页面返回的参数">接受其他页面返回的参数</h5>
+
+<p>为了接受其他页面返回的参数，我们需要做一个异步处理等待其它页面的返回，因此我么需要使用到<code>dart:async</code>这个包</p>
+
+<ol>
+<li><p>首先将路由抽离出来</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">  Future getBackAccount(BuildContext context) <span style="color:#66d9ef">async</span> {
+      <span style="color:#66d9ef">int</span> times <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> Navigator.push(context,
+        <span style="color:#66d9ef">new</span> MaterialPageRoute<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>(builder: (context) <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> SecondPage(backAccount: _backCount,)),
+      );
+
+      <span style="color:#66d9ef">if</span>(times <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>){
+        setState(() {
+                _backCount <span style="color:#f92672">=</span> times;  
+        });
+      }
+  }
+
+}</code></pre></div>
+<p>这里将路由抽离出来放到一个单独的函数里面，限定返回的数据类型为int类型</p>
+
+<p>如果返回的数据不是一个null类型，则将返回的值赋值给<code>_backCount参数</code></p></li>
+
+<li><p>在<code>SecondPage</code>中，只需要在<code>Navigator.pop</code>方法中将值返回即可</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">      onPressed: (){
+        backAccount <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>;
+        Navigator.of(context).pop(backAccount);
+      },</code></pre></div></li>
+</ol>
+
+<h4 id="参考文档">参考文档</h4>
+
+<ul>
+<li><p><a href="https://flutter.io/cookbook/"> Flutter Cookbook - Navigation</a></p></li>
+
+<li><p><a href="https://docs.flutter.io/flutter/widgets/BuildContext-class.html">BuildContext-class</a></p></li>
+</ul>
+
+<h5 id="完成代码">完成代码</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;dart:async&#39;</span>;
+
+<span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;package:flutter/foundation.dart&#39;</span>;
+<span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;package:flutter/material.dart&#39;</span>;
+
+
+<span style="color:#66d9ef">void</span> main() <span style="color:#f92672">=&gt;</span> runApp(<span style="color:#66d9ef">new</span> FirstPage());
+
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FirstPage</span> <span style="color:#66d9ef">extends</span> StatefulWidget {
+  <span style="color:#960050;background-color:#1e0010">@</span>override
+  _FirstPageState createState() <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> _FirstPageState();
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">_FirstPageState</span> <span style="color:#66d9ef">extends</span> State<span style="color:#f92672">&lt;</span>FirstPage<span style="color:#f92672">&gt;</span> {
+
+  <span style="color:#66d9ef">int</span> _backCount <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+  <span style="color:#960050;background-color:#1e0010">@</span>override
+  Widget build(BuildContext context) {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> MaterialApp(title: <span style="color:#e6db74">&#39;First Page&#39;</span>,home: <span style="color:#66d9ef">new</span> Scaffold(
+      appBar: <span style="color:#66d9ef">new</span> AppBar(title: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;First Page&#39;</span>),),
+      body: <span style="color:#66d9ef">new</span> Builder(
+        builder: (BuildContext context){
+          <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Center(
+              child: <span style="color:#66d9ef">new</span> RaisedButton(
+                child: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;GO To Second&#39;</span>),
+                onPressed: (){
+                  getBackAccount(context);
+                }
+              ),
+          );
+        },
+      ),
+    ),);
+  }
+
+  Future getBackAccount(BuildContext context) <span style="color:#66d9ef">async</span> {
+      <span style="color:#66d9ef">int</span> times <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> Navigator.push(context,
+        <span style="color:#66d9ef">new</span> MaterialPageRoute<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>(builder: (context) <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> SecondPage(backAccount: _backCount,)),
+      );
+
+      <span style="color:#66d9ef">if</span>(times <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>){
+        setState(() {
+                _backCount <span style="color:#f92672">=</span> times;  
+        });
+      }
+  }
+
+}
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SecondPage</span> <span style="color:#66d9ef">extends</span> StatelessWidget {
+  
+  <span style="color:#66d9ef">int</span> backAccount;
+
+  SecondPage({Key key, <span style="color:#960050;background-color:#1e0010">@</span>required <span style="color:#66d9ef">this</span>.backAccount})<span style="color:#f92672">:</span><span style="color:#66d9ef">super</span>(key:key);
+
+  <span style="color:#960050;background-color:#1e0010">@</span>override
+  Widget build(BuildContext context) {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Scaffold(
+      appBar: <span style="color:#66d9ef">new</span> AppBar(title: <span style="color:#66d9ef">new</span> Text(<span style="color:#e6db74">&#39;Second&#39;</span>),),
+      body: <span style="color:#66d9ef">new</span> Center(
+        child: <span style="color:#66d9ef">new</span> RaisedButton(
+          child: <span style="color:#66d9ef">new</span> Text(backAccount.toString()),
+          onPressed: (){
+            backAccount <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>;
+            Navigator.of(context).pop(backAccount);
+          },
+        ),
+      ),
+    );
+  }
+}</code></pre></div>
 </div>
 
 
