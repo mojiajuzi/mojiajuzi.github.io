@@ -6,10 +6,19 @@
     <description>Recent content in Phps on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 May 2018 22:23:05 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 05 Jun 2018 11:53:19 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/php/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Laravel 数据迁移浅析 使用篇</title>
+      <link>https://gru.tsecloud.club/php/laravel-migrate/</link>
+      <pubDate>Tue, 05 Jun 2018 11:53:19 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/laravel-migrate/</guid>
+      <description>命令查看 php artisan make:migration --help 创建文件 在创建文件的时候,通过以下语句查看其创建选项 php artisan make:migration --help 对于创建迁移文件,有用的是以下几个选项 --create[=CREATE] The table to be created. --table[=TABLE] The table to migrate. --path[=PATH] The</description>
+    </item>
     
     <item>
       <title>Laravel 队列使用-Redis作为驱动</title>
