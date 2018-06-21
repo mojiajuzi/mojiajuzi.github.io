@@ -82,19 +82,21 @@
 </ul>
 
 <p>因此实现方式如下:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">function sum(array $arr): int {
-    $arrCount = count($arr);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">sum</span>(<span style="color:#66d9ef">array</span> $arr)<span style="color:#f92672">:</span> <span style="color:#a6e22e">int</span> {
+    $arrCount <span style="color:#f92672">=</span> <span style="color:#a6e22e">count</span>($arr);
 
-    // 基线条件
-    if($arrCount == 0)
-        return 0;
+    <span style="color:#75715e">// 基线条件
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>($arrCount <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 
-    if($arrCount == 1)
-        return array_shift($arr);
+    <span style="color:#66d9ef">if</span>($arrCount <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">array_shift</span>($arr);
 
-    // 递归条件
-    return array_shift($arr) + sum($arr);
-}</code></pre></div>
+    <span style="color:#75715e">// 递归条件
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">array_shift</span>($arr) <span style="color:#f92672">+</span> <span style="color:#a6e22e">sum</span>($arr);
+}
+</code></pre></div>
 <p>那么考虑一下如何对一个数组进行排序,由于之前已经已经使用选择排序对数组进行排序，其时间复杂度为<code>O(n^2)</code></p>
 
 <p>因此这里对于一个数组使用快速排序的方式进行排序，首先介绍已给快速排序的步骤</p>
@@ -123,7 +125,7 @@
     $greeterArr <span style="color:#f92672">=</span> [];
 
     <span style="color:#66d9ef">foreach</span> ($arr <span style="color:#66d9ef">as</span> $key <span style="color:#f92672">=&gt;</span> $value) {
-        
+
          <span style="color:#66d9ef">if</span>($key <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
             <span style="color:#66d9ef">continue</span>;
         
