@@ -6,10 +6,19 @@
     <description>Recent content in Phps on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 Jun 2018 11:53:19 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 22 Jun 2018 17:13:23 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/php/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>beanstalkd的使用-基本概念</title>
+      <link>https://gru.tsecloud.club/php/beanstalk/</link>
+      <pubDate>Fri, 22 Jun 2018 17:13:23 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/beanstalk/</guid>
+      <description>在beanstalkd中包含几个重要的概念，如下图所示，对于一个系统消息队列系统来说 其必定有 - 一个或多个生产者(Producter), - 一个</description>
+    </item>
     
     <item>
       <title>Laravel 数据迁移浅析 使用篇</title>

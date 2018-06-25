@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://gru.tsecloud.club/php/beanstalk/</loc>
+    <lastmod>2018-06-22T17:13:23+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://gru.tsecloud.club/algorithm/fast_sort/</loc>
     <lastmod>2018-06-21T22:40:41+08:00</lastmod>
   </url>
@@ -208,7 +213,7 @@
   
   <url>
     <loc>https://gru.tsecloud.club/php/</loc>
-    <lastmod>2018-06-05T11:53:19+08:00</lastmod>
+    <lastmod>2018-06-22T17:13:23+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -232,7 +237,7 @@
   
   <url>
     <loc>https://gru.tsecloud.club/</loc>
-    <lastmod>2018-06-21T22:40:41+08:00</lastmod>
+    <lastmod>2018-06-22T17:13:23+08:00</lastmod>
     <priority>0</priority>
   </url>
   
