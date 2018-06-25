@@ -71,7 +71,7 @@
 
 <p>对于beanstalkd来说，以管道(Tube)作为其主要的组成部分，一个beanstalkd可以包含一个或者多个管道</p>
 
-<p><img src="/images/beanstalkd1.png" alt="beanstalkd" /></p>
+<p><img src="/images/beanstalkd-systerm.png" alt="beanstalkd" /></p>
 
 <p>对于Tube而言,有两个队列组成，<code>ready queue</code>和<code>delay queue</code>,每一个队列里面可以包含零个或者多个任务</p>
 
@@ -80,7 +80,7 @@
 <li><code>delay</code> 队列用来存储尚未到执行时间的队列</li>
 </ul>
 
-<p><img src="/images/beanstalkd1.png" alt="beanstalkd" /></p>
+<p><img src="/images/beanstalkd-tube.png" alt="beanstalkd" /></p>
 
 <p>对于队列中的任务而言，我们更加关注的是任务的状态，因此在<code>beanstalkd</code>中的任务包含一下四中状态
 <code>ready, reserved, delayed,buried</code></p>
@@ -92,7 +92,7 @@
 <li><code>buried</code> 已经被执行完，但是未删除的任务</li>
 </ul>
 
-<p><img src="/images/beanstalkd2.png" alt="beanstalkd" /></p>
+<p><img src="/images/beanstalkd-stats.png" alt="beanstalkd" /></p>
 
 <ol>
 <li><p>由上面的流程图可以看到，生成任务时，可以将任务设置成立即执行(ready)或者延迟执行(delayed)</p></li>
