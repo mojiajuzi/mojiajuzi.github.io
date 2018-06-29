@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.39" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Laravel 包编写(二)-服务提供者 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+    
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+  
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+                        
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+  <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/railscasts.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/python.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/sql.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/bash.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/dart.min.js"></script>
+
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+  <body class=" ">
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+      <li><a href="/algorithm"> Algorithm </a></li><li><a href="/book"> Book </a></li><li><a href="/dart"> Dart/Flutter </a></li><li><a href="/go"> Golang </a></li><li><a href="/php"> PHP </a></li><li><a href="/sql"> SQL </a></li>
+    </ul>
+        <a href="https://github.com/mojiajuzi">
+          <i class="fa fa-github fa-2x"></i>
+        </a>
+    <p>&copy;湘ICP备18001813</p>
+  </div>
+</div>
+
+    <div class="content container">
+    <div class="post">
+  <h1>Laravel 包编写(二)-服务提供者</h1>
+  <span class="post-date">Fri, Jun 29, 2018</span>
+  
+
+<h4 id="创建服务提供者">创建服务提供者</h4>
+
+<p>在Laravel中,我们可以通过<code>artisan</code>命令创建一个服务提供者</p>
+
+<pre><code>php artisan make:provider HelloServiceProvider
+</code></pre>
+
+<p>以上命令将会创建一个名为<code>HelloServiceProvider</code>的服务提供者</p>
+
+<h4 id="服务提供者结构">服务提供者结构</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+
+<span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">App\Providers</span>;
+
+<span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Illuminate\Support\ServiceProvider</span>;
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HelloServiceProvider</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">ServiceProvider</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">boot</span>(){
+        <span style="color:#75715e">// TODO
+</span><span style="color:#75715e"></span>    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">register</span>(){
+        <span style="color:#75715e">//TODO
+</span><span style="color:#75715e"></span>    }
+}
+</code></pre></div>
+<p>在Laravel中,服务提供者继承了<code>Illuminate\Support\ServiceProvider</code>类,并且包含两个方法<code>boot</code>和<code>register</code></p>
+
+<ul>
+<li><p><strong>register:</strong> 该方法中我们要做的就是一件事,那就是将服务绑定到容器中,
+对于其他的诸如事件监听,路由或者其他的服务则不应该放到这里,
+这是由于该方法的调用是在服务的注册阶段,其他的服务提供者可能还未完成注册</p></li>
+
+<li><p><strong>boot:</strong> 我们将可以使用其他服务提供者提供的服务,
+因为该方法的调用是在所有其他的服务提供者全部注册完成之后,因此,我们可以使用框架中的所有其他的服务</p></li>
+
+<li><p><strong>ServiceProvider:</strong> 在这个类的初始化方法中就是注入应用的实例<code>$app</code>,
+对于我们的服务提供这而言基本会涉及到的东西就是: 配置文件,路由,控制器,数据模型,数据迁移等,因此<code>ServiceProvider</code>提供了便捷的方法
+方便我们实现以下内容</p>
+
+<ul>
+<li><p><code>mergeConfigFrom($path, $key)</code> 配置文件的加载</p></li>
+
+<li><p><code>loadRoutesFrom($path)</code> 加载路由</p></li>
+
+<li><p><code>loadViewsFrom($path, $namespace)</code> 加载视图</p></li>
+
+<li><p><code>loadTranslationsFrom($path, $namespace)</code>, <code>loadJsonTranslationsFrom</code>加载多语言</p></li>
+
+<li><p><code>loadMigrationsFrom($paths)</code> 数据迁移</p></li>
+
+<li><p><code>publishes(array $paths, $group = null)</code> 发布</p></li>
+
+<li><p><code>commands($commands)</code> 注册<code>Artisan</code>命令</p></li>
+
+<li><p><code>isDeferred()</code> 延迟注册</p></li>
+</ul></li>
+</ul>
+
+<h4 id="注册服务提供者">注册服务提供者</h4>
+
+<p>注册服务提供者,只需要将服务提供者添加到<code>config/app.php</code>文件的<code>providers</code>数组中即可</p>
+
+<pre><code>App\Providers\HelloServiceProvider::class,
+</code></pre>
+
+<h4 id="参考文档">参考文档</h4>
+
+<ul>
+<li><a href="https://laravel.com/docs/5.6/providers">Service Providers</a></li>
+</ul>
+
+</div>
+
+
+    </div>
+
+    
+  </body>
+</html>

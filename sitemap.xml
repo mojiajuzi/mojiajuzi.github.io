@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://gru.tsecloud.club/php/package-create/</loc>
+    <lastmod>2018-06-29T11:32:11+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gru.tsecloud.club/php/package-bind/</loc>
+    <lastmod>2018-06-29T10:31:29+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gru.tsecloud.club/php/package-theory/</loc>
+    <lastmod>2018-06-29T09:37:49+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://gru.tsecloud.club/php/beanstalkd-use/</loc>
     <lastmod>2018-06-26T15:54:40+08:00</lastmod>
   </url>
@@ -223,7 +238,7 @@
   
   <url>
     <loc>https://gru.tsecloud.club/php/</loc>
-    <lastmod>2018-06-26T15:54:40+08:00</lastmod>
+    <lastmod>2018-06-29T11:32:11+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -247,7 +262,7 @@
   
   <url>
     <loc>https://gru.tsecloud.club/</loc>
-    <lastmod>2018-06-26T15:54:40+08:00</lastmod>
+    <lastmod>2018-06-29T11:32:11+08:00</lastmod>
     <priority>0</priority>
   </url>
   
