@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.34" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Composer &middot; 实话先生</title>
+
+  
+  <link rel="stylesheet" href="https://mojiajuzi.github.io/css/print.css" media="print">
+  <link rel="stylesheet" href="https://mojiajuzi.github.io/css/poole.css">
+  <link rel="stylesheet" href="https://mojiajuzi.github.io/css/syntax.css">
+  <link rel="stylesheet" href="https://mojiajuzi.github.io/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="实话先生" />
+</head>
+
+  <body class=" ">
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://mojiajuzi.github.io/"><h1>实话先生</h1></a>
+      <p class="lead">
+       待我编码已成,少女嫁我可好 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="https://mojiajuzi.github.io/">Home</a> </li>
+      <li><a href="/golang/"> Golang </a></li><li><a href="/laravel/"> Laravel </a></li><li><a href="/mysql/"> Mysql </a></li><li><a href="/service/"> server </a></li>
+    </ul>
+
+    <p>Copyright (c) 2018, 湘ICP备18001813</p>
+  </div>
+</div>
+
+    <div class="content container">
+    <div class="post">
+  <h1>Composer</h1>
+  <span class="post-date">Wed, Jan 31, 2018</span>
+  
+
+<h4 id="安装">安装</h4>
+
+<p>参考composer官方的<a href="http://docs.phpcomposer.com/00-intro.html#Installation-*nix">安装文档</a></p>
+
+<h4 id="依赖声明">依赖声明</h4>
+
+<p>使用<code>包名:版本</code>的形式</p>
+
+<pre><code class="language-json">
+{
+
+  &quot;require&quot;:{
+
+    &quot;monolog/monolog&quot;: &quot;1.0.*&quot;
+
+  },
+
+  //required_dev中的包只会在开发环境中使用，正式环境中将会无效，安装时只需要在后面加上`--dev`
+
+  &quot;required_dev&quot;:{
+
+        &quot;fzaninotto/faker&quot;: &quot;~1.4&quot;,
+
+        &quot;mockery/mockery&quot;: &quot;0.9.*&quot;,
+
+        &quot;phpunit/phpunit&quot;: &quot;~4.0&quot;,
+
+        &quot;symfony/css-selector&quot;: &quot;2.8.*|3.0.*&quot;,
+
+        &quot;symfony/dom-crawler&quot;: &quot;2.8.*|3.0.*&quot;
+
+  }
+
+}
+
+</code></pre>
+
+<h4 id="依赖安装">依赖安装</h4>
+
+<pre><code class="language-shell">
+ composer install
+
+</code></pre>
+
+<p>执行完该语句后会在项目的根目录下面的vendord文件夹中产生相对应的目录</p>
+
+<pre><code>
+ vendord/monolog/monolog
+
+</code></pre>
+
+<h4 id="包的使用">包的使用</h4>
+
+<p>在需要使用的文件中引入自动加载的文件即可：</p>
+
+<pre><code class="language-php">
+require 'vendor/autoload.php';
+
+</code></pre>
+
+<p>然后就可以使用安装的依赖包</p>
+
+<h4 id="使用自己的包">使用自己的包</h4>
+
+<p>在json文件中添加如下字段，就可以使用自己的autoloader</p>
+
+<pre><code class="language-json">
+&quot;autoload&quot;: {
+
+    &quot;psr-4&quot;: {&quot;Acme\\&quot;: &quot;src/&quot;}
+
+}
+
+</code></pre>
+
+<p>此时，composer将会注册一个PSR-4 autoloader到Acme命名空间，</p>
+
+<p><code>src</code>:表示的命名空间到目录的映射，与vendor同级，再次运行</p>
+
+<pre><code class="language-php">
+composer install
+
+</code></pre>
+
+<p>当再一次使用</p>
+
+<pre><code class="language-php">
+require 'vendor/autoload.php';
+
+</code></pre>
+
+<p>的时候，返回的自动加载的实例中就会包含autoloader实例，当然我们也可以使用classmap来加载不符合我psr-4规范的类库</p>
+
+<p>classmap数据中表示的是：类文件所在的目录</p>
+
+<pre><code class="language-json">
+&quot;autoload&quot;: {
+
+    &quot;psr-4&quot;: {&quot;Acme\\&quot;: &quot;src/&quot;},
+
+    &quot;classmap&quot;:[&quot;src/&quot;, &quot;lib/&quot;, &quot;Something.php&quot;]
+
+
+}
+
+</code></pre>
+
+</div>
+
+
+    </div>
+
+    
+  </body>
+</html>

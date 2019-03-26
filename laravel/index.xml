@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Laravels on 实话先生</title>
+    <link>https://mojiajuzi.github.io/laravel/</link>
+    <description>Recent content in Laravels on 实话先生</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2018, 湘ICP备18001813</copyright>
+    <lastBuildDate>Thu, 08 Mar 2018 23:27:06 +0800</lastBuildDate>
+    
+	<atom:link href="https://mojiajuzi.github.io/laravel/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Laravel中安装和使用Redis作为会话和缓存的载体</title>
+      <link>https://mojiajuzi.github.io/laravel/redis/</link>
+      <pubDate>Thu, 08 Mar 2018 23:27:06 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/laravel/redis/</guid>
+      <description>本人使用的是Laradock 作为开发环境
+ predis的安装  安装依赖包predis/predis  composer require predis/predis  重新生成自动加载文件  composer dumpautoload 修改配置 修改.env文件中的缓存驱动,会话驱动,redis连接设置 #缓存驱动 #CACHE_DRIVER=array CACHE_DRIVER=redis #会话驱动 #SESSION_DRIVER=file SESSION_DRIVER=redis #redis连接驱动 REDIS_HOST=redis REDIS_PASSWORD=null REDIS_PORT=6379 配置session和cache使用不同的数据库 之所以这样做是避免清除缓存的时候，用户会话也一并清除
+ 修改config/database.php文件中的redis数组，复制一份default的配置，并依据需要修改其中的参数,这里最主要的两点是索引名称和database选项的修改
+&amp;#39;session&amp;#39; =&amp;gt; [ &amp;#39;host&amp;#39; =&amp;gt; env(&amp;#39;REDIS_HOST&amp;#39;), &amp;#39;password&amp;#39; =&amp;gt; env(&amp;#39;REDIS_PASSWORD&amp;#39;, null), &amp;#39;port&amp;#39; =&amp;gt; env(&amp;#39;REDIS_PORT&amp;#39;, 6379), &amp;#39;database&amp;#39; =&amp;gt; 1, ],  修改config/session.php文件中connection为session,这里的值，就是上一步设置的索引名称
+&amp;#39;connection&amp;#39; =&amp;gt; &amp;#34;session&amp;#34;,   重新加载配置 当配置完成以后，应该运行一下两条命令，重新加载配置，避免出现不必要的问题
+ 清除配置  php artisan config:clear  清空缓存  php artisan cache:clear 简单使用 Laravel提供Cache, Redis两种Facade来使用对redis进行操作,而这两种方式已存在一些区别</description>
+    </item>
+    
+    <item>
+      <title>Laravel自带的登录注册组件简单说明</title>
+      <link>https://mojiajuzi.github.io/laravel/register/</link>
+      <pubDate>Wed, 07 Mar 2018 21:48:05 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/laravel/register/</guid>
+      <description>在这里我们需要理解Laravle中两个名词 - Guards:定义了对于每一个请求，如何对用户进行认证 - Providers: 定义了从哪里获取用户
+使用脚手架生成登录注册页面 php artisan make:auth 查看配置config/auth.php, 该文件用于配置如何登录,注册,重置密码 Providers Config &amp;#39;providers&amp;#39; =&amp;gt; [ &amp;#39;users&amp;#39; =&amp;gt; [ &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;eloquent&amp;#39;, &amp;#39;model&amp;#39; =&amp;gt; App\User::class, ], // &amp;#39;users&amp;#39; =&amp;gt; [ // &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;database&amp;#39;, // &amp;#39;table&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;, // ], ], 在Providers中，定义了两个数组,　一个是以Eloquent模型作为驱动，并且使用App\Users这个数据模型作为存储用户数据的载体，当然也可以使用database作为驱动,直接指明table作为存储载体
+指定了如何获取到用户数据以后，接下来就需要配置如何验证用户
+Guards Config &amp;#39;guards&amp;#39; =&amp;gt; [ &amp;#39;web&amp;#39; =&amp;gt; [ &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;session&amp;#39;, &amp;#39;provider&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;, ], &amp;#39;api&amp;#39; =&amp;gt; [ &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;token&amp;#39;, &amp;#39;provider&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;, ], ], 在Guards中,配置了两种的验证方式,一种是web,通过session来验证用户信息,另一种是通过令牌token来验证用户，这两种方式默认都使用以Eloquent类型的App\User模型作为存储用户信息的载体</description>
+    </item>
+    
+    <item>
+      <title>Composer</title>
+      <link>https://mojiajuzi.github.io/laravel/composer/</link>
+      <pubDate>Wed, 31 Jan 2018 20:58:44 +0800</pubDate>
+      
+      <guid>https://mojiajuzi.github.io/laravel/composer/</guid>
+      <description> 安装 参考composer官方的安装文档
+依赖声明 使用包名:版本的形式
+{ &amp;quot;require&amp;quot;:{ &amp;quot;monolog/monolog&amp;quot;: &amp;quot;1.0.*&amp;quot; }, //required_dev中的包只会在开发环境中使用，正式环境中将会无效，安装时只需要在后面加上`--dev` &amp;quot;required_dev&amp;quot;:{ &amp;quot;fzaninotto/faker&amp;quot;: &amp;quot;~1.4&amp;quot;, &amp;quot;mockery/mockery&amp;quot;: &amp;quot;0.9.*&amp;quot;, &amp;quot;phpunit/phpunit&amp;quot;: &amp;quot;~4.0&amp;quot;, &amp;quot;symfony/css-selector&amp;quot;: &amp;quot;2.8.*|3.0.*&amp;quot;, &amp;quot;symfony/dom-crawler&amp;quot;: &amp;quot;2.8.*|3.0.*&amp;quot; } }  依赖安装 composer install  执行完该语句后会在项目的根目录下面的vendord文件夹中产生相对应的目录
+ vendord/monolog/monolog  包的使用 在需要使用的文件中引入自动加载的文件即可：
+require &#39;vendor/autoload.php&#39;;  然后就可以使用安装的依赖包
+使用自己的包 在json文件中添加如下字段，就可以使用自己的autoloader
+&amp;quot;autoload&amp;quot;: { &amp;quot;psr-4&amp;quot;: {&amp;quot;Acme\\&amp;quot;: &amp;quot;src/&amp;quot;} }  此时，composer将会注册一个PSR-4 autoloader到Acme命名空间，
+src:表示的命名空间到目录的映射，与vendor同级，再次运行
+composer install  当再一次使用
+require &#39;vendor/autoload.php&#39;;  的时候，返回的自动加载的实例中就会包含autoloader实例，当然我们也可以使用classmap来加载不符合我psr-4规范的类库
+classmap数据中表示的是：类文件所在的目录
+&amp;quot;autoload&amp;quot;: { &amp;quot;psr-4&amp;quot;: {&amp;quot;Acme\\&amp;quot;: &amp;quot;src/&amp;quot;}, &amp;quot;classmap&amp;quot;:[&amp;quot;src/&amp;quot;, &amp;quot;lib/&amp;quot;, &amp;quot;Something.php&amp;quot;] }  </description>
+    </item>
+    
+  </channel>
+</rss>
