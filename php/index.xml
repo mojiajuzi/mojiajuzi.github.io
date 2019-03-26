@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Phps on To Be A Better Man</title>
+    <link>https://gru.tsecloud.club/php/</link>
+    <description>Recent content in Phps on To Be A Better Man</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 29 Jun 2018 11:32:11 +0800</lastBuildDate>
+    
+	<atom:link href="https://gru.tsecloud.club/php/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Laravel 包编写(三)-服务提供者实现</title>
+      <link>https://gru.tsecloud.club/php/package-create/</link>
+      <pubDate>Fri, 29 Jun 2018 11:32:11 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/package-create/</guid>
+      <description>在这一篇我们将实现一个简单的关于文章分类的包(gru\tag),该包将会尽量涉及到包开发的各个方面
+ 在一个Laravel项目的根目录下面创建一个名为packages, 然后在package目录下面创建一个gru文件夹, 最后在gru文件夹下面创建一个tag文件,创建完成以后,结构如下
+-Root --gru --tag --src  之所以这样布局是因为相同作者的包,使用composer管理以后将统一放到一个目录下,而src将会作为我们代码放置的地方
+ 在tag目录下,使用composer初始化包,初始化以后我们就可以得到一个composer.json文件,由于该项目没有依赖其他的包,所以这里添加依赖
+{ &amp;quot;name&amp;quot;: &amp;quot;gru/tag&amp;quot;, &amp;quot;description&amp;quot;: &amp;quot;this is demo about package write&amp;quot;, &amp;quot;type&amp;quot;: &amp;quot;library&amp;quot;, &amp;quot;license&amp;quot;: &amp;quot;MIT&amp;quot;, &amp;quot;require&amp;quot;: {} }  如果不熟悉,composer可以参考composer中文网提供的文档
+ 模拟自动加载,为了更好的在Laravel项目中进行包的开发与测试,我们需要在项目的根目录(注意:不是tag下面)下面添加命名psr-4的加载规则
+&amp;quot;psr-4&amp;quot;: { &amp;quot;App\\&amp;quot;: &amp;quot;app/&amp;quot;, &amp;quot;Gru\\Tag\\&amp;quot;: &amp;quot;packages/gru/tag/src&amp;quot; }  添加完成以后需要执行composer dumpautoload来使配置生效,生效后,我们包的命名空间就会变成Gru\Tag
+ 创建服务提供者GruTagServiceProvider
+php artisan make:provider GruTagServiceProvider  创建完成以后,需要将该文件迁移到packages/gru/tag/src目录下,并修改其命名空间为Gru\Tag
+ 将创建的服务注册到config/app.php文件的providers数组中
+Gru\Tag\GruTagServiceProvider::class,  创建数据迁移文件
+php artisan make:migration create_table_tags --create=tags  然后将文件迁移到我们包的src目录下,
+ 创建模型,并迁移到src目录下,注意变更模型的命名空间
+php artisan make:model Tag  创建资源控制器,并迁移到src目录下,注意变更模型的命名空间</description>
+    </item>
+    
+    <item>
+      <title>Laravel 包编写(二)-服务提供者</title>
+      <link>https://gru.tsecloud.club/php/package-bind/</link>
+      <pubDate>Fri, 29 Jun 2018 10:31:29 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/package-bind/</guid>
+      <description>创建服务提供者 在Laravel中,我们可以通过artisan命令创建一个服务提供者
+php artisan make:provider HelloServiceProvider  以上命令将会创建一个名为HelloServiceProvider的服务提供者
+服务提供者结构 &amp;lt;?php namespace App\Providers; use Illuminate\Support\ServiceProvider; class HelloServiceProvider extends ServiceProvider { public function boot(){ // TODO } public function register(){ //TODO } }  在Laravel中,服务提供者继承了Illuminate\Support\ServiceProvider类,并且包含两个方法boot和register
+ register: 该方法中我们要做的就是一件事,那就是将服务绑定到容器中, 对于其他的诸如事件监听,路由或者其他的服务则不应该放到这里, 这是由于该方法的调用是在服务的注册阶段,其他的服务提供者可能还未完成注册
+ boot: 我们将可以使用其他服务提供者提供的服务, 因为该方法的调用是在所有其他的服务提供者全部注册完成之后,因此,我们可以使用框架中的所有其他的服务
+ ServiceProvider: 在这个类的初始化方法中就是注入应用的实例$app, 对于我们的服务提供这而言基本会涉及到的东西就是: 配置文件,路由,控制器,数据模型,数据迁移等,因此ServiceProvider提供了便捷的方法 方便我们实现以下内容
+ mergeConfigFrom($path, $key) 配置文件的加载
+ loadRoutesFrom($path) 加载路由
+ loadViewsFrom($path, $namespace) 加载视图
+ loadTranslationsFrom($path, $namespace), loadJsonTranslationsFrom加载多语言
+ loadMigrationsFrom($paths) 数据迁移
+ publishes(array $paths, $group = null) 发布</description>
+    </item>
+    
+    <item>
+      <title>Laravel 包编写(一)-Laravel启动过程</title>
+      <link>https://gru.tsecloud.club/php/package-theory/</link>
+      <pubDate>Fri, 29 Jun 2018 09:37:49 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/package-theory/</guid>
+      <description>在Laravel文档请求的生命周期一篇中,讲解了请求的生命周期
+ 首先请求进入public/index.php文件中, 该文件首先加载autoload.php文件,用于类的自动加载
+require __DIR__.&#39;/../vendor/autoload.php&#39;;  然后引入应用的初始文件,并返回一个应用的实例$app
+$app = require_once __DIR__.&#39;/../bootstrap/app.php&#39;; $kernel = $app-&amp;gt;make(Illuminate\Contracts\Http\Kernel::class);  在初始化$app实例的初始化函数中,进行了如下的操作
+public function __construct($basePath = null) { if ($basePath) { $this-&amp;gt;setBasePath($basePath); } // 实例化容器 $this-&amp;gt;registerBaseBindings(); // 注册基础服务(事件监听服务, 日志服务, 路由服务) $this-&amp;gt;registerBaseServiceProviders(); // 注册核心容器的别名 $this-&amp;gt;registerCoreContainerAliases(); }  在实例化Illuminate\Foundation\Application之后,使用单例模式将http请求的核心注册到容器中
+// http请求核心 $app-&amp;gt;singleton( Illuminate\Contracts\Http\Kernel::class, App\Http\Kernel::class ); // 命令行请求核心 $app-&amp;gt;singleton( Illuminate\Contracts\Console\Kernel::class, App\Console\Kernel::class ); //异常处理 $app-&amp;gt;singleton( Illuminate\Contracts\Debug\ExceptionHandler::class, App\Exceptions\Handler::class );   调用Http\Kernel的handle方法将http请求传递
+$response = $kernel-&amp;gt;handle( $request = Illuminate\Http\Request::capture() );  在handle方法中,会对请求进行处理</description>
+    </item>
+    
+    <item>
+      <title>beanstalkd-Laravel Queue</title>
+      <link>https://gru.tsecloud.club/php/beanstalkd-use/</link>
+      <pubDate>Tue, 26 Jun 2018 15:54:40 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/beanstalkd-use/</guid>
+      <description> 使用beanstalkd作为Laravel的队列驱动,需要安装pda/pheanstalk包
+ 安装依赖包
+composer require pda/pheanstalk  修改.env文件中的项目驱动为beanstalkd
+QUEUE_DRIVER=beanstalkd  调整config\queue.php文件中beanstalkd数组
+&amp;lt;?php &#39;beanstalkd&#39; =&amp;gt; [ &#39;driver&#39; =&amp;gt; &#39;beanstalkd&#39;, &#39;host&#39; =&amp;gt; env(&#39;BEANSTALKD_HOST&#39;, &#39;localhost&#39;), &#39;queue&#39; =&amp;gt; &#39;default&#39;, &#39;retry_after&#39; =&amp;gt; 90, ],  队列的使用文档,可以参考Laravel Queue
+ 如果你不使用Laravel的队列和计划任务,pad/pheanstalk Pheanstalk类文件对协议中的方法进行封装
+ 安装beanstalk_console,对beanstalkd中的任务进行管理
+  参考文档  Laravel
+ pda/pheanstalk
+ beanstalk_console
+  </description>
+    </item>
+    
+    <item>
+      <title>beanstalkd-协议</title>
+      <link>https://gru.tsecloud.club/php/beanstalkd-command/</link>
+      <pubDate>Tue, 26 Jun 2018 12:06:38 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/beanstalkd-command/</guid>
+      <description>beanstalk协议以ASCII编码运行在TCP协议上；客户端的执行的周期为：连接服务，发送命名和数据，等待响应，关闭连接，对于一个连接而言；服务器按接收顺序依次处理命令，并以相同的顺序发送响应；所有的数字都将转换成无符号的十进制整型．
+命名，对于ASCII字符串而言，名字可以包含字母(A-Z, a-z), 数字(0-9),横线(&amp;lsquo;-&amp;rsquo;),加号(&amp;lsquo;+&amp;rsquo;), 斜线(&amp;ldquo;/&amp;rdquo;), 分号(&amp;ldquo;;&amp;rdquo;), 顿号(&amp;ldquo;.&amp;rdquo;), 美元符号(&amp;ldquo;$&amp;rdquo;),以及括号(&amp;ldquo;()&amp;rdquo;)，但是不能以横线作为开头．字符串以空白符结尾，但是每一个名字至少包含一个字符
+该协议包含两种数据格式，文本行，非结构化的数据块．其中文本行主要用于客户端命令和服务端响应，数据块常用来保存任务详情以及状态．每一个消息体 都是一个字节序列，服务端不会对消息进行检查和修改，只会原样返回,这样使得客户端能够正确的解析消息
+beanstalk中并没有用于关闭连接的命令，客户端如果长时间未使用服务将会自动关闭TCP连接，对于beanstalk而言，能够同时保持大量的连接，对于客户端而言就能够更好的保持连接以及重用连接，这样就避免了创建新的TCP连接带来的额外开销
+如果客户端违反协议(如:发送非法格式请求数据,命令不存在)或者服务端发生了错误，客户端将会返回如下的错误信息
+- &amp;quot;OUT_OF_MEMORY\r\n&amp;quot; 内存不足，服务端无法分配足够的内存用于消息的执行，客户端需要等待一段时间再尝试发送 - &amp;quot;INTERNAL_ERROR\r\n&amp;quot; 内部错误，服务端出现了BUG - &amp;quot;DRAINING\r\n&amp;quot; 服务端不再接受新的消息，客户端需要尝试连接其他的服务或者关闭服务 - &amp;quot;BAD_FORMAT\r\n&amp;quot; 客户端发送了错误的数据格式 - &amp;quot;UNKNOWN_COMMAND\r\n&amp;quot;　客户端发送了错误的命令  生产者命令 指定使用的Tube,如果不指定Tube,那么任务将会被投递到一个名为default的Tube中,其名称长度不得大于200bytes,如果Tube不存在将会新建一个,执行成功后,将会返回USING &amp;lt;tube&amp;gt;\r\n
+use &amp;lt;tube&amp;gt;\r\n  创建一个新的任务
+put &amp;lt;pri&amp;gt; &amp;lt;delay&amp;gt; &amp;lt;ttr&amp;gt; &amp;lt;bytes&amp;gt;\r\n   pri 指定任务的优先级,0-2**32
+ delay 任务的延迟执行时间,单位为秒,如果指定,则任务将会被投递到Tube的延迟队列中
+ ttr 允许消费者处理任务的时间,单位为秒,该时间从消费者获取任务后开始计时,在该时间区间内 如果消费者不变更任务的状态或者删除任务,那么该任务将会被重新投递到ready queue中,该值的最小值为1,如果设置为0,那么服务端将会自动增加为1
+ bytes 任务的编码大小,任务编码以后,其大小不得超过2**16 bytes
+ data 消息体
+  创建一个任务的可能响应值如下
+ INSERTED &amp;lt;id&amp;gt; \r\n 任务写入成功，并返回任务的id标识
+ BURIED &amp;lt;id&amp;gt;\r\n 优先级队列已经耗尽内存，任务状态将会被设定为BURIED</description>
+    </item>
+    
+    <item>
+      <title>beanstalkd-基本概念</title>
+      <link>https://gru.tsecloud.club/php/beanstalk/</link>
+      <pubDate>Fri, 22 Jun 2018 17:13:23 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/beanstalk/</guid>
+      <description>在beanstalkd中包含几个重要的概念，如下图所示，对于一个系统消息队列系统来说 其必定有 - 一个或多个生产者(Producter), - 一个或多个消费者(Customer), - 一个消息存储系统，在这里指的是beanstalkd
+对于beanstalkd来说，以管道(Tube)作为其主要的组成部分，一个beanstalkd可以包含一个或者多个管道
+对于Tube而言,有两个队列组成，ready queue和delay queue,每一个队列里面可以包含零个或者多个任务
+ ready 队列用来存储满足执行条件的队列 delay 队列用来存储尚未到执行时间的队列  对于队列中的任务而言，我们更加关注的是任务的状态，因此在beanstalkd中的任务包含一下四中状态 ready, reserved, delayed,buried
+ ready 需要立即被处理的任务 reserved 已经被消费者获取，正在处理的任务 delayed 延迟执行的任务 buried 已经被执行完，但是未删除的任务   由上面的流程图可以看到，生成任务时，可以将任务设置成立即执行(ready)或者延迟执行(delayed)
+ 对于延迟任务而言，延迟时间到了以后，其状态变更为立即执行状态
+ 只有在立即执行状态下的任务，才能被消费者消费
+ 处于立即执行状态下的任务，被消费者获取以后，其状态变成正在处理中(reserved)
+ 当任务处理完以后，有四种处理方式删除，重新投递到立即执行队列，投递到延迟队列以及不做任何处理
+ 当不对已完成任务做任何处理时，其对消费者属于不可见状态，直到其被重新投递到ready队列中，或者被删除
+  put with delay release with delay ----------------&amp;gt; [DELAYED] &amp;lt;------------. | | | (time passes) | | | put v reserve | delete -----------------&amp;gt; [READY] ---------&amp;gt; [RESERVED] --------&amp;gt; *poof* ^ ^ | | | \ release | | | `-------------&#39; | | | | kick | | | | bury | [BURIED] &amp;lt;---------------&#39; | | delete `--------&amp;gt; *poof*  </description>
+    </item>
+    
+    <item>
+      <title>Laravel 数据迁移浅析 使用篇</title>
+      <link>https://gru.tsecloud.club/php/laravel-migrate/</link>
+      <pubDate>Tue, 05 Jun 2018 11:53:19 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/laravel-migrate/</guid>
+      <description>命令查看 php artisan make:migration --help  创建文件 在创建文件的时候,通过以下语句查看其创建选项
+php artisan make:migration --help  对于创建迁移文件,有用的是以下几个选项
+--create[=CREATE] The table to be created. --table[=TABLE] The table to migrate. --path[=PATH] The location where the migration file should be created.  说明:
+ create: 创建一个新的数据表,后面指定表名,--create=articles
+ table: 修改表字段,单独使用这个选项的时候,前提条件是数据表已经存在, --table=articles
+ path: 指定一个相对于项目根目录的相对路径作为迁移文件的存放路径,前提条件是是该目录已经存在, --path=database/migrations/temp
+  注意事项  文件名称的一致性
+创建迁移文件的时候,需要保证文件名的唯一性, 虽然在创建文件的时候,会自动添加当前日期以及微秒作为文件的前缀(如：2018_06_01_014354_create_table_articles_table),
+但是需要注意的是,其所形成的迁移文件类名为 CreateTableArticlesTable,尽管Laravel已经引入了类名检查的机制,但对于多人协作来说难免会存在创建相同类名的情况 为了保证数据迁移时的唯一性，在vendor/composer/autoload_classmap.php文件的数组中,以类名作为key,以文件名称作为value
+为了迁移时能够正确执行，因此如果由于某些原因需要删除迁移文件或者分之合并以后,都需要执行composer dumpautoload,
+防止数据迁移的时候出现类名重复或者类文件不存在的情况
+ 文件结构
+在所创建的文件结构中,包含两个方法up和down,其中up方法执行的是迁移时需要进行的数据表操作,
+而对于down方法来说则是up操作的逆操作,如果没有对down方法进行维护,那么在执行迁移回滚的时候, 虽然回滚成功(即migrations数据表的迁移记录回滚成功),
+但是up方法所进行的操作(比如增加,修改等)造成数据表结构的变更将不会进行回滚,造成重新迁移的时候,出现一系列的问题(比如:改名的时候,字段名称不存在, 增加的时候,字段名称已存在的问题)
+  文件迁移  迁移记录表结构</description>
+    </item>
+    
+    <item>
+      <title>Laravel 队列使用-Redis作为驱动</title>
+      <link>https://gru.tsecloud.club/php/laravel-event-redis/</link>
+      <pubDate>Mon, 07 May 2018 22:23:05 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/laravel-event-redis/</guid>
+      <description>准备工作  安装相对应的Redis包
+$ composer require composer require predis/predis  修改配置文件.env,设置驱动
+QUEUE_DRIVER=redis REDIS_HOST=redis REDIS_PASSWORD=null REDIS_PORT=6379  修改config/queue.php文件中redis队列连详情
+&#39;redis&#39; =&amp;gt; [ &#39;driver&#39; =&amp;gt; &#39;redis&#39;, &#39;connection&#39; =&amp;gt; &#39;default&#39;, &#39;queue&#39; =&amp;gt; &#39;default&#39;, &#39;expire&#39; =&amp;gt; 60, ],  设置任务运行失败是的存储,失败的任务是存放到数据库表中的,在config/queue.php文件中配置相关的选项
+&#39;failed&#39; =&amp;gt; [ &#39;database&#39; =&amp;gt; env(&#39;DB_CONNECTION&#39;, &#39;mysql&#39;), &#39;table&#39; =&amp;gt; &#39;failed_jobs&#39;, ],   任务存储结构 在Redis中,队列根据是否延迟执行分为两种结构
+无延迟队列 无延迟队列在Redis中的存储结构为Lists,其key的命名规则以queues关键字后面添加队列名称
+queues:happybird  延迟队列 延迟队列由于引入了延迟执行的时间概念,所以其存储的结构为Sort Sets, 其key的命名规则以queues关键字后面添加队列名称以及delayed关键字
+queues:happybird:delayed  执行时间为Sort Sets的score</description>
+    </item>
+    
+    <item>
+      <title>Laravel 队列使用-队列失败任务处理</title>
+      <link>https://gru.tsecloud.club/php/laravel-job-fail/</link>
+      <pubDate>Fri, 04 May 2018 21:57:38 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/laravel-job-fail/</guid>
+      <description>在config/queue.php文件的failed字段里面,可以配置失败任务的连接以及数据的存储
+&#39;failed&#39; =&amp;gt; [ &#39;database&#39; =&amp;gt; env(&#39;DB_CONNECTION&#39;, &#39;mysql&#39;), &#39;table&#39; =&amp;gt; &#39;failed_jobs&#39;, ],  在使用artisan命令来执行队列任务的时候,如果没有指定任务失败的次数,那么任务将会一直尝试 例如在HappybirdJob类的handle函数中添加如下代码
+public function handle() { $data = []; $data[3]; }  当执行的时候,将会一直不断的尝试执行而不会停止,如果指定了--tries次数,那么任务将会在执行指定的次数之后删除任务并将任务放置到失败的任务表中 &amp;gt; Note: 任务序列化存储的时候只会存储对应的上下文环境,但是不包括handle中的业务逻辑,所以测试的时候需要注意这一点
+注册失败任务监听任务 在App\Providers\AppServiceProvider这个文件的AppServiceProvider类中引入如下类:
+use Illuminate\Support\Facades\Queue; use Illuminate\Queue\Events\JobFailed;  然后在boot中做如下处理:
+Queue::failing(function(JobFailed $event){ // deal with the fail job });  通过查看JobFailed可以看到,这个类没有任务方法,仅仅只是保存了任务的一下几个属性:
+public function __construct($connectionName, $job, $data, $failedId = null) { $this-&amp;gt;job = $job; //任务对象 $this-&amp;gt;data = $data; // 传递给任务的数据 $this-&amp;gt;failedId = $failedId; // 失败任务记录ID $this-&amp;gt;connectionName = $connectionName; //队列连接名称 }  通过job对象,我们就可以获取到任务的所有详情,然后就可以针对任务进行处理</description>
+    </item>
+    
+    <item>
+      <title>Laravel 队列使用-队列的触发与守护</title>
+      <link>https://gru.tsecloud.club/php/laravel-job-triger/</link>
+      <pubDate>Thu, 03 May 2018 23:07:15 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/laravel-job-triger/</guid>
+      <description>触发 任务的触发,主要的实现是在Illuminate\Foundation\Bus\DispatchesJobs这个trait中实现的,其只包含两个方法
+protected function dispatch($job){ return app(Dispatcher::class)-&amp;gt;dispatch($job); } protected function dispatchNow($job){ return app(Dispatcher::class)-&amp;gt;dispatchNow($job); }  这两个方法的区别就在于时间上,一个是推送到队列,另外一个是推送并立即执行,依据前面的traitQueueable可知,我们可以在对任务进行设置,例如
+protected function hpJob(){ $job = (new HappybirdJob(5))-&amp;gt;onConnection(&amp;quot;other&amp;quot;) -&amp;gt;onQueue(&amp;quot;happybird&amp;quot;) -&amp;gt;delay(5); }  以上例子表示,我们使用other的连接在happybird队列中设置一个延迟时间为5s的HappybirdJob任务
+由于dispatch, dispatchNow都是使用的是容器中绑定的Dsipatch类,接下来看一下这个类 这个类位于Illuminate\Bus\Dispatcher中
+Dispatch 该类主要是用于队列任务的分发以及设置,其中可以看到
+public function dispatch($command) { if ($this-&amp;gt;queueResolver &amp;amp;&amp;amp; $this-&amp;gt;commandShouldBeQueued($command)) { return $this-&amp;gt;dispatchToQueue($command); } else { return $this-&amp;gt;dispatchNow($command); } }  当使用dispatch类触发任务时,将需要判断是否实现了ShouldQueue,这个就是之前在讨论异步队列和同步队列时两个不同的列所实现的差异
+而对于立即执行的操作来说,则是通过管道来执行
+public function dispatchNow($command) { return $this-&amp;gt;pipeline-&amp;gt;send($command) -&amp;gt;through($this-&amp;gt;pipes) -&amp;gt;then(function ($command) { return $this-&amp;gt;container-&amp;gt;call([$command, &#39;handle&#39;]); }); }  对于管道的说明和解释,可以参考 Laravel Pipeline 组件的实现, Understanding Laravel Pipelines这两篇文章</description>
+    </item>
+    
+    <item>
+      <title>Laravel 队列使用-队列的同步与异步</title>
+      <link>https://gru.tsecloud.club/php/laravel-job-part1/</link>
+      <pubDate>Wed, 02 May 2018 22:42:46 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/laravel-job-part1/</guid>
+      <description>关于Laravle所支持的驱动类型以及对应驱动的配置,请查看Laravel Queue, 在这里将会使用以数据库作为驱动来说明,Laravel队列的使用
+准备工作  设置驱动类型,修改.env文件中配置选项
+QUEUE_DRIVER=database  生成任务表并执行迁移
+$ php artisan queue:table $ php artisan migrate  以上将会生成jobs和failed_jobs任务表,数据表字段我们随后再做解释
+ 创建两个不同类型任务
+$ php artisan make:job HappybirdJob $ php artisan make:job --sync HappybirdSyncJob  数据表结构
+|id|queue|payload|attempts|reserved|reserved_at|available_at|created_at|   queue:队列名称 payload:存储序列化之后的job模型 attempts:重试次数 reserved: 任务是否保留 reserved_at: 保留时间 available_at:执行时间 created_at: 创建时间   结构  HappybirdSyncJob
+App\Jobs\HappybirdSyncJob.php文件的内容如下
+&amp;lt;?php namespace App\Jobs; use App\Jobs\Job; class HappybirdSyncJob extends Job { public function __construct(){} public function handle(){} }  这个类包含了一个初始化函数,以及一个业务逻辑执行函数,并且继承了Job类,查看可以看到其只是使用了一个组合,</description>
+    </item>
+    
+    <item>
+      <title>Laravel 事件监听简单使用</title>
+      <link>https://gru.tsecloud.club/php/laravel-event/</link>
+      <pubDate>Fri, 27 Apr 2018 23:35:21 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/laravel-event/</guid>
+      <description>定义事件与事件监听器, 在App\Providers\EventServiceProvider.php类的$listen中定义事件与事件监听者的关系
+protected $listen = [ &#39;App\Events\HappybirdEvent&#39; =&amp;gt; [ &#39;App\Listeners\HappybirdListener&#39;, ], ];  创建事件和事件监听器, 在终端中执行artisan命令来创建
+$ php artisan event:generate​
+ 定义事件结构, 在事件类App\Events\HappybirdEvent设置事件所需要的条件或者环境 &amp;lt;?phppublic $item;/*** Create a new event instance.** @return void*/public function __construct(int $item){$this-&amp;gt;item = $item;} 当然在这里里面,我们可以定义一些处理不同监听者的逻辑,这一点在含有多个监听者的条件下尤其有效
+&amp;lt;?phppublic function addItem(){$this-&amp;gt;item += 1;} 实现监听逻辑, 在App\Listeners\HappybirdListener
+&amp;lt;?php/*** Handle the event.** @param HappybirdEvent $event* @return void*/public function handle(HappybirdEvent $event){//Do something } 在监听类的处理句柄handle中,实现了事件的依赖注入,这样就可以直接在函数体中获取事件的参数</description>
+    </item>
+    
+    <item>
+      <title>Laravel中安装和使用Redis作为会话和缓存的载体</title>
+      <link>https://gru.tsecloud.club/php/redis/</link>
+      <pubDate>Thu, 08 Mar 2018 23:27:06 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/redis/</guid>
+      <description>本人使用的是Laradock 作为开发环境
+ predis的安装  安装依赖包predis/predis  composer require predis/predis  重新生成自动加载文件  composer dumpautoload 修改配置 修改.env文件中的缓存驱动,会话驱动,redis连接设置 &amp;lt;?php#缓存驱动#CACHE_DRIVER=arrayCACHE_DRIVER=redis#会话驱动#SESSION_DRIVER=fileSESSION_DRIVER=redis#redis连接驱动REDIS_HOST=redisREDIS_PASSWORD=nullREDIS_PORT=6379  配置session和cache使用不同的数据库 之所以这样做是避免清除缓存的时候，用户会话也一并清除
+ 修改config/database.php文件中的redis数组，复制一份default的配置，并依据需要修改其中的参数,这里最主要的两点是索引名称和database选项的修改
+&amp;lt;?php&amp;#39;session&amp;#39; =&amp;gt; [&amp;#39;host&amp;#39; =&amp;gt; env(&amp;#39;REDIS_HOST&amp;#39;),&amp;#39;password&amp;#39; =&amp;gt; env(&amp;#39;REDIS_PASSWORD&amp;#39;, null),&amp;#39;port&amp;#39; =&amp;gt; env(&amp;#39;REDIS_PORT&amp;#39;, 6379),&amp;#39;database&amp;#39; =&amp;gt; 1,], 修改config/session.php文件中connection为session,这里的值，就是上一步设置的索引名称
+&amp;lt;?php&amp;#39;connection&amp;#39; =&amp;gt; &amp;#34;session&amp;#34;,  重新加载配置 当配置完成以后，应该运行一下两条命令，重新加载配置，避免出现不必要的问题
+ 清除配置  php artisan config:clear  清空缓存  php artisan cache:clear 简单使用 Laravel提供Cache, Redis两种Facade来使用对redis进行操作,而这两种方式已存在一些区别</description>
+    </item>
+    
+    <item>
+      <title>Laravel自带的登录注册组件简单说明</title>
+      <link>https://gru.tsecloud.club/php/register/</link>
+      <pubDate>Wed, 07 Mar 2018 21:48:05 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/register/</guid>
+      <description>在这里我们需要理解Laravle中两个名词 - Guards:定义了对于每一个请求，如何对用户进行认证 - Providers: 定义了从哪里获取用户
+使用脚手架生成登录注册页面 php artisan make:auth 查看配置config/auth.php, 该文件用于配置如何登录,注册,重置密码 Providers Config &amp;lt;?php&amp;#39;providers&amp;#39; =&amp;gt; [&amp;#39;users&amp;#39; =&amp;gt; [&amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;eloquent&amp;#39;,&amp;#39;model&amp;#39; =&amp;gt; App\User::class,],// &amp;#39;users&amp;#39; =&amp;gt; [ // &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;database&amp;#39;, // &amp;#39;table&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;, // ],],  在Providers中，定义了两个数组,　一个是以Eloquent模型作为驱动，并且使用App\Users这个数据模型作为存储用户数据的载体，当然也可以使用database作为驱动,直接指明table作为存储载体
+指定了如何获取到用户数据以后，接下来就需要配置如何验证用户
+Guards Config &amp;lt;?php&amp;#39;guards&amp;#39; =&amp;gt; [&amp;#39;web&amp;#39; =&amp;gt; [&amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;session&amp;#39;,&amp;#39;provider&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;,],&amp;#39;api&amp;#39; =&amp;gt; [&amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;token&amp;#39;,&amp;#39;provider&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;,],],  在Guards中,配置了两种的验证方式,一种是web,通过session来验证用户信息,另一种是通过令牌token来验证用户，这两种方式默认都使用以Eloquent类型的App\User模型作为存储用户信息的载体</description>
+    </item>
+    
+  </channel>
+</rss>

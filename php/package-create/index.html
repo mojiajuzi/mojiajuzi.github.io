@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Laravel 包编写(三)-服务提供者实现 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Laravel 包编写(三)-服务提供者实现</h1>
+  <time datetime=2018-06-29T11:32:11&#43;0800 class="post-date">Fri, Jun 29, 2018</time>
+  
+
+<p>在这一篇我们将实现一个简单的关于文章分类的包(<code>gru\tag</code>),该包将会尽量涉及到包开发的各个方面</p>
+
+<ol>
+<li><p>在一个Laravel项目的根目录下面创建一个名为<code>packages</code>,
+然后在package目录下面创建一个<code>gru</code>文件夹,
+最后在<code>gru</code>文件夹下面创建一个<code>tag</code>文件,创建完成以后,结构如下</p>
+
+<pre><code>-Root
+    --gru
+        --tag
+          --src
+</code></pre>
+
+<p>之所以这样布局是因为相同作者的包,使用composer管理以后将统一放到一个目录下,而<code>src</code>将会作为我们代码放置的地方</p></li>
+
+<li><p>在tag目录下,使用composer初始化包,初始化以后我们就可以得到一个composer.json文件,由于该项目没有依赖其他的包,所以这里添加依赖</p>
+
+<pre><code class="language-json">    {
+        &quot;name&quot;: &quot;gru/tag&quot;,
+        &quot;description&quot;: &quot;this is demo about package write&quot;,
+        &quot;type&quot;: &quot;library&quot;,
+        &quot;license&quot;: &quot;MIT&quot;,
+        &quot;require&quot;: {}
+    }
+</code></pre>
+
+<p>如果不熟悉,composer可以参考<a href="https://www.phpcomposer.com/">composer中文网</a>提供的文档</p></li>
+
+<li><p>模拟自动加载,为了更好的在Laravel项目中进行包的开发与测试,我们需要在项目的根目录(注意:不是tag下面)下面添加命名psr-4的加载规则</p>
+
+<pre><code class="language-json">    &quot;psr-4&quot;: {
+        &quot;App\\&quot;: &quot;app/&quot;,
+        &quot;Gru\\Tag\\&quot;: &quot;packages/gru/tag/src&quot;
+    }
+</code></pre>
+
+<p>添加完成以后需要执行<code>composer dumpautoload</code>来使配置生效,生效后,我们包的命名空间就会变成<code>Gru\Tag</code></p></li>
+
+<li><p>创建服务提供者<code>GruTagServiceProvider</code></p>
+
+<pre><code>php artisan make:provider GruTagServiceProvider
+</code></pre>
+
+<p>创建完成以后,需要将该文件迁移到<code>packages/gru/tag/src</code>目录下,并修改其命名空间为<code>Gru\Tag</code></p></li>
+
+<li><p>将创建的服务注册到<code>config/app.php</code>文件的<code>providers</code>数组中</p>
+
+<pre><code>Gru\Tag\GruTagServiceProvider::class,
+</code></pre></li>
+
+<li><p>创建数据迁移文件</p>
+
+<pre><code>php artisan make:migration create_table_tags --create=tags
+</code></pre>
+
+<p>然后将文件迁移到我们包的<code>src</code>目录下,</p></li>
+
+<li><p>创建模型,并迁移到<code>src</code>目录下,注意变更模型的命名空间</p>
+
+<pre><code>php artisan make:model Tag
+</code></pre></li>
+
+<li><p>创建资源控制器,并迁移到<code>src</code>目录下,注意变更模型的命名空间</p>
+
+<pre><code>php artisan make:controller --resource TagController
+</code></pre>
+
+<p>这里需要注意的是,处理变更命名空间,还需要引入基础控制器类</p>
+
+<pre><code>use App\Http\Controllers\Controller;
+</code></pre></li>
+
+<li><p>添加路由文件<code>src\routes.php</code></p>
+
+<pre><code class="language-php">&lt;?php
+
+Route::resource(&quot;tags&quot;, &quot;Gru\Tag\TagController&quot;);
+</code></pre></li>
+
+<li><p>添加路由文件到<code>GruServiceProvider.php</code>文件的<code>boot</code>方法中</p>
+
+<pre><code class="language-php">&lt;?php
+public function boot()
+{
+    $routeFile = __DIR__ . '/routes.php';
+    $this-&gt;loadRoutesFrom($routeFile);
+}
+</code></pre></li>
+
+<li><p>在<code>TagController</code>类中的<code>index</code>方法中,添加如下代码,测试当前路由几控制器是否可用</p>
+
+<pre><code class="language-php">&lt;?php
+ public function index()
+{
+    return response()-&gt;json(['state' =&gt; 'route, controller work']);
+}
+</code></pre></li>
+
+<li><p>通过路由访问<code>you_domain/tags</code>,如果看到</p>
+
+<pre><code class="language-json">{&quot;state&quot;:&quot;route, controller work&quot;}
+</code></pre>
+
+<p>则表明,路由和控制器已经正常工作</p></li>
+
+<li><p>在<code>src</code>目录下创建配置文件<code>tag.php</code>,并添加一点内容</p>
+
+<pre><code class="language-php">&lt;?php
+return [
+    'tag' =&gt; 'this is tag config'
+];
+</code></pre></li>
+
+<li><p>在<code>GruServiceProvider</code>的boot方法中加载配置</p>
+
+<pre><code class="language-php">&lt;?php
+public function boot()
+{
+    .....
+
+    $configFile = __DIR__ . '/tag.php';
+    $this-&gt;mergeConfigFrom($configFile, 'tag');
+}
+</code></pre>
+
+<p>然后就可以在任何地方通过<code>config(tag.xx)</code>的形式进行访问配置文件</p></li>
+
+<li><p>执行迁移文件, 在<code>GruServiceProvider</code>类的<code>boot</code>方法中,增加迁移文件的路径</p>
+
+<pre><code class="language-php">&lt;?php
+    //加载迁移文件
+    $migratePath = __DIR__ . '/';
+    $this-&gt;loadMigrationsFrom($migratePath);
+</code></pre>
+
+<p>然后在项目的根目录下执行迁移</p>
+
+<pre><code>php artisan migrate
+</code></pre></li>
+
+<li><p>视图的使用,在<code>src</code>目录下,增加增加一个名为<code>create.blade.php</code>的文件,在这里将用来创建tag</p>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;title&gt;Tag create&lt;/title&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form action=&quot;{{url('tags')}}&quot; method=&quot;post&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></li>
+
+<li><p>在<code>GruServiceProvider</code>类的<code>boot</code>方法中,添加视图加载路径</p>
+
+<pre><code class="language-php">&lt;?php
+    //加载视图文件
+    $viewPath = __DIR__ . '/';
+    $this-&gt;loadViewsFrom($viewPath, 'Gru\Tag');
+</code></pre></li>
+
+<li><p>然后在控制的<code>create</code>方法中,增加视图的返回</p>
+
+<pre><code class="language-php">&lt;?php
+public function create()
+{
+    return view('Gru\Tag::create');
+}
+</code></pre>
+
+<p>在这里需要注意的是,这里的视图加载需要使用到<code>loadViewsFrom</code>中的命名空间来指定视图的地址</p></li>
+
+<li><p>最后在控制器的<code>store</code>方法中,添加标签保存的逻辑处理,这里为了简化操作,去除了必要的校验处理</p>
+
+<pre><code class="language-php">&lt;?php
+public function store(Request $request)
+{
+    $name = $request-&gt;get(&quot;name&quot;);
+    $tag = new Tag;
+    $tag-&gt;name = $name;
+    $tag-&gt;save();
+}
+</code></pre></li>
+</ol>
+
+<p>至此一个包的创建过程基本就完成了,由于这里我们没有提供特别的服务类,
+因此没有在<code>register</code>中注册服务,如果有的话,注册的代码如下:</p>
+
+<pre><code class="language-php">&lt;?php
+// 服务注册
+$this-&gt;app-&gt;singleton(MyPackage::class, function () {
+    return new MyPackage();
+});
+
+// 别名注册
+$this-&gt;app-&gt;alias(MyPackage::class, 'my-package');
+</code></pre>
+
+<h4 id="不足">不足</h4>
+
+<ol>
+<li><p>一个完整的包,离不开测试,这里我们没有进行代码的测试,在实际的包开发中,应该补充包测试,以及使用文档</p></li>
+
+<li><p>这里我们为了方便,没有对包的目录结构进行设计,实际上应该依据自己的需要,调整包各个模块的结构</p></li>
+</ol>
+
+<h4 id="参考资料">参考资料</h4>
+
+<ul>
+<li><p><a href="https://medium.com/@lasselehtinen/getting-started-on-laravel-package-development-a62110c58ba1">Getting started on Laravel package development</a></p></li>
+
+<li><p><a href="https://devdojo.com/blog/tutorials/how-to-create-a-laravel-package">How to create a Laravel Package</a></p></li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

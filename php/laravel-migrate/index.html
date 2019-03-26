@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Laravel 数据迁移浅析 使用篇 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Laravel 数据迁移浅析 使用篇</h1>
+  <time datetime=2018-06-05T11:53:19&#43;0800 class="post-date">Tue, Jun 5, 2018</time>
+  
+
+<h4 id="命令查看">命令查看</h4>
+
+<pre><code class="language-bash">php artisan make:migration --help
+</code></pre>
+
+<h4 id="创建文件">创建文件</h4>
+
+<p>在创建文件的时候,通过以下语句查看其创建选项</p>
+
+<pre><code class="language-bash">php artisan make:migration --help
+</code></pre>
+
+<p>对于创建迁移文件,有用的是以下几个选项</p>
+
+<pre><code class="language-bash">--create[=CREATE]  The table to be created.
+--table[=TABLE]    The table to migrate.
+--path[=PATH]      The location where the migration file should be created.
+</code></pre>
+
+<p>说明:</p>
+
+<ul>
+<li><p>create: 创建一个新的数据表,后面指定表名,<code>--create=articles</code></p></li>
+
+<li><p>table:  修改表字段,单独使用这个选项的时候,前提条件是数据表已经存在, <code>--table=articles</code></p></li>
+
+<li><p>path: 指定一个相对于项目根目录的相对路径作为迁移文件的存放路径,前提条件是是该目录已经存在, <code>--path=database/migrations/temp</code></p></li>
+</ul>
+
+<h5 id="注意事项">注意事项</h5>
+
+<ol>
+<li><p>文件名称的一致性</p>
+
+<p>创建迁移文件的时候,需要保证文件名的唯一性,
+虽然在创建文件的时候,会自动添加当前日期以及微秒作为文件的前缀(如：<code>2018_06_01_014354_create_table_articles_table</code>),</p>
+
+<p>但是需要注意的是,其所形成的迁移文件类名为
+<code>CreateTableArticlesTable</code>,尽管Laravel已经引入了类名检查的机制,但对于多人协作来说难免会存在创建相同类名的情况
+为了保证数据迁移时的唯一性，在<code>vendor/composer/autoload_classmap.php</code>文件的数组中,以类名作为key,以文件名称作为value</p>
+
+<p>为了迁移时能够正确执行，因此如果由于某些原因需要删除迁移文件或者分之合并以后,都需要执行<code>composer dumpautoload</code>,</p>
+
+<p>防止数据迁移的时候出现类名重复或者类文件不存在的情况</p></li>
+
+<li><p>文件结构</p>
+
+<p>在所创建的文件结构中,包含两个方法<code>up</code>和<code>down</code>,其中<code>up</code>方法执行的是迁移时需要进行的数据表操作,</p>
+
+<p>而对于<code>down</code>方法来说则是<code>up</code>操作的<strong>逆操作</strong>,如果没有对<code>down</code>方法进行维护,那么在执行迁移回滚的时候,
+虽然回滚成功(即<code>migrations</code>数据表的迁移记录回滚成功),</p>
+
+<p>但是<code>up</code>方法所进行的操作(比如增加,修改等)造成数据表结构的变更将不会进行回滚,造成重新迁移的时候,出现一系列的问题(比如:改名的时候,字段名称不存在, 增加的时候,字段名称已存在的问题)</p></li>
+</ol>
+
+<h4 id="文件迁移">文件迁移</h4>
+
+<ol>
+<li><p>迁移记录表结构</p>
+
+<p>迁移记录表的结构较为简单,总共也就两个字段</p>
+
+<ul>
+<li>migration 记录迁移文件的文件名</li>
+<li>batch 文件属于第几次迁移</li>
+</ul>
+
+<pre><code class="language-ansi">mysql&gt; select * from migrations;
++------------------------------------------------+-------+
+| migration                                      | batch |
++------------------------------------------------+-------+
+| 2014_10_12_000000_create_users_table           |     1 |
+| 2014_10_12_100000_create_password_resets_table |     1 |
+| 2018_06_01_014354_create_table_articles_table  |     2 |
+| 2018_06_01_014454_create_table_categories_table|     2 |
+| 2018_06_01_015356_create_tags_table            |     2 |
++------------------------------------------------+-------+
+</code></pre></li>
+
+<li><p>迁移命令</p>
+
+<p>使用<code>php artisan migrate --help</code>,查看迁移时的数据选项</p>
+
+<p>说明:</p>
+
+<ul>
+<li><p>database, 指定需要连接的数据库</p></li>
+
+<li><p>force, 在生产环境中强制执行数据迁移</p></li>
+
+<li><p>path, 指定执行特定位置的迁移文件, 与创建迁移文件的<code>--path</code>选项相对应</p></li>
+
+<li><p>pretend, 显示即将执行的sql语句,如果迁移文件中使用了<code>doctrine/dbal</code>提供的功能,将会提示错误,因为其操作必须依赖于数据表已存在的字段</p></li>
+
+<li><p>seed 显示是否需要重新运行的迁移文件名称</p></li>
+
+<li><p>step 将每一个文件作为一次迁移操作,也就是<code>migrations</code>表的<code>batch</code>会依据文件执行的顺序依次递增</p></li>
+</ul></li>
+
+<li><p>回滚上一次迁移</p>
+
+<pre><code class="language-bash">php artisan migrate:rollback
+</code></pre>
+
+<p>通过添加<code>--pretend</code>选项,可以查看数据即将执行的sql语句, 需要注意的是,这里是执行<strong>上一次</strong>操作,如果重复执行该命令,将会把迁移全部回滚,相当于执行全部执行回滚的命令</p></li>
+
+<li><p>回滚所有操作</p>
+
+<pre><code class="language-bash">php artisan migrate:reset 
+</code></pre>
+
+<p>通过添加相对应的选项可以查看不同的操作,具体选项与迁移时一样</p></li>
+
+<li><p>重建迁移</p>
+
+<pre><code class="language-bash">php artisan migrate:refresh --seed
+</code></pre>
+
+<p>执行该条语句,等价于先执行<code>migrate:reset</code>,然后再执行<code>migrate</code></p></li>
+</ol>
+
+<h4 id="参考资料">参考资料</h4>
+
+<ul>
+<li><a href="https://laravel.com/docs/5.2/migrations">Laravel5.2 Database Migrations</a></li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

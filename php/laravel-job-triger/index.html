@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Laravel 队列使用-队列的触发与守护 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Laravel 队列使用-队列的触发与守护</h1>
+  <time datetime=2018-05-03T23:07:15&#43;0800 class="post-date">Thu, May 3, 2018</time>
+  
+
+<h4 id="触发">触发</h4>
+
+<p>任务的触发,主要的实现是在<code>Illuminate\Foundation\Bus\DispatchesJobs</code>这个trait中实现的,其只包含两个方法</p>
+
+<pre><code class="language-php">protected function dispatch($job){
+    return app(Dispatcher::class)-&gt;dispatch($job);
+}
+
+protected function dispatchNow($job){
+    return app(Dispatcher::class)-&gt;dispatchNow($job);
+}
+</code></pre>
+
+<p>这两个方法的区别就在于时间上,一个是推送到队列,另外一个是推送并立即执行,依据前面的<code>traitQueueable</code>可知,我们可以在对任务进行设置,例如</p>
+
+<pre><code class="language-php">protected function hpJob(){
+    $job = (new HappybirdJob(5))-&gt;onConnection(&quot;other&quot;)
+        -&gt;onQueue(&quot;happybird&quot;)
+        -&gt;delay(5);
+}
+</code></pre>
+
+<p>以上例子表示,我们使用<code>other</code>的连接在<code>happybird</code>队列中设置一个延迟时间为<code>5s</code>的<code>HappybirdJob</code>任务</p>
+
+<p>由于<code>dispatch, dispatchNow</code>都是使用的是容器中绑定的<code>Dsipatch</code>类,接下来看一下这个类
+这个类位于<code>Illuminate\Bus\Dispatcher</code>中</p>
+
+<h5 id="dispatch">Dispatch</h5>
+
+<p>该类主要是用于队列任务的分发以及设置,其中可以看到</p>
+
+<pre><code class="language-php">    public function dispatch($command)
+    {
+        if ($this-&gt;queueResolver &amp;&amp; $this-&gt;commandShouldBeQueued($command)) {
+            return $this-&gt;dispatchToQueue($command);
+        } else {
+            return $this-&gt;dispatchNow($command);
+        }
+    }
+</code></pre>
+
+<p>当使用<code>dispatch</code>类触发任务时,将需要判断是否实现了<code>ShouldQueue</code>,这个就是之前在讨论异步队列和同步队列时两个不同的列所实现的差异</p>
+
+<p>而对于立即执行的操作来说,则是通过管道来执行</p>
+
+<pre><code class="language-php">    public function dispatchNow($command)
+    {
+        return $this-&gt;pipeline-&gt;send($command)
+            -&gt;through($this-&gt;pipes)
+            -&gt;then(function ($command) {
+                return $this-&gt;container-&gt;call([$command, 'handle']);
+        });
+    }
+</code></pre>
+
+<p>对于管道的说明和解释,可以参考
+<a href="https://www.insp.top/article/realization-of-pipeline-component-for-laravel">Laravel Pipeline 组件的实现</a>,
+<a href="https://medium.com/@jeffochoa/understanding-laravel-pipelines-a7191f75c351">Understanding Laravel Pipelines</a>这两篇文章</p>
+
+<h4 id="执行">执行</h4>
+
+<p>对于推送到队列里面的任务,可以通过<code>artisan</code>命令及其参数来进行控制,通过如下命令查看详情</p>
+
+<pre><code>$ php artisan list | grep queue
+</code></pre>
+
+<p>将可以得到如下的结果:</p>
+
+<pre><code>  queue:failed        List all of the failed queue jobs
+  queue:failed-table  Create a migration for the failed queue jobs database table
+  queue:flush         Flush all of the failed queue jobs
+  queue:forget        Delete a failed queue job
+  queue:listen        Listen to a given queue
+  queue:restart       Restart queue worker daemons after their current job
+  queue:retry         Retry a failed queue job
+  queue:table         Create a migration for the queue jobs database table
+  queue:work          Process the next job on a queue
+</code></pre>
+
+<p>这里需要特别注意的是,<code>queue:work, queue:listen</code>这两个命令,其余的都没有额外的参数</p>
+
+<h5 id="queue-listern">queue:listern</h5>
+
+<pre><code>--queue[=QUEUE]      The queue to listen on
+--delay[=DELAY]      Amount of time to delay failed jobs [default: 0]
+--memory[=MEMORY]    The memory limit in megabytes [default: 128]
+--timeout[=TIMEOUT]  Seconds a job may run before timing out [default: 60]
+--sleep[=SLEEP]      Seconds to wait before checking queue for jobs [default: 3]
+--tries[=TRIES]      Number of times to attempt a job before logging it failed [default: 0]
+</code></pre>
+
+<h5 id="queue-work">queue:work</h5>
+
+<pre><code>--queue[=QUEUE]    The queue to listen on
+--daemon           Run the worker in daemon mode
+--delay[=DELAY]    Amount of time to delay failed jobs [default: 0]
+--force            Force the worker to run even in maintenance mode
+--memory[=MEMORY]  The memory limit in megabytes [default: 128]
+--sleep[=SLEEP]    Number of seconds to sleep when no job is available [default: 3]
+--tries[=TRIES]    Number of times to attempt a job before logging it failed [default: 0]
+</code></pre>
+
+<p>相同:</p>
+
+<ul>
+<li>queue: 当包含多个队列时,指定其执行的优先级,优先级顺序为:越往前优先级越高</li>
+<li>delay: 失败队列的延迟执行时间</li>
+<li>memory: 任务执行的最大使用内存,默认为128M</li>
+<li>tries: 任务失败后,尝试运行的次数,默认为不启动</li>
+</ul>
+
+<p>差异:
+对于<code>listen</code>来说,其包含一个<code>--timeout</code>参数,用来置顶执行的时间,超过该时间,将会造成任务失败,程序异常,队列停止</p>
+
+<p>而<code>--sleep</code>选项对于<code>listen</code>来说,表示暂时未有任务执行时,重新执行任务需要的时间,对于<code>queue:work</code>来说,则表示当没有任务运行时,重新检测任务的时间间隔</p>
+
+<p><code>queue:work</code>还有一项特别的参数就是用来指定<code>work</code>运行的模式,如果启用,则会强制队列服务器持续处理任务,无需重启框架</p>
+
+<h4 id="守护">守护</h4>
+
+<p>官方推荐使用<a href="http://supervisord.org/index.html">Supervisor</a>来守护队列的进程,其推荐的配置如下:</p>
+
+<pre><code class="language-ini">[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/forge/app.com/artisan queue:work sqs --sleep=3 --tries=3 --daemon
+autostart=true
+autorestart=true
+user=forge
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/home/forge/app.com/worker.log
+</code></pre>
+
+<ul>
+<li>command:用来设置运行的命令,这个需要替换成自己的环境配置</li>
+<li>numprocs: 监控的进程数量,需要注意的是,进程的数量不能设置过大</li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

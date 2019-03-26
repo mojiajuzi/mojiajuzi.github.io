@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Flutter 基础组件-容器 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Flutter 基础组件-容器</h1>
+  <time datetime=2018-05-10T22:58:56&#43;0800 class="post-date">Thu, May 10, 2018</time>
+  
+
+<h3 id="container-widget">Container Widget</h3>
+
+<blockquote>
+<p>本文章主要翻译于<a href="https://flutterdoc.com/widgets-container-d8eee21ad2f4">Widgets: Container</a></p>
+</blockquote>
+
+<h4 id="特点">特点</h4>
+
+<ul>
+<li>该组件常常用来包含子组件,同时其本身也包含一些样式属性,</li>
+<li>如果没有包含子组件的时候,将会自动填充屏幕上给定的区域</li>
+<li>如果设定了长度和宽度,将会作用域其子组件</li>
+</ul>
+
+<p>假定我们创建了如下一个示例</p>
+
+<pre><code class="language-dart">  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+        title: 'Flutter Demo',
+        home: new Scaffold(
+          appBar: new AppBar(
+            title: new Text('Flutter Container'),
+          ),
+          body: new Container(
+              width: 200.0,
+              height: 200.0,
+              color: Colors.amber.shade400,
+              child: Container(
+                width: 100.0,
+                height: 100.0,
+                color: Colors.greenAccent.shade200,
+              )),
+        ));
+  }
+</code></pre>
+
+<p>以上我们先创建一个容器,并设定其宽度和高度分别为200.0和200.0, 指定其填充色为橘黄色</p>
+
+<p>然后创建该容器的子组件为容器,同样设定其长度和高度为100.0和100.0, 指定其颜色,</p>
+
+<p>实际上,我们只能看见容器子容器的颜色,这是因为如果没有对容器中,如果没有对子组件进行限定的话</p>
+
+<p>子组件将会完全沾满container容器,因此我们可以使用容器的属性对子组件进行限定</p>
+
+<h4 id="属性">属性</h4>
+
+<ul>
+<li><p><strong>padding</strong> 设定子组件与容器的内边距</p>
+
+<pre><code class="language-dart">padding: const EdgeInsets.only(top: 10.0, bottom: 0.0, left: 0.0),
+</code></pre></li>
+
+<li><p><strong>alignment</strong> 设定子组件相对于容器的相对位置</p>
+
+<pre><code class="language-dart">alignment: FractionalOffset.topCenter,
+</code></pre></li>
+
+<li><p><strong>margin</strong> 设置容器的外边距</p>
+
+<pre><code class="language-dart">margin: const EdgeInsets.all(20.0),
+</code></pre></li>
+
+<li><p><strong>color</strong> 设置容器的填充色</p>
+
+<pre><code class="language-dart">color: Colors.amber.shade400,
+</code></pre></li>
+
+<li><p><strong>foregroundDecoration</strong> 设置容器的前景色,将会覆盖其子元素</p>
+
+<pre><code class="language-dart">    foregroundDecoration:
+        new BoxDecoration(color: Colors.amber.shade400),
+</code></pre></li>
+
+<li><p><strong>decoration</strong> 设置容器的颜色,图片,边框等</p>
+
+<pre><code class="language-dart">    decoration: new BoxDecoration(
+        color: const Color(0xff7c94b6),
+        image: new DecorationImage(
+            image: new ExactAssetImage('images/hello.png'),
+            fit: BoxFit.cover),
+        border: new Border.all(color: Colors.black, width: 8.0)),
+</code></pre>
+
+<p>需要注意的是,<code>color</code>,<code>foregroundDecoration</code>,<code>decoration</code>三者不能同时使用</p></li>
+
+<li><p><strong>trans</strong> 设置旋转,可以选择<code>X,Y,Z</code>三个方向</p>
+
+<pre><code class="language-dart">transform: new Matrix4.rotationZ(0.1),
+</code></pre></li>
+
+<li><p><strong>decoration</strong> 约束容器</p>
+
+<pre><code class="language-dart">constraints: new BoxConstraints.expand(width: 100.0),
+</code></pre></li>
+</ul>
+
+<h4 id="完整实例">完整实例</h4>
+
+<pre><code class="language-dart">import 'package:flutter/material.dart';
+
+void main() =&gt; runApp(new HomePage());
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() =&gt; new _HomePageState();
+}
+
+class _HomePageState extends State&lt;HomePage&gt; {
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+        title: 'Flutter Demo',
+        home: new Scaffold(
+          appBar: new AppBar(
+            title: new Text('Flutter Container'),
+          ),
+          body: new Container(
+              alignment: FractionalOffset.topCenter,
+              padding: const EdgeInsets.only(top: 10.0, bottom: 0.0, left: 0.0),
+              decoration: new BoxDecoration(
+                  color: const Color(0xff7c94b6),
+                  image: new DecorationImage(
+                      image: new ExactAssetImage('images/hello.png'),
+                      fit: BoxFit.cover),
+                  border: new Border.all(color: Colors.black, width: 8.0)),
+              // foregroundDecoration:
+              //     new BoxDecoration(color: Colors.amber.shade400),
+              // color: Colors.amber.shade400,
+              // transform: new Matrix4.rotationZ(0.1),
+              constraints: new BoxConstraints.expand(width: 100.0),
+              width: 200.0,
+              height: 200.0,
+              child: Container(
+                margin: const EdgeInsets.all(20.0),
+                width: 100.0,
+                height: 100.0,
+                color: Colors.greenAccent.shade200,
+                alignment: FractionalOffset.topRight,
+                // decoration: new BoxDecoration(color: Colors.blue.shade300),
+                child: new Text('H'),
+              )),
+        ));
+  }
+}
+</code></pre>
+
+<h4 id="参考资料">参考资料</h4>
+
+<ul>
+<li><p><a href="https://flutterdoc.com/widgets-container-d8eee21ad2f4">Widgets: Container</a></p></li>
+
+<li><p><a href="https://docs.flutter.io/flutter/widgets/Container-class.html">Container Class</a></p></li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

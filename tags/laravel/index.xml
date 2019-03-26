@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Laravel on To Be A Better Man</title>
+    <link>https://gru.tsecloud.club/tags/laravel/</link>
+    <description>Recent content in Laravel on To Be A Better Man</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 07 May 2018 22:23:05 +0800</lastBuildDate>
+    
+	<atom:link href="https://gru.tsecloud.club/tags/laravel/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Laravel 队列使用-Redis作为驱动</title>
+      <link>https://gru.tsecloud.club/php/laravel-event-redis/</link>
+      <pubDate>Mon, 07 May 2018 22:23:05 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/laravel-event-redis/</guid>
+      <description>准备工作  安装相对应的Redis包
+$ composer require composer require predis/predis  修改配置文件.env,设置驱动
+QUEUE_DRIVER=redis REDIS_HOST=redis REDIS_PASSWORD=null REDIS_PORT=6379  修改config/queue.php文件中redis队列连详情
+&#39;redis&#39; =&amp;gt; [ &#39;driver&#39; =&amp;gt; &#39;redis&#39;, &#39;connection&#39; =&amp;gt; &#39;default&#39;, &#39;queue&#39; =&amp;gt; &#39;default&#39;, &#39;expire&#39; =&amp;gt; 60, ],  设置任务运行失败是的存储,失败的任务是存放到数据库表中的,在config/queue.php文件中配置相关的选项
+&#39;failed&#39; =&amp;gt; [ &#39;database&#39; =&amp;gt; env(&#39;DB_CONNECTION&#39;, &#39;mysql&#39;), &#39;table&#39; =&amp;gt; &#39;failed_jobs&#39;, ],   任务存储结构 在Redis中,队列根据是否延迟执行分为两种结构
+无延迟队列 无延迟队列在Redis中的存储结构为Lists,其key的命名规则以queues关键字后面添加队列名称
+queues:happybird  延迟队列 延迟队列由于引入了延迟执行的时间概念,所以其存储的结构为Sort Sets, 其key的命名规则以queues关键字后面添加队列名称以及delayed关键字
+queues:happybird:delayed  执行时间为Sort Sets的score</description>
+    </item>
+    
+    <item>
+      <title>Laravel 队列使用-队列失败任务处理</title>
+      <link>https://gru.tsecloud.club/php/laravel-job-fail/</link>
+      <pubDate>Fri, 04 May 2018 21:57:38 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/laravel-job-fail/</guid>
+      <description>在config/queue.php文件的failed字段里面,可以配置失败任务的连接以及数据的存储
+&#39;failed&#39; =&amp;gt; [ &#39;database&#39; =&amp;gt; env(&#39;DB_CONNECTION&#39;, &#39;mysql&#39;), &#39;table&#39; =&amp;gt; &#39;failed_jobs&#39;, ],  在使用artisan命令来执行队列任务的时候,如果没有指定任务失败的次数,那么任务将会一直尝试 例如在HappybirdJob类的handle函数中添加如下代码
+public function handle() { $data = []; $data[3]; }  当执行的时候,将会一直不断的尝试执行而不会停止,如果指定了--tries次数,那么任务将会在执行指定的次数之后删除任务并将任务放置到失败的任务表中 &amp;gt; Note: 任务序列化存储的时候只会存储对应的上下文环境,但是不包括handle中的业务逻辑,所以测试的时候需要注意这一点
+注册失败任务监听任务 在App\Providers\AppServiceProvider这个文件的AppServiceProvider类中引入如下类:
+use Illuminate\Support\Facades\Queue; use Illuminate\Queue\Events\JobFailed;  然后在boot中做如下处理:
+Queue::failing(function(JobFailed $event){ // deal with the fail job });  通过查看JobFailed可以看到,这个类没有任务方法,仅仅只是保存了任务的一下几个属性:
+public function __construct($connectionName, $job, $data, $failedId = null) { $this-&amp;gt;job = $job; //任务对象 $this-&amp;gt;data = $data; // 传递给任务的数据 $this-&amp;gt;failedId = $failedId; // 失败任务记录ID $this-&amp;gt;connectionName = $connectionName; //队列连接名称 }  通过job对象,我们就可以获取到任务的所有详情,然后就可以针对任务进行处理</description>
+    </item>
+    
+    <item>
+      <title>Laravel 队列使用-队列的触发与守护</title>
+      <link>https://gru.tsecloud.club/php/laravel-job-triger/</link>
+      <pubDate>Thu, 03 May 2018 23:07:15 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/laravel-job-triger/</guid>
+      <description>触发 任务的触发,主要的实现是在Illuminate\Foundation\Bus\DispatchesJobs这个trait中实现的,其只包含两个方法
+protected function dispatch($job){ return app(Dispatcher::class)-&amp;gt;dispatch($job); } protected function dispatchNow($job){ return app(Dispatcher::class)-&amp;gt;dispatchNow($job); }  这两个方法的区别就在于时间上,一个是推送到队列,另外一个是推送并立即执行,依据前面的traitQueueable可知,我们可以在对任务进行设置,例如
+protected function hpJob(){ $job = (new HappybirdJob(5))-&amp;gt;onConnection(&amp;quot;other&amp;quot;) -&amp;gt;onQueue(&amp;quot;happybird&amp;quot;) -&amp;gt;delay(5); }  以上例子表示,我们使用other的连接在happybird队列中设置一个延迟时间为5s的HappybirdJob任务
+由于dispatch, dispatchNow都是使用的是容器中绑定的Dsipatch类,接下来看一下这个类 这个类位于Illuminate\Bus\Dispatcher中
+Dispatch 该类主要是用于队列任务的分发以及设置,其中可以看到
+public function dispatch($command) { if ($this-&amp;gt;queueResolver &amp;amp;&amp;amp; $this-&amp;gt;commandShouldBeQueued($command)) { return $this-&amp;gt;dispatchToQueue($command); } else { return $this-&amp;gt;dispatchNow($command); } }  当使用dispatch类触发任务时,将需要判断是否实现了ShouldQueue,这个就是之前在讨论异步队列和同步队列时两个不同的列所实现的差异
+而对于立即执行的操作来说,则是通过管道来执行
+public function dispatchNow($command) { return $this-&amp;gt;pipeline-&amp;gt;send($command) -&amp;gt;through($this-&amp;gt;pipes) -&amp;gt;then(function ($command) { return $this-&amp;gt;container-&amp;gt;call([$command, &#39;handle&#39;]); }); }  对于管道的说明和解释,可以参考 Laravel Pipeline 组件的实现, Understanding Laravel Pipelines这两篇文章</description>
+    </item>
+    
+    <item>
+      <title>Laravel 队列使用-队列的同步与异步</title>
+      <link>https://gru.tsecloud.club/php/laravel-job-part1/</link>
+      <pubDate>Wed, 02 May 2018 22:42:46 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/laravel-job-part1/</guid>
+      <description>关于Laravle所支持的驱动类型以及对应驱动的配置,请查看Laravel Queue, 在这里将会使用以数据库作为驱动来说明,Laravel队列的使用
+准备工作  设置驱动类型,修改.env文件中配置选项
+QUEUE_DRIVER=database  生成任务表并执行迁移
+$ php artisan queue:table $ php artisan migrate  以上将会生成jobs和failed_jobs任务表,数据表字段我们随后再做解释
+ 创建两个不同类型任务
+$ php artisan make:job HappybirdJob $ php artisan make:job --sync HappybirdSyncJob  数据表结构
+|id|queue|payload|attempts|reserved|reserved_at|available_at|created_at|   queue:队列名称 payload:存储序列化之后的job模型 attempts:重试次数 reserved: 任务是否保留 reserved_at: 保留时间 available_at:执行时间 created_at: 创建时间   结构  HappybirdSyncJob
+App\Jobs\HappybirdSyncJob.php文件的内容如下
+&amp;lt;?php namespace App\Jobs; use App\Jobs\Job; class HappybirdSyncJob extends Job { public function __construct(){} public function handle(){} }  这个类包含了一个初始化函数,以及一个业务逻辑执行函数,并且继承了Job类,查看可以看到其只是使用了一个组合,</description>
+    </item>
+    
+    <item>
+      <title>Laravel 事件监听简单使用</title>
+      <link>https://gru.tsecloud.club/php/laravel-event/</link>
+      <pubDate>Fri, 27 Apr 2018 23:35:21 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/laravel-event/</guid>
+      <description>定义事件与事件监听器, 在App\Providers\EventServiceProvider.php类的$listen中定义事件与事件监听者的关系
+protected $listen = [ &#39;App\Events\HappybirdEvent&#39; =&amp;gt; [ &#39;App\Listeners\HappybirdListener&#39;, ], ];  创建事件和事件监听器, 在终端中执行artisan命令来创建
+$ php artisan event:generate​
+ 定义事件结构, 在事件类App\Events\HappybirdEvent设置事件所需要的条件或者环境 &amp;lt;?phppublic $item;/*** Create a new event instance.** @return void*/public function __construct(int $item){$this-&amp;gt;item = $item;} 当然在这里里面,我们可以定义一些处理不同监听者的逻辑,这一点在含有多个监听者的条件下尤其有效
+&amp;lt;?phppublic function addItem(){$this-&amp;gt;item += 1;} 实现监听逻辑, 在App\Listeners\HappybirdListener
+&amp;lt;?php/*** Handle the event.** @param HappybirdEvent $event* @return void*/public function handle(HappybirdEvent $event){//Do something } 在监听类的处理句柄handle中,实现了事件的依赖注入,这样就可以直接在函数体中获取事件的参数</description>
+    </item>
+    
+    <item>
+      <title>Laravel中安装和使用Redis作为会话和缓存的载体</title>
+      <link>https://gru.tsecloud.club/php/redis/</link>
+      <pubDate>Thu, 08 Mar 2018 23:27:06 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/redis/</guid>
+      <description>本人使用的是Laradock 作为开发环境
+ predis的安装  安装依赖包predis/predis  composer require predis/predis  重新生成自动加载文件  composer dumpautoload 修改配置 修改.env文件中的缓存驱动,会话驱动,redis连接设置 &amp;lt;?php#缓存驱动#CACHE_DRIVER=arrayCACHE_DRIVER=redis#会话驱动#SESSION_DRIVER=fileSESSION_DRIVER=redis#redis连接驱动REDIS_HOST=redisREDIS_PASSWORD=nullREDIS_PORT=6379  配置session和cache使用不同的数据库 之所以这样做是避免清除缓存的时候，用户会话也一并清除
+ 修改config/database.php文件中的redis数组，复制一份default的配置，并依据需要修改其中的参数,这里最主要的两点是索引名称和database选项的修改
+&amp;lt;?php&amp;#39;session&amp;#39; =&amp;gt; [&amp;#39;host&amp;#39; =&amp;gt; env(&amp;#39;REDIS_HOST&amp;#39;),&amp;#39;password&amp;#39; =&amp;gt; env(&amp;#39;REDIS_PASSWORD&amp;#39;, null),&amp;#39;port&amp;#39; =&amp;gt; env(&amp;#39;REDIS_PORT&amp;#39;, 6379),&amp;#39;database&amp;#39; =&amp;gt; 1,], 修改config/session.php文件中connection为session,这里的值，就是上一步设置的索引名称
+&amp;lt;?php&amp;#39;connection&amp;#39; =&amp;gt; &amp;#34;session&amp;#34;,  重新加载配置 当配置完成以后，应该运行一下两条命令，重新加载配置，避免出现不必要的问题
+ 清除配置  php artisan config:clear  清空缓存  php artisan cache:clear 简单使用 Laravel提供Cache, Redis两种Facade来使用对redis进行操作,而这两种方式已存在一些区别</description>
+    </item>
+    
+    <item>
+      <title>Laravel自带的登录注册组件简单说明</title>
+      <link>https://gru.tsecloud.club/php/register/</link>
+      <pubDate>Wed, 07 Mar 2018 21:48:05 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/php/register/</guid>
+      <description>在这里我们需要理解Laravle中两个名词 - Guards:定义了对于每一个请求，如何对用户进行认证 - Providers: 定义了从哪里获取用户
+使用脚手架生成登录注册页面 php artisan make:auth 查看配置config/auth.php, 该文件用于配置如何登录,注册,重置密码 Providers Config &amp;lt;?php&amp;#39;providers&amp;#39; =&amp;gt; [&amp;#39;users&amp;#39; =&amp;gt; [&amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;eloquent&amp;#39;,&amp;#39;model&amp;#39; =&amp;gt; App\User::class,],// &amp;#39;users&amp;#39; =&amp;gt; [ // &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;database&amp;#39;, // &amp;#39;table&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;, // ],],  在Providers中，定义了两个数组,　一个是以Eloquent模型作为驱动，并且使用App\Users这个数据模型作为存储用户数据的载体，当然也可以使用database作为驱动,直接指明table作为存储载体
+指定了如何获取到用户数据以后，接下来就需要配置如何验证用户
+Guards Config &amp;lt;?php&amp;#39;guards&amp;#39; =&amp;gt; [&amp;#39;web&amp;#39; =&amp;gt; [&amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;session&amp;#39;,&amp;#39;provider&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;,],&amp;#39;api&amp;#39; =&amp;gt; [&amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;token&amp;#39;,&amp;#39;provider&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;,],],  在Guards中,配置了两种的验证方式,一种是web,通过session来验证用户信息,另一种是通过令牌token来验证用户，这两种方式默认都使用以Eloquent类型的App\User模型作为存储用户信息的载体</description>
+    </item>
+    
+  </channel>
+</rss>

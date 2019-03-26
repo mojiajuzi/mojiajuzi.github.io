@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Algorithms on To Be A Better Man</title>
+    <link>https://gru.tsecloud.club/algorithm/</link>
+    <description>Recent content in Algorithms on To Be A Better Man</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 21 Jun 2018 22:40:41 +0800</lastBuildDate>
+    
+	<atom:link href="https://gru.tsecloud.club/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>基础算法-快速排序</title>
+      <link>https://gru.tsecloud.club/algorithm/fast_sort/</link>
+      <pubDate>Thu, 21 Jun 2018 22:40:41 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/algorithm/fast_sort/</guid>
+      <description>递归是快速排序的基础，因此想要了解快速排序，就必须得知道递归，对于递归来说有两个重要的概念
+ 基线条件，函数结束调用自身的条件
+ 递归条件，函数调用自身的条件
+  一个递归函数，必须包含基线条件，否则递归将无法结束
+举例说明，假设需要实现对一个元素为数字类型的数组进行求和，那么我们首先需要做的就是找出其基线条件和递归条件
+ 基线条件，数组只包含一个元素或者数组为空
+ 递归条件，数组元素个数大于一个
+  因此实现方式如下:
+&amp;lt;?php function sum(array $arr): int { $arrCount = count($arr); // 基线条件 if($arrCount == 0) return 0; if($arrCount == 1) return array_shift($arr); // 递归条件 return array_shift($arr) + sum($arr); }  那么考虑一下如何对一个数组进行排序,由于之前已经已经使用选择排序对数组进行排序，其时间复杂度为O(n^2)
+因此这里对于一个数组使用快速排序的方式进行排序，首先介绍已给快速排序的步骤
+ 找出基准值,基准值就是从数组中找出一个元素作为基准
+ 分区， 分区就是以基准值作为参考，将素组分为三个区，小于等于基准值的元素集合， 基准值， 大于基准值的集合
+ 对分区进行快速排序，使用递归的方式对所分的区进行递归排序
+  因此，我们需要找出快速排序的基线条件以及递归条件,结束递归的条件就是数组为空，或者数组只有一个元素，那么这个时候，该数组是不需要进行排序的
+&amp;lt;?php function fastSort(array $arr):array{ // 基线条件 if(count($arr) &amp;lt; 2) return $arr; // 基准值 $pivot = $arr[0]; $lessArr = []; $greeterArr = []; foreach ($arr as $key =&amp;gt; $value) { if($key == 0) continue; // 分区 if($value &amp;lt;= $pivot){ $lessArr[] = $value; }else{ $greeterArr[] = $value; } } // 递归条件 return array_merge(fastSort($lessArr), [$pivot], fastSort($greeterArr)); }  </description>
+    </item>
+    
+    <item>
+      <title>基础算法-选择排序</title>
+      <link>https://gru.tsecloud.club/algorithm/select_sort/</link>
+      <pubDate>Fri, 01 Jun 2018 22:51:07 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/algorithm/select_sort/</guid>
+      <description>原理
+选择排序就是将一个有序的元素集合，将其第一个元素于后面的元素进行比对， 找出符合条件的的元素，并将符合条件的元素从该集合中剔除，存储到新的集合中 重复执行以上操作，直到集合中的元素全部转移到新的集合中
+ 时间复杂度
+对于选择排序来说其时间复杂度用大O表示法来表示为O(n^2), 虽然需要比对的元素逐渐减少，但是平均每一次需要比对的元素个数为n/2 总共需要比对的次数为n,因此时间复杂度为O(n * 1/2 * n),考虑到大O表示法中，忽略常数项， 因此选择排序的时间复杂度为O(n ^ 2)
+ 代码示例
+&amp;lt;?php /** * 获取数组中的最小元素 */ function getMinItem(array $list):int{ // 由于php没有没有Python中类数以arr.pop之类的函数，因此需要将数组的第一个元素作为最小索引 $i = 0; foreach($list as $k =&amp;gt; $v){ // 将第一个元素的索引作为最小索引 if($i == 0){ $minKey = $k; $i++; continue; } // 逐个两两比对，并将较小的元素索引作为最小元素的索引 if($v &amp;lt;= $list[$minKey]) $minKey = $k; } return $minKey; } function orderItem(array $list):array{ $mewArr= []; $listLength = count($list); //计算总的元素个数 for ($i=0; $i &amp;lt; $listLength; $i++) { // 循环次数为元素的个数，因为每一次只能获取一个最小元素的索引 $minKey = getMinItem($list); // 每一次从数组中获取最小元素的索引 array_push($mewArr, $list[$minKey]); // 将获取到的元素添加到新数组中 unset($list[$minKey]); //从旧有的元素中删除掉当次比对所获取的最小元素 } return $mewArr; } $a = [1,4,6,5,23,2]; var_dump(orderItem($a));  以上会打印出</description>
+    </item>
+    
+    <item>
+      <title>基础算法-二分查找</title>
+      <link>https://gru.tsecloud.club/algorithm/binary_search/</link>
+      <pubDate>Tue, 29 May 2018 23:38:46 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/algorithm/binary_search/</guid>
+      <description>前提，被查找的列表必须是有序的,对于二分查找而言，其时间的复杂度为对数时间(O(log n))
+&amp;lt;?php function binary_search(array $list, int $item):int { $low = 0; $high = count($list) - 1; // 判断数组是否为空 if($high &amp;lt; 0) return -1; // 只有当范围缩小到一位时才停止循环 while ($low &amp;lt;= $high) { $mid = floor(($low + $high) / 2); //获取中间值，使用向下取整 $guess = $list[$mid]; if($guess == $item) return $mid; if($guess &amp;gt; $item) $high = $mid - 1; if($guess &amp;lt; $item) $low = $mid + 1; } return -1; } $a = [1, 3,5,7,9]; echo binary_search($a, 20);  </description>
+    </item>
+    
+    <item>
+      <title>算法-大O表示法</title>
+      <link>https://gru.tsecloud.club/algorithm/big-o/</link>
+      <pubDate>Thu, 17 May 2018 00:21:51 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/algorithm/big-o/</guid>
+      <description>算法-大O表示法  大O表示法通常用来表示一个算法的执行效率， 而算法的执行效率则以相对于输入N的操作步骤来衡量，而这些步骤则考虑的是最坏情况下执行情况
+ 规则  忽略常量，这是因为当输入N足够大时，常量的影响则可以忽略不计， 例如： 5n-&amp;gt;O(n)
+ 耗时长的步骤将占主导地位, O(1) &amp;lt; O(logn) &amp;lt; O(n) &amp;lt; O(nlogn) &amp;lt; O(n^2) &amp;lt; O(2^n) &amp;lt; O(n!)
+  实例  常量时间(O(1))
+print(1) x = 5 + (10 * 12)  以上代码的运行总时间为:total time = O(1) + 0(1) = 2 * O(1) = O(1), 这是因为我们忽略常量
+ 线性时间(O(n))
+for x in range (0, n): print x; // O(1)  尽管在循环中的时间复杂度为常量，但是由于执行了n次，所以其执行总时间为：total time = N * O(1) = O(n)</description>
+    </item>
+    
+  </channel>
+</rss>

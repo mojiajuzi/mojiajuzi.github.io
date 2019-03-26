@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>beanstalkd-基本概念 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>beanstalkd-基本概念</h1>
+  <time datetime=2018-06-22T17:13:23&#43;0800 class="post-date">Fri, Jun 22, 2018</time>
+  <p>在beanstalkd中包含几个重要的概念，如下图所示，对于一个系统消息队列系统来说
+其必定有
+- 一个或多个生产者(Producter),
+- 一个或多个消费者(Customer),
+- 一个消息存储系统，在这里指的是beanstalkd</p>
+
+<p>对于beanstalkd来说，以管道(Tube)作为其主要的组成部分，一个beanstalkd可以包含一个或者多个管道</p>
+
+<p><img src="/images/beanstalkd-systerm.png" alt="beanstalkd" /></p>
+
+<p>对于Tube而言,有两个队列组成，<code>ready queue</code>和<code>delay queue</code>,每一个队列里面可以包含零个或者多个任务</p>
+
+<ul>
+<li><code>ready</code> 队列用来存储满足执行条件的队列</li>
+<li><code>delay</code> 队列用来存储尚未到执行时间的队列</li>
+</ul>
+
+<p><img src="/images/beanstalkd-tube.png" alt="beanstalkd" /></p>
+
+<p>对于队列中的任务而言，我们更加关注的是任务的状态，因此在<code>beanstalkd</code>中的任务包含一下四中状态
+<code>ready, reserved, delayed,buried</code></p>
+
+<ul>
+<li><code>ready</code> 需要立即被处理的任务</li>
+<li><code>reserved</code> 已经被消费者获取，正在处理的任务</li>
+<li><code>delayed</code> 延迟执行的任务</li>
+<li><code>buried</code> 已经被执行完，但是未删除的任务</li>
+</ul>
+
+<p><img src="/images/beanstalkd-stats.png" alt="beanstalkd" /></p>
+
+<ol>
+<li><p>由上面的流程图可以看到，生成任务时，可以将任务设置成立即执行(ready)或者延迟执行(delayed)</p></li>
+
+<li><p>对于延迟任务而言，延迟时间到了以后，其状态变更为立即执行状态</p></li>
+
+<li><p>只有在立即执行状态下的任务，才能被消费者消费</p></li>
+
+<li><p>处于立即执行状态下的任务，被消费者获取以后，其状态变成正在处理中(reserved)</p></li>
+
+<li><p>当任务处理完以后，有四种处理方式删除，重新投递到立即执行队列，投递到延迟队列以及不做任何处理</p></li>
+
+<li><p>当不对已完成任务做任何处理时，其对消费者属于不可见状态，直到其被重新投递到<code>ready</code>队列中，或者被删除</p></li>
+</ol>
+
+<pre><code class="language-asciiarmor">   put with delay               release with delay
+  ----------------&gt; [DELAYED] &lt;------------.
+                        |                   |
+                        | (time passes)     |
+                        |                   |
+   put                  v     reserve       |       delete
+  -----------------&gt; [READY] ---------&gt; [RESERVED] --------&gt; *poof*
+                       ^  ^                |  |
+                       |   \  release      |  |
+                       |    `-------------'   |
+                       |                      |
+                       | kick                 |
+                       |                      |
+                       |       bury           |
+                    [BURIED] &lt;---------------'
+                       |
+                       |  delete
+                        `--------&gt; *poof*
+</code></pre>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

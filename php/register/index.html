@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Laravel自带的登录注册组件简单说明 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Laravel自带的登录注册组件简单说明</h1>
+  <time datetime=2018-03-07T21:48:05&#43;0800 class="post-date">Wed, Mar 7, 2018</time>
+  
+
+<p>在这里我们需要理解Laravle中两个名词
+- Guards:定义了对于每一个请求，如何对用户进行认证
+- Providers: 定义了从哪里获取用户</p>
+
+<h4 id="使用脚手架生成登录注册页面">使用脚手架生成登录注册页面</h4>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">php artisan make:auth</code></pre></div>
+
+<h4 id="查看配置-config-auth-php-该文件用于配置如何登录-注册-重置密码">查看配置<code>config/auth.php</code>, 该文件用于配置如何登录,注册,重置密码</h4>
+
+<h5 id="providers-config">Providers Config</h5>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<span style="color:#e6db74">&#39;providers&#39;</span> <span style="color:#f92672">=&gt;</span> [
+    <span style="color:#e6db74">&#39;users&#39;</span> <span style="color:#f92672">=&gt;</span> [
+        <span style="color:#e6db74">&#39;driver&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;eloquent&#39;</span>,
+        <span style="color:#e6db74">&#39;model&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">App\User</span><span style="color:#f92672">::</span><span style="color:#a6e22e">class</span>,
+    ],
+
+    <span style="color:#75715e">// &#39;users&#39; =&gt; [
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//     &#39;driver&#39; =&gt; &#39;database&#39;,
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//     &#39;table&#39; =&gt; &#39;users&#39;,
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// ],
+</span><span style="color:#75715e"></span>],
+</code></pre></div>
+在Providers中，定义了两个数组,　一个是以<code>Eloquent</code>模型作为驱动，并且使用<code>App\Users</code>这个数据模型作为存储用户数据的载体，当然也可以使用<code>database</code>作为驱动,直接指明<code>table</code>作为存储载体</p>
+
+<p>指定了如何获取到用户数据以后，接下来就需要配置如何验证用户</p>
+
+<h5 id="guards-config">Guards Config</h5>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<span style="color:#e6db74">&#39;guards&#39;</span> <span style="color:#f92672">=&gt;</span> [
+    <span style="color:#e6db74">&#39;web&#39;</span> <span style="color:#f92672">=&gt;</span> [
+        <span style="color:#e6db74">&#39;driver&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;session&#39;</span>,
+        <span style="color:#e6db74">&#39;provider&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;users&#39;</span>,
+    ],
+
+    <span style="color:#e6db74">&#39;api&#39;</span> <span style="color:#f92672">=&gt;</span> [
+        <span style="color:#e6db74">&#39;driver&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;token&#39;</span>,
+        <span style="color:#e6db74">&#39;provider&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;users&#39;</span>,
+    ],
+],
+</code></pre></div>
+在Guards中,配置了两种的验证方式,一种是<code>web</code>,通过<code>session</code>来验证用户信息,另一种是通过令牌<code>token</code>来验证用户，这两种方式默认都使用以<code>Eloquent</code>类型的<code>App\User</code>模型作为存储用户信息的载体</p>
+
+<h5 id="默认配置">默认配置</h5>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<span style="color:#e6db74">&#39;defaults&#39;</span> <span style="color:#f92672">=&gt;</span> [
+    <span style="color:#e6db74">&#39;guard&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;web&#39;</span>,
+    <span style="color:#e6db74">&#39;passwords&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;users&#39;</span>,
+]
+</code></pre></div>
+
+<h4 id="路由-routes-web-php">路由(<code>routes\web.php</code>)</h4>
+
+<p>在<code>web.php</code>这个路由文件中,可以找到如下的语句
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<span style="color:#a6e22e">Auth</span><span style="color:#f92672">::</span><span style="color:#a6e22e">routes</span>();
+</code></pre></div>
+由于<code>Auth</code>是一个别名,其定义在<code>config/app.php</code>文件的<code>aliases</code>数组中，该数组对应的是一个<a href="https://laravel.com/docs/5.6/facades">Facades</a>,<code>Illuminate\Support\Facades\Auth</code>,在这个类里面我们找到了<code>routes</code>方法</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">routes</span>()
+    {
+        <span style="color:#66d9ef">static</span><span style="color:#f92672">::</span>$app<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">make</span>(<span style="color:#e6db74">&#39;router&#39;</span>)<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">auth</span>();
+    }
+</code></pre></div>
+在这个方法中，从<code>$app</code>对象中获取<code>router</code>类示例,而这个类示例是在<code>Illuminate/Foundation/Application.php</code>文件中的<code>registerCoreContainerAliases</code>方法中进行注册的，因此，我们可以找到<code>Illuminate\Routing\Router</code>类，在这个类中，我们可以看到</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">auth</span>()
+{
+    <span style="color:#75715e">// Authentication Routes...
+</span><span style="color:#75715e"></span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;login&#39;</span>, <span style="color:#e6db74">&#39;Auth\LoginController@showLoginForm&#39;</span>)<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span>(<span style="color:#e6db74">&#39;login&#39;</span>);
+    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;login&#39;</span>, <span style="color:#e6db74">&#39;Auth\LoginController@login&#39;</span>);
+    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;logout&#39;</span>, <span style="color:#e6db74">&#39;Auth\LoginController@logout&#39;</span>)<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span>(<span style="color:#e6db74">&#39;logout&#39;</span>);
+
+    <span style="color:#75715e">// Registration Routes...
+</span><span style="color:#75715e"></span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;register&#39;</span>, <span style="color:#e6db74">&#39;Auth\RegisterController@showRegistrationForm&#39;</span>)<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span>(<span style="color:#e6db74">&#39;register&#39;</span>);
+    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;register&#39;</span>, <span style="color:#e6db74">&#39;Auth\RegisterController@register&#39;</span>);
+
+    <span style="color:#75715e">// Password Reset Routes...
+</span><span style="color:#75715e"></span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;password/reset&#39;</span>, <span style="color:#e6db74">&#39;Auth\ForgotPasswordController@showLinkRequestForm&#39;</span>)<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span>(<span style="color:#e6db74">&#39;password.request&#39;</span>);
+    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;password/email&#39;</span>, <span style="color:#e6db74">&#39;Auth\ForgotPasswordController@sendResetLinkEmail&#39;</span>)<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span>(<span style="color:#e6db74">&#39;password.email&#39;</span>);
+    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;password/reset/{token}&#39;</span>, <span style="color:#e6db74">&#39;Auth\ResetPasswordController@showResetForm&#39;</span>)<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span>(<span style="color:#e6db74">&#39;password.reset&#39;</span>);
+    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;password/reset&#39;</span>, <span style="color:#e6db74">&#39;Auth\ResetPasswordController@reset&#39;</span>);
+}
+</code></pre></div>
+在这里面，找到了我们需要的方法</p>
+
+<h4 id="控制器-controller">控制器(Controller)</h4>
+
+<p>使用<code>RegistersUsers</code>这个trait以及 <code>App\RegisterController</code>，实现用户注册的功能
+在<code>register</code>方法中，做了一下几个动作</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">register</span>(<span style="color:#a6e22e">Request</span> $request)
+{
+    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">validator</span>($request<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">all</span>())<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">validate</span>();
+
+    <span style="color:#a6e22e">event</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Registered</span>($user <span style="color:#f92672">=</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">create</span>($request<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">all</span>())));
+
+    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">guard</span>()<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">login</span>($user);
+
+    <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">registered</span>($request, $user)
+                    <span style="color:#f92672">?:</span> <span style="color:#a6e22e">redirect</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">redirectPath</span>());
+}
+</code></pre></div>
+
+<ol>
+<li>验证用户提交数据</li>
+<li>将用户写入数据库</li>
+<li>触发用户注册事件</li>
+<li>建立用户会话(session, cookie)</li>
+<li>跳转到<code>/home</code>页面</li>
+</ol>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

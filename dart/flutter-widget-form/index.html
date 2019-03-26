@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Flutter 基础组件-表单 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Flutter 基础组件-表单</h1>
+  <time datetime=2018-05-29T17:35:50&#43;0800 class="post-date">Tue, May 29, 2018</time>
+  
+
+<h4 id="textfield-formfield">TextField, FormField</h4>
+
+<p>对于<code>TextField</code>和<code>FormField</code>而言,只要用来接收用户的输入,以及用户输入的事件处理,
+因此,可以将其分解为三个部分来说明</p>
+
+<h5 id="样式属性">样式属性</h5>
+
+<pre><code class="language-dart">child: new TextField(
+autocorrect: false, // 是否自动校正
+autofocus: false, //自动获取焦点
+enabled: true, // 是否启用
+inputFormatters: [], //对输入的文字进行限制和校验
+keyboardType: TextInputType.text, //获取焦点时,启用的键盘类型
+maxLines: 2, // 输入框最大的显示行数
+maxLength: 3, //允许输入的字符长度/
+maxLengthEnforced: false, //是否允许输入的字符长度超过限定的字符长度
+obscureText: true, // 是否隐藏输入的内容
+onChanged: (newValue) {
+    // print(newValue); // 当输入内容变更时,如何处理
+},
+onSubmitted: (value) {
+    // print(&quot;whar&quot;); // 当用户确定已经完成编辑时触发
+},
+style: new TextStyle(
+    color: new Color(Colors.amberAccent.green)), // 设置字体样式
+textAlign: TextAlign.center, //输入的内容在水平方向如何显示
+decoration: new InputDecoration(
+    labelText: &quot;城市&quot;,
+    icon: new Icon(Icons.location_city),
+    border: new OutlineInputBorder(), // 边框样式
+    helperText: 'required',
+    hintText: '请选择你要投保的城市',
+    prefixIcon: new Icon(Icons.android),
+    prefixText: 'Hello'),
+),
+</code></pre>
+
+<h5 id="输入处理">输入处理</h5>
+
+<p>在<code>TextField</code>中,有两个事件是我们应该关注的<code>onChanged</code>,<code>onSubmitted</code></p>
+
+<pre><code class="language-dart">child: new TextField(
+controller: _controller,
+decoration: new InputDecoration(labelText: 'Your Name'),
+onChanged: (val) {
+    print(val);
+},
+onSubmitted: (String v) {
+    print(v);
+},
+),
+</code></pre>
+
+<p>顾名思义:
+- <code>onChanged</code>事件,在输入内容发生变化的时候触发
+- <code>onSubmitted</code>事件,则是在输入结束,点击完成的时候触发</p>
+
+<p>然而在<code>TextFormField</code>中没有这两个事件,取而代之的是<code>validator</code>, <code>onSaved</code>,<code>onFieldSubmitted</code> 他们都接受三个函数,并且将其值作为参数传递到函数里面</p>
+
+<ul>
+<li><p>validator,如果开启<code>autovalidate: true,</code>那么将会自动检验输入的值,如果没有则会在表单提交的时候检验
+该函数只允许返回验证失败的错误信息以及验证通过时返回<code>null</code></p></li>
+
+<li><p>onSaved, 当调用<code>FormState.save</code>方法的时候调用</p></li>
+
+<li><p>onFieldSubmitted, 与<code>onSubmitted</code>一样,则是在输入结束,点击完成的时候触发</p></li>
+</ul>
+
+<h5 id="编辑控制">编辑控制</h5>
+
+<p>无论是在<code>TextField</code>还是<code>TextFormField</code>中,都有一个重要的属性<code>controller</code>,该属性可用来对输入框内容进行控制</p>
+
+<p>先创建一个控制对象</p>
+
+<pre><code class="language-dart">  TextEditingController _controller = new TextEditingController();
+  TextEditingController _formFieldController = new TextEditingController();
+</code></pre>
+
+<p>为输入框初始化值以及注册一个监听事件</p>
+
+<pre><code class="language-dart">  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller.value = new TextEditingValue(text: 'Hello');
+    _formFieldController.addListener(() {
+      print('listener');
+    });
+  }
+</code></pre>
+
+<p>触发一个监听事件</p>
+
+<pre><code class="language-dart">  void _textFieldAction() {
+    // print(_formFieldController.selection);
+    // print(_formFieldController.text); //获取输入内容
+    print(_formFieldController.hasListeners); //判断是否注册监听事件
+    _formFieldController.notifyListeners(); //触发监听事件
+  }
+</code></pre>
+
+<h4 id="form">Form</h4>
+
+<p>对于表单而言,其就像是一个容器,里面包含了<code>TextFormField</code>的一个列表
+下面通过一个例子说明表单的一些特性</p>
+
+<ol>
+<li>布局</li>
+</ol>
+
+<pre><code class="language-dart"> @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new MaterialApp(
+      title: 'Flutter data',
+      home: new Scaffold(
+        appBar: new AppBar(
+          title: new Text('Flutter Form'),
+        ),
+        floatingActionButton: new FloatingActionButton(
+          onPressed: _forSubmitted,
+          child: new Text('提交'),
+        ),
+        body: new Container(
+          padding: const EdgeInsets.all(16.0),
+          child: new Form(
+            key: _formKey,
+            child: new Column(
+              children: &lt;Widget&gt;[
+                new TextFormField(
+                  decoration: new InputDecoration(
+                    labelText: 'Your Name',
+                  ),
+                  onSaved: (val) {
+                    _name = val;
+                  },
+                ),
+                new TextFormField(
+                  decoration: new InputDecoration(
+                    labelText: 'Password',
+                  ),
+                  obscureText: true,
+                  validator: (val) {
+                    return val.length &lt; 4 ? &quot;密码长度错误&quot; : null;
+                  },
+                  onSaved: (val) {
+                    _password = val;
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+</code></pre>
+
+<p>以上,我们使用一个<code>Form</code>包裹着两个<code>TextFormField</code>组件,在这里为了简便,我们只设置了一些必要的元素,先暂时忽略<code>TextFormField</code>中的事件</p>
+
+<p>为了获取表单的实例,我们需要设置一个全局类型的key,通过这个key的属性,来获取表单对象</p>
+
+<pre><code class="language-dart">  GlobalKey&lt;FormState&gt; _formKey = new GlobalKey&lt;FormState&gt;();
+
+  String _name;
+
+  String _password;
+</code></pre>
+
+<p>同时也设置了<code>_name</code>,<code>_password</code>两个变量来存储用户的输入值,在<code>TextFormField</code>组件的<code>onSaved</code>方法中,将输入框的值赋值到设定的变量中</p>
+
+<p>我们通过<code>FloatingActionButton</code>来触发表单提交事件</p>
+
+<pre><code class="language-dart">floatingActionButton: new FloatingActionButton(
+    onPressed: _forSubmitted,
+    child: new Text('提交'),
+),
+</code></pre>
+
+<p>在<code>_forSubmitted</code>中我们使用key的<code>currentState</code>属性来获取表单的实例对象</p>
+
+<pre><code>  void _forSubmitted() {
+    var _form = _formKey.currentState;
+
+    if (_form.validate()) {
+      _form.save();
+      print(_name);
+      print(_password);
+    }
+  }
+</code></pre>
+
+<p>对于表单对象来说,其有一些非常实用的方法比如:
+- <code>reset</code> 重置表单内容
+- <code>validate</code>, 调用<code>TextFormField</code>的<code>validator</code>方法
+- <code>save</code>, 表单保存</p>
+
+<p>完整示例</p>
+
+<pre><code class="language-dart">import 'package:flutter/material.dart';
+
+void main() =&gt; runApp(new HomePage());
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() =&gt; new _HomePageState();
+}
+
+class _HomePageState extends State&lt;HomePage&gt; {
+  GlobalKey&lt;FormState&gt; _formKey = new GlobalKey&lt;FormState&gt;();
+
+  String _name;
+
+  String _password;
+
+  void _forSubmitted() {
+    var _form = _formKey.currentState;
+
+    if (_form.validate()) {
+      _form.save();
+      print(_name);
+      print(_password);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new MaterialApp(
+      title: 'Flutter data',
+      home: new Scaffold(
+        appBar: new AppBar(
+          title: new Text('Flutter Form'),
+        ),
+        floatingActionButton: new FloatingActionButton(
+          onPressed: _forSubmitted,
+          child: new Text('提交'),
+        ),
+        body: new Container(
+          padding: const EdgeInsets.all(16.0),
+          child: new Form(
+            key: _formKey,
+            child: new Column(
+              children: &lt;Widget&gt;[
+                new TextFormField(
+                  decoration: new InputDecoration(
+                    labelText: 'Your Name',
+                  ),
+                  onSaved: (val) {
+                    _name = val;
+                  },
+                ),
+                new TextFormField(
+                  decoration: new InputDecoration(
+                    labelText: 'Password',
+                  ),
+                  obscureText: true,
+                  validator: (val) {
+                    return val.length &lt; 4 ? &quot;密码长度错误&quot; : null;
+                  },
+                  onSaved: (val) {
+                    _password = val;
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
+
+<h4 id="参考资料">参考资料</h4>
+
+<ul>
+<li><p><a href="https://docs.flutter.io/flutter/widgets/FormState-class.html">FormState class</a></p></li>
+
+<li><p><a href="https://docs.flutter.io/flutter/widgets/Form-class.html">Form Class</a></p></li>
+
+<li><p><a href="https://docs.flutter.io/flutter/material/TextField-class.html">TextField class</a></p></li>
+
+<li><p><a href="https://docs.flutter.io/flutter/material/TextFormField-class.html">TextFormField</a></p></li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

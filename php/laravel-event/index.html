@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Laravel 事件监听简单使用 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Laravel 事件监听简单使用</h1>
+  <time datetime=2018-04-27T23:35:21&#43;0800 class="post-date">Fri, Apr 27, 2018</time>
+  
+
+<ol>
+<li><p>定义事件与事件监听器, 在<code>App\Providers\EventServiceProvider.php</code>类的$listen中定义事件与事件监听者的关系</p>
+
+<pre><code class="language-php">    protected $listen = [
+        'App\Events\HappybirdEvent' =&gt; [
+            'App\Listeners\HappybirdListener',
+        ],
+    ];
+</code></pre></li>
+
+<li><p>创建事件和事件监听器, 在终端中执行artisan命令来创建</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">    $ php artisan event:generate
+    </code></pre></div>​</p></li>
+
+<li><p>定义事件结构, 在事件类<code>App\Events\HappybirdEvent</code>设置事件所需要的条件或者环境
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#75715e">&lt;?php</span>
+    <span style="color:#66d9ef">public</span> $item;
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * Create a new event instance.
+</span><span style="color:#e6db74">     *
+</span><span style="color:#e6db74">     * @return void
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct(<span style="color:#a6e22e">int</span> $item)
+    {
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">item</span> <span style="color:#f92672">=</span> $item;
+    }
+    
+</code></pre></div>
+当然在这里里面,我们可以定义一些处理不同监听者的逻辑,这一点在含有多个监听者的条件下尤其有效</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#75715e">&lt;?php</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">addItem</span>(){
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">item</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>;
+    }
+    
+</code></pre></div></li>
+
+<li><p>实现监听逻辑, 在<code>App\Listeners\HappybirdListener</code></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#75715e">&lt;?php</span>
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * Handle the event.
+</span><span style="color:#e6db74">     *
+</span><span style="color:#e6db74">     * @param  HappybirdEvent  $event
+</span><span style="color:#e6db74">     * @return void
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">handle</span>(<span style="color:#a6e22e">HappybirdEvent</span> $event)
+    {
+       <span style="color:#75715e">//Do something
+</span><span style="color:#75715e"></span>    }
+    
+</code></pre></div>
+
+<p>在监听类的处理句柄<code>handle</code>中,实现了事件的依赖注入,这样就可以直接在函数体中获取事件的参数</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#75715e">&lt;?php</span>
+    $event<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">itme</span>
+    
+</code></pre></div></li>
+
+<li><p>触发事件, 在你需要的地方,按照如下的方式触发事件
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#75715e">&lt;?php</span>
+    $item <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+    <span style="color:#a6e22e">event</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">HappybirdEvent</span>($item))
+    
+</code></pre></div></p></li>
+</ol>
+
+<h4 id="注意事项">注意事项</h4>
+
+<ol>
+<li><p>默认情况下,事件的监听是阻塞的,
+也就是说,当代码执行到事件触发的地方将会暂停执行,
+直到监听事件完成,才会继续执行后面的业务逻辑, 例如我们可以在监听者中添加如下代码,验证我们的观点</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#75715e">&lt;?php</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">handle</span>(<span style="color:#a6e22e">HappybirdEvent</span> $event)
+    {
+      <span style="color:#a6e22e">sleep</span>(<span style="color:#ae81ff">10</span>);
+    }
+    
+</code></pre></div></li>
+
+<li><p>触发事件监<code>event</code>将会返回 <code>array|null</code>,如果监听者中没有返回值,将会自动返回null,如果有两个监听者,将会返回两个监听者返回的值</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#75715e">&lt;?php</span>
+    <span style="color:#66d9ef">protected</span> $listen <span style="color:#f92672">=</span> [
+        <span style="color:#e6db74">&#39;App\Events\HappybirdEvent&#39;</span> <span style="color:#f92672">=&gt;</span> [
+            <span style="color:#e6db74">&#39;App\Listeners\HappybirdListener&#39;</span>,
+            <span style="color:#e6db74">&#39;App\Listeners\HappybirdListenerB&#39;</span>,
+        ],
+    ];
+    
+</code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#75715e">&lt;?php</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">handle</span>(<span style="color:#a6e22e">HappybirdEvent</span> $event)
+    {
+        <span style="color:#a6e22e">sleep</span>(<span style="color:#ae81ff">5</span>);
+        <span style="color:#66d9ef">return</span> [<span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;B&#34;</span>];
+    }
+   
+</code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    <span style="color:#75715e">&lt;?php</span>
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">handle</span>(<span style="color:#a6e22e">HappybirdEvent</span> $event)
+        {
+            <span style="color:#66d9ef">return</span> [<span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;A&#39;</span>];
+        }
+    
+</code></pre></div></li>
+</ol>
+
+<p>执行以上,将会返回如下结果</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+    <span style="color:#66d9ef">array</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span> [<span style="color:#a6e22e">▼</span>
+    <span style="color:#ae81ff">0</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">array</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1</span> [<span style="color:#a6e22e">▼</span>
+        <span style="color:#e6db74">&#34;a&#34;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;A&#34;</span>
+    ]
+    <span style="color:#ae81ff">1</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">array</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1</span> [<span style="color:#a6e22e">▼</span>
+        <span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;B&#34;</span>
+    ]
+    ]
+</code></pre></div>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

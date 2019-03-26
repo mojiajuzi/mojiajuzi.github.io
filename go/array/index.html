@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>数组与切片 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>数组与切片</h1>
+  <time datetime=2019-03-26T22:25:25&#43;0800 class="post-date">Tue, Mar 26, 2019</time>
+  
+
+<h3 id="数组声明">数组声明</h3>
+
+<p>由于Go语言是一种强类型的语言，所有的变量都必须先声明后使用，因此数组的声明有以下几种方式:</p>
+
+<ol>
+<li><p>先声明数量和类型，未赋值的话，将初始化未数组元素类型的零值。</p>
+
+<pre><code class="language-go">    var a [2]int
+</code></pre></li>
+
+<li><p>声明的时候，同时赋值,未赋值的元素，将使用元素的零值</p>
+
+<pre><code class="language-go">    var a = [2]int{2}
+</code></pre></li>
+
+<li><p>利用编译的时候自动推导出数组的长度，因此可以使用<code>...</code>来省略数组的长度</p>
+
+<pre><code class="language-go">    var a = [...]int{2, 3, 4}
+</code></pre></li>
+
+<li><p>当然也可以使用短语法来声明一个数组</p>
+
+<pre><code class="language-go">    a := [...]int{2,3}
+</code></pre></li>
+</ol>
+
+<h3 id="数组类型">数组类型</h3>
+
+<p>在Go中，数组表示相同类型的元素集合，数组是一种类型，简写为:<code>n[T]</code>,由此可见，数组这种类型是由数量<code>n</code>和类型<code>[T]</code>两部分组成的,包含相同类型，但是元素不同的两个数组属于两个不同的数组类型</p>
+
+<pre><code class="language-go">var a = [2]int{2, 3}
+var b = [2]int{2}
+var c = [1]int{3}
+
+b = a
+c = a //将会报错误:cannot use a (type [2]int) as type [1]int in assignment
+fmt.Println(a, b, c)
+
+</code></pre>
+
+<p>以上，将数组<code>a</code>赋值给<code>b</code>是允许的，因为他们的元素类型和元素数量相同，反之，将<code>a</code>赋值给<code>c</code>是不被允许的，虽然他们的元素的类型相同，但是他们的元素的数量不一致，因此他们属于不同的数组类型。</p>
+
+<p>由于数组在Go中是一种值类型而不是反射类型，因此当我们将数组赋值给一个变量的时候，实际上是对原数组进行一个复制，对于新数组的变更，将不会作用与旧的数组，看下面一个例子</p>
+
+<pre><code class="language-go">var a = [...]int{2, 3, 4}
+b := a
+fmt.Println(&quot;array a:&quot;, a)
+fmt.Println(&quot;array b:&quot;, b)
+
+b[0] = 20
+
+fmt.Println(&quot;array a:&quot;, a)
+fmt.Println(&quot;array b:&quot;, b)
+</code></pre>
+
+<p>输出的结果如下图所示:</p>
+
+<pre><code>array a: [2 3 4]
+array b: [2 3 4]
+array a: [2 3 4]
+array b: [20 3 4]
+</code></pre>
+
+<p>既然数组中的元素数量也是数组类型的一部分，因此我们可以通过使用<code>len</code>函数来获取数组的长度属性。就像下面这个例子</p>
+
+<pre><code class="language-go">var a = [2]int{2, 3}
+
+fmt.Println(len(a)) //将会输出：2
+</code></pre>
+
+<h3 id="数组的操作">数组的操作</h3>
+
+<p>对于数组而言，其常用的操作是一个遍历，Go提供一个有用的<code>for...range</code>结构来便利一个数组</p>
+
+<pre><code class="language-go">var a = [...]int{2, 3, 4}
+
+for k, v := range a {
+    fmt.Printf(&quot;index is:%d, value is:%d \n&quot;, k, v)
+}
+</code></pre>
+
+<p>其输出结果为：</p>
+
+<pre><code>index is:0, value is:2 
+index is:1, value is:3 
+index is:2, value is:4 
+</code></pre>
+
+<p>尽管Go中的数组看起来足够的灵活，但是长度是其类型的一部分，这就限定了数组的可用性。</p>
+
+<p>因为一旦声明的时候定义数组的长度，那么数组的长度后期是不能再增长或减少的，为了解决这个问题，在Go中引入了<code>slice(切片)</code>的概念</p>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

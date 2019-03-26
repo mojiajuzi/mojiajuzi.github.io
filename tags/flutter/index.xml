@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Flutter on To Be A Better Man</title>
+    <link>https://gru.tsecloud.club/tags/flutter/</link>
+    <description>Recent content in Flutter on To Be A Better Man</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 29 May 2018 17:35:50 +0800</lastBuildDate>
+    
+	<atom:link href="https://gru.tsecloud.club/tags/flutter/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Flutter 基础组件-表单</title>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-form/</link>
+      <pubDate>Tue, 29 May 2018 17:35:50 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-form/</guid>
+      <description>TextField, FormField 对于TextField和FormField而言,只要用来接收用户的输入,以及用户输入的事件处理, 因此,可以将其分解为三个部分来说明
+样式属性 child: new TextField( autocorrect: false, // 是否自动校正 autofocus: false, //自动获取焦点 enabled: true, // 是否启用 inputFormatters: [], //对输入的文字进行限制和校验 keyboardType: TextInputType.text, //获取焦点时,启用的键盘类型 maxLines: 2, // 输入框最大的显示行数 maxLength: 3, //允许输入的字符长度/ maxLengthEnforced: false, //是否允许输入的字符长度超过限定的字符长度 obscureText: true, // 是否隐藏输入的内容 onChanged: (newValue) { // print(newValue); // 当输入内容变更时,如何处理 }, onSubmitted: (value) { // print(&amp;quot;whar&amp;quot;); // 当用户确定已经完成编辑时触发 }, style: new TextStyle( color: new Color(Colors.amberAccent.green)), // 设置字体样式 textAlign: TextAlign.center, //输入的内容在水平方向如何显示 decoration: new InputDecoration( labelText: &amp;quot;城市&amp;quot;, icon: new Icon(Icons.</description>
+    </item>
+    
+    <item>
+      <title>Flutter 基础组件-按钮</title>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-raisedbutton/</link>
+      <pubDate>Wed, 16 May 2018 09:37:39 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-raisedbutton/</guid>
+      <description>在RaisedButton组件中,有两种方式认为其是不可用的
+ 通过设置enabled属性为false(在beta3.0中已经去掉该属性)
+ 通过设置onPressed属性值为null,来禁用组件
+  import &#39;package:flutter/material.dart&#39;; void main() =&amp;gt; runApp(new HomePage()); class HomePage extends StatefulWidget { @override _HomePageState createState() =&amp;gt; new _HomePageState(); } class _HomePageState extends State&amp;lt;HomePage&amp;gt; { ShapeBorder myShape; _changeShape() { setState(() { myShape = new StadiumBorder(); }); } @override Widget build(BuildContext context) { return new MaterialApp( title: &#39;Flutter Demo&#39;, home: new Scaffold( appBar: new AppBar( title: new Text(&#39;Flutter Container&#39;), ), body: new Center( child: new RaisedButton( onPressed: _changeShape, color: Colors.</description>
+    </item>
+    
+    <item>
+      <title>Flutter 基础组件-图标</title>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-icon/</link>
+      <pubDate>Tue, 15 May 2018 10:48:15 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-icon/</guid>
+      <description>对于图标组件来说其不存在交互性,如果需要使用交互性,需要使用IconButton组件
+Icon 组件 new Icon( Icons.star, // 图标数据 size: 40.0, //大小 color: Colors.red, //颜色 semanticLabel: &#39;Hello&#39;, // 图标不显示时,显示的文本 ),  IconButton 组件 new IconButton( icon: new Icon( Icons.star, // color: Colors.teal, ), // 图标 color: Colors.red, //图标显示颜色 splashColor: Colors.blue, //图标扩散时的颜色 highlightColor: Colors.yellow, //单击时轮廓颜色 disabledColor: Colors.green, //图标不可用时显示的颜色 iconSize: 80.0, //图标大小 padding: const EdgeInsets.all(20.0), //图标内边距 onPressed: () {}, // 图标点击事件 tooltip: &#39;IconButton&#39;, // 点击时的提示信息  Note:这里有一点需要注意的是,IconButton组件是否可用,取决于其onPresses属性是否为null,如果为null那么将会只显示disabledColor属性设置的颜色,其他所有的颜色将全部不显示
+外部图标 关于外部图标的引用,可以参考一下这篇文章Icons</description>
+    </item>
+    
+    <item>
+      <title>Flutter 基础组件-文本</title>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-text/</link>
+      <pubDate>Tue, 15 May 2018 09:08:35 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-text/</guid>
+      <description>文本组件,常常用来显示显示文本文字,当文字长度超过父组件时是截断还是显示多行,这个取决于属性的限制
+样式规则  对于文本的样式是可选的,如果忽略将会使用与它最接近组件的默认样式
+ 如果设置了样式的TextStyle.inherit属性值,那么父组件的样式以及组件本身的样式将会同时作用
+ 如果需要使得同一行的文本的不同文字显示不同的样式,则需要使用TextSpan.rich作为构造函数
+  属性  textAlign 控制文本的对齐方式
+textAlign: TextAlign.justify,  textDirection 文本的显示方向
+textDirection: TextDirection.rtl  Note: 需要注意的是.textAlign和textDirection两个属性存在相互影响
+ overflow 如何处理溢出的文本
+overflow: TextOverflow.clip  softWrap 溢出的文字是否在下一行显示
+softWrap: true,   Note: overflow和softWrap存在相互影响
+ style 文本的样式
+style: new TextStyle(fontSize: 40.0),  textScaleFactor 缩放比例
+textScaleFactor: 1.5   Simple child: new Text( &#39;Helloaaaaaaaaaaaaaaaaaaaaaaaaaaa&#39;, textAlign: TextAlign.justify, // overflow: TextOverflow.clip, textDirection: TextDirection.rtl, // softWrap: true, style: new TextStyle(fontSize: 40.</description>
+    </item>
+    
+    <item>
+      <title>Flutter 基础组件-图像</title>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-image/</link>
+      <pubDate>Mon, 14 May 2018 23:30:51 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-image/</guid>
+      <description>  本文章主要翻译于Widgets: Image
+ 对于图像组件而言,其提供了以下几种方式来获取图片 - Image,从一个图片提供者(ImageProvider)处获取图片
+ Image.assert 从(AssertBundle)处使用key来获取图片
+ Image.network 通过URL从网络获取图片
+ Image.file 从文件读取图像
+ Image.memory 从Uint8List中获取图像
+  属性  alignment 图像对齐
+ fit 图像的填充方式
+ height 设置图片的高度
+ width 设置图像的宽度
+ gaplessPlayback 当使用的图像源变化时,图片如何切换
+ colorBlendMode 两张重叠的图像如何显示
+  </description>
+    </item>
+    
+    <item>
+      <title>Flutter 基础组件-行</title>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-row/</link>
+      <pubDate>Fri, 11 May 2018 23:17:47 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-row/</guid>
+      <description>本文章主要翻译于Widgets: Row
+ Row组件主要用来在水平方向显示其子组件， 当组件作为子组件被放置在Row中时，子组件不能滚动
+只显示在视图中可见的组件
+例如，可以像如下使用一个Row组件
+new Row( children: &amp;lt;Widget&amp;gt;[ new Text(‘The first text widget’, textAlign: TextAlign.center), new Text(‘The first text widget’, textAlign: TextAlign.center), new Text(‘The first text widget’, textAlign: TextAlign.center) ], )  在Row中，子组件按照顺序逐个布局，再看一下下面这个例子
+new Row( children: &amp;lt;Widget&amp;gt;[ const FlutterLogo(), new Text(&amp;quot;This is a text widget to be displayed on the screen, as you can see it is a pretty long text widget, right?&amp;quot;), const FlutterLogo() ], )  这个组件的布局顺序如下： - 首先布局FlutterLogo，其占据其大小的屏幕空间</description>
+    </item>
+    
+    <item>
+      <title>Flutter 基础组件-列</title>
+      <link>https://gru.tsecloud.club/dart/flutter-wdiget-column/</link>
+      <pubDate>Fri, 11 May 2018 23:10:25 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/dart/flutter-wdiget-column/</guid>
+      <description>本文章主要翻译于Widgets: Column
+ Column组件常用来显示垂直方向的子组件列表,与Row组件一样,该组件只会显示其可见范围内的子组件,并不会滚动显示其子组件
+如下,可以创建一个具有三个子组件的Column组件
+body: new Column( crossAxisAlignment: CrossAxisAlignment.start, children: &amp;lt;Widget&amp;gt;[ new Text(&#39;The first line of text&#39;), new Text(&#39;The second line of text&#39;), new Text(&#39;The third line of text&#39;), ], ),  布局步骤  优先布局子组件为null以及不可伸缩组件(相对的可伸缩组件为:Expanded), 对于这些组件在垂直方向上没有做限制,在水平方向上限制为屏幕的大小 如果设定crossAxisAlignment:CrossAxisAlignment.stretch,在水平方向上将会匹配其宽度的最大值
+ 然后将可伸缩的组件布局于剩下的空间,在这一步的时候,子组件还没有被布局
+ 当布局可伸缩组件时,采用的规则与第一步的规则相似,只不过不会将已经布局的不可伸缩组件挤出屏幕之外,而是自身超出部分不可见
+ Column的宽度,子组件在水平方向的显示永远是安全的,也就是说水平方向永远可见
+ Column的高度取决于mainAxisSize属性
+ 子组件的位置确定,取决于mainAxisAlignment和crossAxisAlignment两个组件
+  属性  crossAxisAlignment 子组件在横轴方向上的定位
+crossAxisAlignment: CrossAxisAlignment.start,  textBaseline 文本的对齐方式
+textBaseline: TextBaseline.ideographic,  textDirection 子组件在水平方向的排列顺序
+textDirection: TextDirection.ltr  verticalDirection 子组件在垂直方向上的排列顺序</description>
+    </item>
+    
+    <item>
+      <title>Flutter 基础组件-容器</title>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-continer/</link>
+      <pubDate>Thu, 10 May 2018 22:58:56 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-continer/</guid>
+      <description>Container Widget  本文章主要翻译于Widgets: Container
+ 特点  该组件常常用来包含子组件,同时其本身也包含一些样式属性, 如果没有包含子组件的时候,将会自动填充屏幕上给定的区域 如果设定了长度和宽度,将会作用域其子组件  假定我们创建了如下一个示例
+@override Widget build(BuildContext context) { return new MaterialApp( title: &#39;Flutter Demo&#39;, home: new Scaffold( appBar: new AppBar( title: new Text(&#39;Flutter Container&#39;), ), body: new Container( width: 200.0, height: 200.0, color: Colors.amber.shade400, child: Container( width: 100.0, height: 100.0, color: Colors.greenAccent.shade200, )), )); }  以上我们先创建一个容器,并设定其宽度和高度分别为200.0和200.0, 指定其填充色为橘黄色
+然后创建该容器的子组件为容器,同样设定其长度和高度为100.0和100.0, 指定其颜色,
+实际上,我们只能看见容器子容器的颜色,这是因为如果没有对容器中,如果没有对子组件进行限定的话
+子组件将会完全沾满container容器,因此我们可以使用容器的属性对子组件进行限定
+属性  padding 设定子组件与容器的内边距
+padding: const EdgeInsets.only(top: 10.</description>
+    </item>
+    
+  </channel>
+</rss>
