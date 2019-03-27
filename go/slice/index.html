@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>GoLang-切片 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.clubcss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.clubcss/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.clubcss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.clubcss/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>GoLang-切片</h1>
+  <time datetime=2019-03-27T20:10:55&#43;0800 class="post-date">Wed, Mar 27, 2019</time>
+  
+
+<p>​   由于数组的长度属性属于数组类型的一部分，因此限定了数组的灵活性，为了解决这个问题，Golang中引入了切片作为数组的一个补充。切片本身存储任何的数据，它只是底层数组的一个反射，因此对于切片的修改将直接作用到底层的数组上。</p>
+
+<h3 id="切片的属性">切片的属性</h3>
+
+<p>对于切片而言，长度，容度是我们特别重要的两个属性</p>
+
+<ul>
+<li>长度，指的是切片中元素的数量，可以使用<code>len</code>函数获取</li>
+<li>容度，指的是切片创建的时候从切片起始位置到数组末尾所占元素的总和，可以使用<code>cap</code>函数获取</li>
+</ul>
+
+<p>因此，对于一个切片而言，其长度&lt;=容度</p>
+
+<h3 id="切片的声明">切片的声明</h3>
+
+<ol>
+<li>使用内置的<code>make</code>函数直接生成</li>
+</ol>
+
+<pre><code class="language-go">   s := make([]int, 3, 4)
+   fmt.Println(s)
+</code></pre>
+
+<p>使用<code>make</code>函数创建切片的时候可表达为<code>make([]T,len,cap)</code>，</p>
+
+<ul>
+<li><code>[]T</code> 用来指明切片底层数组所保存的元素类型。</li>
+<li><code>len</code> 用来标识切片底层数组的长度。</li>
+<li><code>cap</code>代表的是切片的容度,通常可省略，省略的时候切片的长度=容度</li>
+</ul>
+
+<p>实际在创建一个切片的时候会先创建一个底层数组，然后将底层数组反射成切片</p>
+
+<ol>
+<li>基于已存在的数组，直接生成切片</li>
+</ol>
+
+<pre><code class="language-go">   a := [...]int{1, 2, 3, 4, 5, 6}
+   s := a[2:4]
+</code></pre>
+
+<p>以上将会输出<code>[3 4]</code>, 基于数组创建切片的时候，切片的取值范围通用表达式为<code>arr[start:end]</code></p>
+
+<ul>
+<li><p><code>start</code>的值决定了切片的容度大小</p></li>
+
+<li><p><code>end</code> 的值的取值范围为<code>0~len(arr)</code></p></li>
+
+<li><p>如果需要取最前端或者最末端的时候，可以留空,比如<code>[:],[start:],[:end]</code></p></li>
+
+<li><p>当创建切片以后，切片中的元素所以将会重新从0开始编号</p></li>
+</ul>
+
+<ol>
+<li>基于已存在的切片来创建</li>
+</ol>
+
+<pre><code class="language-go">   a := [...]int{1, 2, 3, 4, 5, 6}
+   s1 := a[4:4]
+   fmt.Printf(&quot;s1 len:%d, cap:%d \n&quot;, len(s1), cap(s1)) //输出：s1 len:0, cap:2 
+   fmt.Println(s1) //输出：[]
+   
+   s2 := s1[:2]
+   fmt.Printf(&quot;s2 len:%d, cap:%d \n&quot;, len(s2), cap(s2)) //输出s2 len:2, cap:2 
+   fmt.Println(s2) //输出 [5 6]
+   
+   s3 := s1[:4] //这里将会显示一个：slice bounds out of range的错误
+   fmt.Printf(&quot;s3 len:%d, cap:%d \n&quot;, len(s3), cap(s3))
+</code></pre>
+
+<p>当我们基于已存在的切片去创建一个切片的时候，创建的切片还是底层数组的一个反射。但是需要注意的是切片的<code>end</code>如果其值超过了父切片的容度，将会出现下标索引取值出现问题。</p>
+
+<h3 id="切片的操作">切片的操作</h3>
+
+<p>由于切片是数组的反射，因此我们对于切片的所有的操作都将直接作用于底层数组，同时也会直接影响到基于改底层数组</p>
+
+<p>的其他切片。例如下面这个例子</p>
+
+<pre><code class="language-go">a := [...]int{1, 2, 3, 4, 5, 6}
+s1 := a[2:4]
+s2 := a[1:4]
+fmt.Println(&quot;before a:&quot;, a)
+fmt.Println(&quot;before s1:&quot;, s1)
+fmt.Println(&quot;before s2:&quot;, s2)
+s1[0] = 23
+fmt.Println(&quot;after a:&quot;, a)
+fmt.Println(&quot;after s1:&quot;, s1)
+fmt.Println(&quot;after s2:&quot;, s2)
+</code></pre>
+
+<p>以上将会直接输出为：</p>
+
+<pre><code>before a: [1 2 3 4 5 6]
+before s1: [3 4]
+before s2: [2 3 4]
+after a: [1 2 23 4 5 6]
+after s1: [23 4]
+after s2: [2 23 4]
+</code></pre>
+
+<p>当我们对切片进行追加元素的时候，会出现两种情况，元素的长度小于切片的容度，元素的长度大于切片的容度</p>
+
+<pre><code class="language-go">a := [...]int{1, 2, 3, 4, 5, 6}
+s1 := a[:3]
+fmt.Printf(&quot;s1 len:%d, cap:%d \n&quot;, len(s1), cap(s1))
+fmt.Println(s1)
+
+s1 = append(s1, 1) 
+fmt.Printf(&quot;s1 len:%d, cap:%d \n&quot;, len(s1), cap(s1))
+fmt.Println(s1)
+
+s1 = append(s1, 1, 2, 3, 4, 5)
+fmt.Printf(&quot;s1 len:%d, cap:%d \n&quot;, len(s1), cap(s1))
+fmt.Println(s1)
+</code></pre>
+
+<p>以上将会输出</p>
+
+<pre><code class="language-go">s1 len:3, cap:6 
+[1 2 3]
+s1 len:4, cap:6 
+[1 2 3 1]
+s1 len:9, cap:12 
+[1 2 3 1 1 2 3 4 5]
+</code></pre>
+
+<p>在Go中，使用<code>append</code>方法对切片的末尾添加元素，其通用表达式为：<code>append(slice,item....Type)</code> ,可以往切片中一次性添加一个或者多个与切片相同类型的元素, 当然也可以使用<code>append</code>将两个切片进行合并，就像<code>append(s1,s2...)</code>。</p>
+
+<p>在对切片进行添加元素的时候，如果添后的元素总数量大于切片的容度，将会对元素进行扩容，而对于扩容的规则，可以参考: <a href="https://studygolang.com/articles/16052?fr=sidebar">golang 切片扩容的探讨</a>和<a href="https://github.com/golang/go/blob/master/src/runtime/slice.go">slice.go文件</a></p>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

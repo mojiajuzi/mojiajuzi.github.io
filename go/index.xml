@@ -6,13 +6,32 @@
     <description>Recent content in Gos on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Mar 2019 22:25:25 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 27 Mar 2019 20:10:55 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/go/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>数组与切片</title>
+      <title>GoLang-切片</title>
+      <link>https://gru.tsecloud.club/go/slice/</link>
+      <pubDate>Wed, 27 Mar 2019 20:10:55 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/slice/</guid>
+      <description>​ 由于数组的长度属性属于数组类型的一部分，因此限定了数组的灵活性，为了解决这个问题，Golang中引入了切片作为数组的一个补充。切片本身存储任何的数据，它只是底层数组的一个反射，因此对于切片的修改将直接作用到底层的数组上。
+切片的属性 对于切片而言，长度，容度是我们特别重要的两个属性
+ 长度，指的是切片中元素的数量，可以使用len函数获取 容度，指的是切片创建的时候从切片起始位置到数组末尾所占元素的总和，可以使用cap函数获取  因此，对于一个切片而言，其长度&amp;lt;=容度
+切片的声明  使用内置的make函数直接生成  s := make([]int, 3, 4) fmt.Println(s)  使用make函数创建切片的时候可表达为make([]T,len,cap)，
+ []T 用来指明切片底层数组所保存的元素类型。 len 用来标识切片底层数组的长度。 cap代表的是切片的容度,通常可省略，省略的时候切片的长度=容度  实际在创建一个切片的时候会先创建一个底层数组，然后将底层数组反射成切片
+ 基于已存在的数组，直接生成切片  a := [...]int{1, 2, 3, 4, 5, 6} s := a[2:4]  以上将会输出[3 4], 基于数组创建切片的时候，切片的取值范围通用表达式为arr[start:end]
+ start的值决定了切片的容度大小
+ end 的值的取值范围为0~len(arr)
+ 如果需要取最前端或者最末端的时候，可以留空,比如[:],[start:],[:end]
+ 当创建切片以后，切片中的元素所以将会重新从0开始编号
+   基于已存在的切片来创建  a := [...]int{1, 2, 3, 4, 5, 6} s1 := a[4:4] fmt.</description>
+    </item>
+    
+    <item>
+      <title>GoLang-数组</title>
       <link>https://gru.tsecloud.club/go/array/</link>
       <pubDate>Tue, 26 Mar 2019 22:25:25 +0800</pubDate>
       
