@@ -6,10 +6,25 @@
     <description>Recent content in Gos on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 Mar 2019 20:10:55 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 28 Mar 2019 22:47:12 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/go/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GoLang-Map</title>
+      <link>https://gru.tsecloud.club/go/map/</link>
+      <pubDate>Thu, 28 Mar 2019 22:47:12 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/map/</guid>
+      <description>map是Go语言的一种内建类型，该类型将一个键和值相互关联起来，通过该键获取其所存储的值。因此我们首先遇到的问题是，哪些类型能够作为key来进行使用,总的来说，所有可以直接使用比较操作符(比如: ==,!=,&amp;lt;,&amp;lt;=,&amp;gt;,&amp;gt;=)进行比较的类型，都可以用来作为key来使用。
+ 布尔值（bool） 整型（integer） 浮点型(float) 复数 字符串 指针 channel (通道)值 interface(接口) struct(结构体) array(数组)  map的声明 对于一个map来说，其元素由key和value组成，因此一个map的声明如下
+var m map[string]string  其通用表达式为map[Key_Type]value_type ,map的零值为nil ,为了验证这个问题，可以做如下的实验
+var m map[string]string if m == nil { fmt.Println(m) } else { fmt.Println(&amp;quot;b&amp;quot;) }  以上结果将会直接输出map[]，但是我们无法在其中添加元素，因为map的零值为nil,为了解决这个问题，可以有一下两种方式
+ 使用make函数来进行声明
+var m = make(map[string]string) if m == nil { fmt.Println(&amp;quot;a&amp;quot;) } else { fmt.Println(m) //将会输出:map[] }  声明的时候，直接进行赋值
+var m = map[string]string{ &amp;quot;a&amp;quot;: &amp;quot;a&amp;quot;, &amp;quot;b&amp;quot;: &amp;quot;b&amp;quot;, } if m == nil { fmt.</description>
+    </item>
     
     <item>
       <title>GoLang-切片</title>
@@ -17,7 +32,7 @@
       <pubDate>Wed, 27 Mar 2019 20:10:55 +0800</pubDate>
       
       <guid>https://gru.tsecloud.club/go/slice/</guid>
-      <description>​ 由于数组的长度属性属于数组类型的一部分，因此限定了数组的灵活性，为了解决这个问题，Golang中引入了切片作为数组的一个补充。切片本身存储任何的数据，它只是底层数组的一个反射，因此对于切片的修改将直接作用到底层的数组上。
+      <description>​ 由于数组的长度属性属于数组类型的一部分，因此限定了数组的灵活性，为了解决这个问题，Golang中引入了切片作为数组的一个补充。切片本身不存储任何的数据，它只是底层数组的一个反射，因此对于切片的修改将直接作用到底层的数组上。
 切片的属性 对于切片而言，长度，容度是我们特别重要的两个属性
  长度，指的是切片中元素的数量，可以使用len函数获取 容度，指的是切片创建的时候从切片起始位置到数组末尾所占元素的总和，可以使用cap函数获取  因此，对于一个切片而言，其长度&amp;lt;=容度
 切片的声明  使用内置的make函数直接生成  s := make([]int, 3, 4) fmt.Println(s)  使用make函数创建切片的时候可表达为make([]T,len,cap)，
