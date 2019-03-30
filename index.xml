@@ -6,10 +6,25 @@
     <description>Recent content on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 Mar 2019 22:47:12 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 29 Mar 2019 23:30:52 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GoLang-指针</title>
+      <link>https://gru.tsecloud.club/go/pointer/</link>
+      <pubDate>Fri, 29 Mar 2019 23:30:52 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/pointer/</guid>
+      <description>指针声明 在GoLang中声明指针的时候，需要表明指针所存储的内存地址对应值的类型，语法为:*T
+var p *int  在声明指针以后，可以使用&amp;amp;操作符来获取一个变量的内存地址
+var p *int fmt.Println(&amp;quot;zero value of p is &amp;quot;, p) //将会输出：zero value of p is &amp;lt;nil&amp;gt; a := 10 p = &amp;amp;a fmt.Printf(&amp;quot;type of p %T \n&amp;quot;, p) //type of p *int fmt.Println(&amp;quot;address is&amp;quot;, p) //address is 0xc000058090 fmt.Println(&amp;quot;the pointer point value is:&amp;quot;, *p) //the pointer point value is: 10   通过以上代码可以看到，对于指针来说，其零值为nil,
+ 使用&amp;amp;操作符可以直接获取一个变量的地址
+ 通过使用*操作符可以直接获取指针所指向的值。
+  当然也可以直接通过指针来修改其所指向地址所代表的值
+var p *int a := 10 p = &amp;amp;a fmt.</description>
+    </item>
     
     <item>
       <title>GoLang-Map</title>

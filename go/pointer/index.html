@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Gos &middot; To Be A Better Man</title>
+  <title>GoLang-指针 &middot; To Be A Better Man</title>
 
   
   <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
@@ -29,7 +29,7 @@
   <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="https://gru.tsecloud.club/go/index.xml" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
 
   
 </head>
@@ -56,25 +56,62 @@
 </aside>
 
     <main class="content container">
-    <ul class="posts">
-<li>
-    <span><a href="https://gru.tsecloud.club/go/pointer/">GoLang-指针</a> <time class="pull-right post-list" datetime="2019-03-29T23:30:52&#43;0800">Fri, Mar 29, 2019</time></span>
-  </li><li>
-    <span><a href="https://gru.tsecloud.club/go/map/">GoLang-Map</a> <time class="pull-right post-list" datetime="2019-03-28T22:47:12&#43;0800">Thu, Mar 28, 2019</time></span>
-  </li><li>
-    <span><a href="https://gru.tsecloud.club/go/slice/">GoLang-切片</a> <time class="pull-right post-list" datetime="2019-03-27T20:10:55&#43;0800">Wed, Mar 27, 2019</time></span>
-  </li><li>
-    <span><a href="https://gru.tsecloud.club/go/array/">GoLang-数组</a> <time class="pull-right post-list" datetime="2019-03-26T22:25:25&#43;0800">Tue, Mar 26, 2019</time></span>
-  </li><li>
-    <span><a href="https://gru.tsecloud.club/go/goruotine/">Goroutine</a> <time class="pull-right post-list" datetime="2018-02-13T21:52:57&#43;0800">Tue, Feb 13, 2018</time></span>
-  </li><li>
-    <span><a href="https://gru.tsecloud.club/go/http-caddyfile/">The HTTP Caddyfile</a> <time class="pull-right post-list" datetime="2018-02-06T23:54:27&#43;0800">Tue, Feb 6, 2018</time></span>
-  </li><li>
-    <span><a href="https://gru.tsecloud.club/go/middleware_part_1/">Golang Middleware Part 1</a> <time class="pull-right post-list" datetime="2018-02-06T23:30:40&#43;0800">Tue, Feb 6, 2018</time></span>
-  </li><li>
-    <span><a href="https://gru.tsecloud.club/go/caddyfile/">Caddyfile</a> <time class="pull-right post-list" datetime="2018-01-31T23:07:05&#43;0800">Wed, Jan 31, 2018</time></span>
-  </li>
+    <div class="post">
+  <h1>GoLang-指针</h1>
+  <time datetime=2019-03-29T23:30:52&#43;0800 class="post-date">Fri, Mar 29, 2019</time>
+  
+
+<h3 id="指针声明">指针声明</h3>
+
+<p>在GoLang中声明指针的时候，需要表明指针所存储的内存地址对应值的类型，语法为:<code>*T</code></p>
+
+<pre><code class="language-go">var p *int
+</code></pre>
+
+<p>在声明指针以后，可以使用<code>&amp;</code>操作符来获取一个变量的内存地址</p>
+
+<pre><code class="language-go">var p *int
+fmt.Println(&quot;zero value of p is &quot;, p) //将会输出：zero value of p is  &lt;nil&gt;
+a := 10
+p = &amp;a
+
+fmt.Printf(&quot;type of p %T \n&quot;, p) //type of p *int 
+
+fmt.Println(&quot;address is&quot;, p) //address is 0xc000058090
+
+fmt.Println(&quot;the pointer point value is:&quot;, *p) //the pointer point value is: 10
+</code></pre>
+
+<ul>
+<li><p>通过以上代码可以看到，对于指针来说，其零值为<code>nil</code>,</p></li>
+
+<li><p>使用<code>&amp;</code>操作符可以直接获取一个变量的地址</p></li>
+
+<li><p>通过使用<code>*</code>操作符可以直接获取指针所指向的值。</p></li>
 </ul>
+
+<p>当然也可以直接通过指针来修改其所指向地址所代表的值</p>
+
+<pre><code class="language-go">var p *int
+
+a := 10
+
+p = &amp;a
+
+fmt.Println(a) //输出 10
+
+*p++
+
+fmt.Println(a) //输出 11
+
+p++ //invalid operation: p++ (non-numeric type *int)
+</code></pre>
+
+<p>这里需要注意的是，在Go中不能够对指针执行算术运算</p>
+
+</div>
+
+
     </main>
 
     
