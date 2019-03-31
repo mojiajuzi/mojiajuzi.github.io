@@ -6,10 +6,52 @@
     <description>Recent content in Gos on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 Mar 2019 23:30:52 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 31 Mar 2019 22:35:32 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/go/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GoLang-Method</title>
+      <link>https://gru.tsecloud.club/go/method/</link>
+      <pubDate>Sun, 31 Mar 2019 22:35:32 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/method/</guid>
+      <description>函数和方法在参数的传递和值的返回方面是一致的，不同的是方法多了一个接收者
+方法的声明 // 声明四边形结构体 type quadrangle struct { width, height int } // 使用结构体作为接收者 func (q quadrangle) area() int { area := q.width * q.height return area } func main() { q := quadrangle{ width: 3, height: 4, } //直接访问方法 area := q.area() fmt.Println(area) }  在以上示例中，
+ 先声明一个quadrangle作为结构体，该结构体有两个字段width,height 声明一个方法area,该方法的接受是一个quadrangle类型的变量,该方法返回计算后的面积 在方法中，直接访问接收者的字段来计算面积 在mian函数中，我们使用.语法来访问一个接收者的方法  当然。一个接收者可以包含多个方法,例如，除了计算面积，还可以添加一个计算周长的方法
+func (q quadrangle) perimeter() int { perimeter := 2 * (q.width * q.height) return perimeter }  那么问题来了，在什么时候使用方法，在什么使用函数呢</description>
+    </item>
+    
+    <item>
+      <title>GoLang-Function</title>
+      <link>https://gru.tsecloud.club/go/function/</link>
+      <pubDate>Sun, 31 Mar 2019 22:16:11 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/function/</guid>
+      <description> 对于一个函数而言，其通常由三部分组成：函数名，参数，返回参数，对于某些函数，也可以没有返回参数
+函数声明 函数的声明主要使用关键字func开头，后面更上函数的参数以及参数的类型，如果由返回参数的话，还需要声明返回参数的类型,比如
+func area(width int, height int) int { area := width * height return area }  以上声明一个计算面积的函数，该函数的名称为area, 它包含两个int类型的惨呼，以及它的返回参数是int类型
+函数参数 一个函数可以有零个或者多个参数，相同的类型的参数可以简写在一起,例如：上面函数的width和height都是相同的类型，所以可以简写如下
+func area(width, height int) int { area := width * height return area }  函数返回值 与参数一样，函数的返回值也可以是零个或者多个。多余多个返回参数，则没有简写的方式，必须要标明函数返回值的数量和类型，例如计算面积的函数，我们想要返回其周长，则可以改写如下：
+func areaAndPerimeter(width, height int) (int, int) { area := width * height perimeter := 2 * (width + height) return area, perimeter }  对于返回参数而言，我们可以直接命名返回参数，就像在函数开始直接声明一样
+func areaAndPerimeter(width, height int) (area, perimeter int) { area = width * height perimeter = 2 * (width + height) return }  </description>
+    </item>
+    
+    <item>
+      <title>GoLang-结构体</title>
+      <link>https://gru.tsecloud.club/go/struct/</link>
+      <pubDate>Sun, 31 Mar 2019 12:45:57 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/struct/</guid>
+      <description>结构体的声明 对于结构而言，其声明方式为type StructName struct{}
+type Book struct { name string author string price int }  如上所示，我们创建了一个名字叫做Book的结构体，他包含三个自定义的字段，在声明字段的时候需要指明字段的类型以及名称，对于相同类型的字段而言，可以放在同一行，比如上面的name和author字段
+name, author string  字段的类型，除了常见的int,string等类型外，还可以是pointer,struct,slice等类型
+当然，除了直接定义一个结构体类型，还可以使用匿名结构体，顾名思义，这种结构体，没有名称
+var book = struct { name, author string price int }{ name: &amp;quot;Dart Time&amp;quot;, author: &amp;quot;刘未鹏&amp;quot;, } fmt.Println(book) //将会输出：{Dart Time 刘未鹏 0}  对于结构体中的字段而言，也可以省略其名字,在访问的时候，使用其字段类型的名称作为字段的名称来访问,不过这种方式并不推荐使用。
+初始化和访问 当我们声明结构体之后，就可以将它作为一个类型使用
+func main() { var book Book fmt.Println(book) //将会输出:{ 0} book.name = &amp;quot;Dark Time&amp;quot; book.author = &amp;quot;刘未鹏&amp;quot; fmt.Println(book) //输出:{Dark Time 刘未鹏 0} p := &amp;amp;book fmt.</description>
+    </item>
     
     <item>
       <title>GoLang-指针</title>

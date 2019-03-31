@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>GoLang-Function &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>GoLang-Function</h1>
+  <time datetime=2019-03-31T22:16:11&#43;0800 class="post-date">Sun, Mar 31, 2019</time>
+  
+
+<p>对于一个函数而言，其通常由三部分组成：函数名，参数，返回参数，对于某些函数，也可以没有返回参数</p>
+
+<h3 id="函数声明">函数声明</h3>
+
+<p>函数的声明主要使用关键字<code>func</code>开头，后面更上函数的参数以及参数的类型，如果由返回参数的话，还需要声明返回参数的类型,比如</p>
+
+<pre><code class="language-go">func area(width int, height int) int {
+	area := width * height
+	return area
+}
+</code></pre>
+
+<p>以上声明一个计算面积的函数，该函数的名称为<code>area</code>, 它包含两个int类型的惨呼，以及它的返回参数是int类型</p>
+
+<h4 id="函数参数">函数参数</h4>
+
+<p>一个函数可以有零个或者多个参数，相同的类型的参数可以简写在一起,例如：上面函数的width和height都是相同的类型，所以可以简写如下</p>
+
+<pre><code class="language-go">func area(width, height int) int {
+	area := width * height
+	return area
+}
+</code></pre>
+
+<h4 id="函数返回值">函数返回值</h4>
+
+<p>与参数一样，函数的返回值也可以是零个或者多个。多余多个返回参数，则没有简写的方式，必须要标明函数返回值的数量和类型，例如计算面积的函数，我们想要返回其周长，则可以改写如下：</p>
+
+<pre><code class="language-go">func areaAndPerimeter(width, height int) (int, int) {
+	area := width * height
+	perimeter := 2 * (width + height)
+	return area, perimeter
+}
+</code></pre>
+
+<p>对于返回参数而言，我们可以直接命名返回参数，就像在函数开始直接声明一样</p>
+
+<pre><code class="language-go">func areaAndPerimeter(width, height int) (area, perimeter int) {
+	area = width * height
+	perimeter = 2 * (width + height)
+	return
+}
+</code></pre>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>
