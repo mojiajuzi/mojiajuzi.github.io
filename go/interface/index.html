@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>GoLang-Interface &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>GoLang-Interface</h1>
+  <time datetime=2019-04-02T17:06:50&#43;0800 class="post-date">Tue, Apr 2, 2019</time>
+  
+
+<h3 id="接口的定义">接口的定义</h3>
+
+<pre><code class="language-go">type areaAndPerimeter interface {
+	area() float64
+	perimeter() float64
+}
+</code></pre>
+
+<p>如上所示，定义一个接口的通用方式是<code>type interfaceName interface{}</code> ,上面的代码定义了一个名为<code>areaAndPerimeter</code>的接口，该接口定义了两个方法<code>area</code>和<code>permimeter</code>来计算面积和周长。</p>
+
+<h3 id="接口的实现">接口的实现</h3>
+
+<p>要实现一个接口，只需要实现接口所定义的所有方法即可</p>
+
+<pre><code class="language-go">type quadrangle struct {
+	width, height float64
+}
+
+func (q quadrangle) area() float64 {
+	area := q.width * q.height
+	return area
+}
+
+func (q quadrangle) perimeter() float64 {
+	perimeter := 2 * (q.width * q.height)
+	return perimeter
+}
+
+type circular struct {
+	r float64
+}
+
+func (c *circular) area() float64 {
+	area := Pi * c.r * c.r
+	return area
+}
+
+func (c *circular) perimeter() float64 {
+	perimeter := 2 * Pi * c.r
+	return perimeter
+}
+</code></pre>
+
+<p>以上分别定义了两个类型<code>quadrangle</code>和<code>circular</code> 他们都实现了接口，稍微有一点区别的是<code>quadrangle</code>采用的是值接收者，<code>circular</code>使用的是指针的接收者,然后我们就可以如下使用</p>
+
+<pre><code class="language-go">
+var ap areaAndPerimeter
+
+q := quadrangle{
+	width:  3,
+	height: 4,
+}
+fmt.Println(q.area())
+
+ap = q
+fmt.Println(ap.area())
+
+c := circular{
+	r: 5,
+}
+
+fmt.Println(c.area())
+
+ap = &amp;c
+fmt.Println(ap.area())
+</code></pre>
+
+<p>由此可见，实现了接口定义的方法也就实现了接口，上面作为指针接收者的类型与值类型接收的两个类型赋值给接口的方式不一样
+一个直接赋值，一个使用<code>&amp;</code>获取地址后赋值，这是因为对于<code>circular</code>类型来说，实现接口的是指针类型而不是值类型。</p>
+
+<h3 id="接口的值">接口的值</h3>
+
+<p>对于接口来说，其值有两部分组成<code>(value, type)</code></p>
+
+<ul>
+<li><p><code>value</code> 表示的是实现该接口的具体的类型的值</p></li>
+
+<li><p><code>type</code> 表示的是实现该接口的类型的类型</p></li>
+</ul>
+
+<pre><code class="language-go">var ap areaAndPerimeter
+
+q := quadrangle{
+	width:  3,
+	height: 4,
+}
+fmt.Printf(&quot;the q  type is:%T value is:%v \n&quot;, q, q)
+
+ap = q
+fmt.Printf(&quot;the ap type is:%T value is:%v \n&quot;, ap, ap)
+
+c := circular{
+	r: 5,
+}
+
+fmt.Printf(&quot;the c type is:%T value is:%v \n&quot;, c, c)
+
+ap = &amp;c
+fmt.Printf(&quot;the ap type is:%T value is:%v \n&quot;, ap, ap)
+
+</code></pre>
+
+<p>以上将会打印出结果:</p>
+
+<pre><code>the q  type is:main.quadrangle value is:{3 4} 
+the ap type is:main.quadrangle value is:{3 4} 
+the c type is:main.circular value is:{5} 
+the ap type is:*main.circular value is:&amp;{5}
+</code></pre>
+
+<p>以上情况都是在底层类型值不为<code>nil</code>的情况下进行计算，当底层类型的值为<code>nil</code>时，会出现什么情况</p>
+
+<pre><code class="language-go">var ap areaAndPerimeter
+
+var q quadrangle
+
+fmt.Printf(&quot;the q  type is:%T value is:%v \n&quot;, q, q)
+
+ap = q
+fmt.Printf(&quot;the ap type is:%T value is:%v \n&quot;, ap, ap)
+
+fmt.Println(&quot;area is:&quot;, ap.area())
+</code></pre>
+
+<p>以上将会输出</p>
+
+<pre><code>the q  type is:main.quadrangle value is:{0 0} 
+the ap type is:main.quadrangle value is:{0 0} 
+area is: 0
+</code></pre>
+
+<p>以上结果可以看出，如果实现接口的类型的值为<code>nil</code>,那么调用方法的时候，将会使用类似于<code>nil.methodName</code>的方式进行调用</p>
+
+<p>还有一种情况是，如果接口的值为<code>nil</code>的情况下会出现什么问题</p>
+
+<pre><code class="language-go">func main() {
+	var ap areaAndPerimeter
+
+	fmt.Println(ap.area())
+}
+</code></pre>
+
+<p>如果执行以上代码，将会出现一个错误</p>
+
+<pre><code>panic: runtime error: invalid memory address or nil pointer dereference
+</code></pre>
+
+<h3 id="类型断言">类型断言</h3>
+
+<p>在接口中，当我们需要判断一个类型的类型的时候，将会使用<code>i.(T)</code>的形式，</p>
+
+<ul>
+<li><p><code>i</code> 表示需要判断类型的值</p></li>
+
+<li><p><code>T</code> 断言<code>i</code>所代表的类型</p></li>
+</ul>
+
+<pre><code class="language-go">	var ap interface{} = quadrangle{
+		width: 3,
+	}
+	fmt.Println(ap.(circular))
+</code></pre>
+
+<p>如上，先声明一个空接口类型的变量<code>ap</code>,然后赋值<code>quadrangle</code>类型，然后我们定义该类型了为<code>circular</code>，运行将会得到如下错误：</p>
+
+<pre><code>panic: interface conversion: interface {} is main.quadrangle, not main.circular
+</code></pre>
+
+<p>为了解决这个问题，与判断<code>map</code>类型中的元素是否存在一致，引入一个<code>ok</code>变量</p>
+
+<pre><code class="language-go">a, ok := ap.(circular)
+if ok {
+	fmt.Println(&quot;the ap type was circular&quot;)
+} else {
+	fmt.Printf(&quot;the a type is: %T, value is:%v&quot;, a, a)
+}
+</code></pre>
+
+<p>以上将会输出：</p>
+
+<pre><code>the a type is: main.circular, value is:{0}
+</code></pre>
+
+<p>可以看到，如果类型判断错误，<code>ok</code>的值为false, 返回的值为对应接口类型的零值。</p>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>
