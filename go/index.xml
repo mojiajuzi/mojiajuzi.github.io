@@ -6,10 +6,38 @@
     <description>Recent content in Gos on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Apr 2019 17:06:50 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 05 Apr 2019 09:10:29 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/go/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Golang-Error</title>
+      <link>https://gru.tsecloud.club/go/error/</link>
+      <pubDate>Fri, 05 Apr 2019 09:10:29 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/error/</guid>
+      <description>error类型是一个内置的接口
+type error interface { Error() string }  依据接口的原则，凡是实现了接口所定义方法的类型，都可以算作是实现了该接口，因此下面是几种在程序逻辑中常用的处理错误的方式
+使用New方法创建 在Go的标准包errors中提供了创建错误的方法,那就是使用New方法,它的实现方式为
+func New(text string) error { return &amp;amp;errorString{text} } type errorString struct { s string } func (e *errorString) Error() string { return e.s }  因此就可以创建一个错误errors.New(&amp;quot;error info&amp;quot;)
+type Student struct { name string age int } func (s Student) getFullStudentInfo() (string, error) { if s.age &amp;lt;= 0 { return strconv.Itoa(s.age), errors.New(&amp;quot;the age can not lt zero&amp;quot;) } return fmt.</description>
+    </item>
+    
+    <item>
+      <title>Golang-Defer</title>
+      <link>https://gru.tsecloud.club/go/defer/</link>
+      <pubDate>Fri, 05 Apr 2019 08:27:43 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/defer/</guid>
+      <description>defer 声明总是再函数或者方法执行的最后执行，如果函数或者方法有返回值，那就是在返回之前执行
+func main() { defer fmt.Println(&amp;quot;world&amp;quot;) fmt.Println(&amp;quot;hello&amp;quot;) }  以上将会输出
+hello world  可以看到，它的执行顺序时在函数的最后执行的，那么对于一个函数中包含多个defer声明的时候，其执行顺序时怎样地的
+defer fmt.Println(&amp;quot;world&amp;quot;) fmt.Println(&amp;quot;hello&amp;quot;) defer fmt.Println(&amp;quot;second defer&amp;quot;)  以上函数将会输出
+hello second defer world  由此可见，对于defer来说，其时存储在一个栈中的，当语句块执行到defer声明的时候，那么该声明将会背压入栈 由于栈先进后出的特点，那么对于多个defer声明而言，那么其执行顺序就清楚了。
+当一个defer声明执行的时候，它只会纪录当前的状态，而不会受之后执行语句的影响
+func main() { i := 0 defer fmt.Println(i) i++ return }  虽然fmt.Println(i)虽然在变量i的值改变之前执行，但是它所执行的结果时变量递增之前的结果</description>
+    </item>
     
     <item>
       <title>GoLang-Interface</title>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Golang-Error &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Golang-Error</h1>
+  <time datetime=2019-04-05T09:10:29&#43;0800 class="post-date">Fri, Apr 5, 2019</time>
+  
+
+<p><code>error</code>类型是一个内置的接口</p>
+
+<pre><code class="language-go">type error interface {
+	Error() string
+}
+</code></pre>
+
+<p>依据接口的原则，凡是实现了接口所定义方法的类型，都可以算作是实现了该接口，因此下面是几种在程序逻辑中常用的处理错误的方式</p>
+
+<h5 id="使用-new-方法创建">使用<code>New</code>方法创建</h5>
+
+<p>在Go的标准包<code>errors</code>中提供了创建错误的方法,那就是使用<code>New</code>方法,它的实现方式为</p>
+
+<pre><code class="language-go">  func New(text string) error {
+      return &amp;errorString{text}
+  }
+
+  type errorString struct {
+      s string
+  }
+
+  func (e *errorString) Error() string {
+      return e.s
+  }
+</code></pre>
+
+<p>因此就可以创建一个错误<code>errors.New(&quot;error info&quot;)</code></p>
+
+<pre><code class="language-go">type Student struct {
+	name string
+	age  int
+}
+
+func (s Student) getFullStudentInfo() (string, error) {
+	if s.age &lt;= 0 {
+		return strconv.Itoa(s.age), errors.New(&quot;the age can not lt zero&quot;)
+	}
+
+	return fmt.Sprintf(&quot;the name %s, age is:%d&quot;, s.name, s.age), nil
+}
+</code></pre>
+
+<p>以上创建了一个学生结构体，该结构体包含简单的名称和年龄两个字段，然后有一个<code>getFullStudentInfo</code>方法获取学生的详细信息
+在该方法中，对年龄进行了简单的判断，如果年龄小于0，则抛出一个错误</p>
+
+<h5 id="使用-errorf-创建">使用<code>Errorf</code>创建</h5>
+
+<p>我们可以使用<code>Errorf</code>抛出更纤细的错误处理信息,这是因为<code>Errorf</code>方法对<code>New</code>方法进行封装</p>
+
+<pre><code class="language-go">func Errorf(format string, a ...interface{}) error {
+	return errors.New(Sprintf(format, a...))
+}
+</code></pre>
+
+<p>因此将上面的例子改写为</p>
+
+<pre><code class="language-go">func (s Student) getFullStudentInfo() (string, error) {
+	if s.age &lt;= 0 {
+		return strconv.Itoa(s.age), fmt.Errorf(&quot;the student name:%s,the age is error, age is:%d&quot;, s.name, s.age)
+	}
+
+	return fmt.Sprintf(&quot;the name %s, age is:%d&quot;, s.name, s.age), nil
+}
+</code></pre>
+
+<h5 id="使用结构体的字段或者方法-亦可以创建错误">使用结构体的字段或者方法，亦可以创建错误</h5>
+
+<pre><code class="language-go">type Student struct {
+	name string
+	age  int
+}
+
+func (s Student) getFullStudentInfo() (string, error) {
+	if s.age &lt;= 0 {
+		return strconv.Itoa(s.age), s
+	}
+
+	return fmt.Sprintf(&quot;the name %s, age is:%d&quot;, s.name, s.age), nil
+}
+
+func (s Student) Error() string {
+	return fmt.Sprintf(&quot;the student name:%s,the age is error, age is:%d&quot;, s.name, s.age)
+}
+</code></pre>
+
+<p>以上使用结构体实现了<code>error</code>方法，因此可以实现错误的抛出</p>
+
+<h4 id="自定义结构体错误类型">自定义结构体错误类型</h4>
+
+<pre><code class="language-go">func (s *StudentError) Error() string {
+	return s.err
+}
+
+func (s *StudentError) ageLt() bool {
+	return s.age &lt;= 0
+}
+
+func (s *StudentError) ageGt() bool {
+	return s.age &gt;= 100
+}
+</code></pre>
+
+<p>以上，定义了一个结构体类型，那么就可以使用如下:</p>
+
+<pre><code class="language-go">if err != &quot;&quot; {
+	return strconv.Itoa(s.age), &amp;StudentError{age: s.age, name: s.name}
+}
+</code></pre>
+
+<h4 id="其他">其他</h4>
+
+<ol>
+<li><p>在一个函数或者方法含有多个返回值的话，如果返回一个错误值，那么该错误值应该作为以后一个返回值的参数返回</p></li>
+
+<li><p>在Go常用的判断错误的方式是将返回的错误值与<code>nil</code>进行比对，如果为<code>nil</code>则表示没有错误，反之则表示有错误发生</p></li>
+</ol>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

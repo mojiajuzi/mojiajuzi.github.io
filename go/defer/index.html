@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Golang-Defer &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Golang-Defer</h1>
+  <time datetime=2019-04-05T08:27:43&#43;0800 class="post-date">Fri, Apr 5, 2019</time>
+  <p>defer 声明总是再函数或者方法执行的最后执行，如果函数或者方法有返回值，那就是在返回之前执行</p>
+
+<pre><code class="language-go">func main() {
+	defer fmt.Println(&quot;world&quot;)
+
+	fmt.Println(&quot;hello&quot;)
+}
+</code></pre>
+
+<p>以上将会输出</p>
+
+<pre><code>hello
+world
+</code></pre>
+
+<p>可以看到，它的执行顺序时在函数的最后执行的，那么对于一个函数中包含多个<code>defer</code>声明的时候，其执行顺序时怎样地的</p>
+
+<pre><code class="language-go">defer fmt.Println(&quot;world&quot;)
+
+fmt.Println(&quot;hello&quot;)
+
+defer fmt.Println(&quot;second defer&quot;)
+</code></pre>
+
+<p>以上函数将会输出</p>
+
+<pre><code>hello
+second defer
+world
+</code></pre>
+
+<p>由此可见，对于<code>defer</code>来说，其时存储在一个栈中的，当语句块执行到<code>defer</code>声明的时候，那么该声明将会背压入栈
+由于栈先进后出的特点，那么对于多个<code>defer</code>声明而言，那么其执行顺序就清楚了。</p>
+
+<p>当一个<code>defer</code>声明执行的时候，它只会纪录当前的状态，而不会受之后执行语句的影响</p>
+
+<pre><code class="language-go">func main() {
+	i := 0
+	defer fmt.Println(i)
+	i++
+	return
+}
+</code></pre>
+
+<p>虽然<code>fmt.Println(i)</code>虽然在变量<code>i</code>的值改变之前执行，但是它所执行的结果时变量递增之前的结果</p>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>
