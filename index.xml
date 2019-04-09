@@ -6,10 +6,22 @@
     <description>Recent content on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Apr 2019 09:10:29 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 09 Apr 2019 20:37:33 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Golang-Panic &amp; Recover</title>
+      <link>https://gru.tsecloud.club/go/panic_recover/</link>
+      <pubDate>Tue, 09 Apr 2019 20:37:33 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/panic_recover/</guid>
+      <description>panic panic: 终止程序继续执行, 当在一个函数中使用panic之后,将会执行一下步骤：
+ 程序将会停止执行 执行defer定义的语句 返回给调用该函数的地方 进程继续执行，直到在该goroutine中的所有函数全部返回 打印出panic堆栈信息 进程终止执行  func main() { defer fmt.Println(&amp;quot;end&amp;quot;) go hello() time.Sleep(2 * time.Second) fmt.Println(&amp;quot;main&amp;quot;) } func hello() { defer fmt.Println(&amp;quot;world&amp;quot;) panic(&amp;quot;this is error&amp;quot;) fmt.Println(&amp;quot;hello&amp;quot;) }  以上会打印出如下结果，验证了上面的执行顺序
+world panic: this is error goroutine 19 [running]: main.hello() C:/code/go/src/hello/main.go:18 +0xc5 created by main.main C:/code/go/src/hello/main.go:11 +0xdf  recover recover接管并处理panic，具有以下几个特点:
+ 只有在使用defer函数时，recover才有用。 只能接管相同goroutine内的panic  func hello() { defer world() panic(&amp;quot;this is error&amp;quot;) fmt.Println(&amp;quot;hello&amp;quot;) } func world() { if r := recover(); r !</description>
+    </item>
     
     <item>
       <title>Golang-Error</title>

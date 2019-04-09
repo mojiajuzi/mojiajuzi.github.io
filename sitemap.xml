@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://gru.tsecloud.club/go/panic_recover/</loc>
+    <lastmod>2019-04-09T20:37:33+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://gru.tsecloud.club/go/error/</loc>
     <lastmod>2019-04-05T09:10:29+08:00</lastmod>
   </url>
@@ -264,7 +269,7 @@
   
   <url>
     <loc>https://gru.tsecloud.club/go/</loc>
-    <lastmod>2019-04-05T09:10:29+08:00</lastmod>
+    <lastmod>2019-04-09T20:37:33+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -312,7 +317,7 @@
   
   <url>
     <loc>https://gru.tsecloud.club/</loc>
-    <lastmod>2019-04-05T09:10:29+08:00</lastmod>
+    <lastmod>2019-04-09T20:37:33+08:00</lastmod>
     <priority>0</priority>
   </url>
   
