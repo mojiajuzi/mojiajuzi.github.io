@@ -6,10 +6,22 @@
     <description>Recent content in Gos on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Apr 2019 22:46:11 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 16 Apr 2019 22:53:16 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/go/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>HTTP 请求与响应之请求数据获取</title>
+      <link>https://gru.tsecloud.club/go/request_parse/</link>
+      <pubDate>Tue, 16 Apr 2019 22:53:16 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/request_parse/</guid>
+      <description>以下的几种方式都是基于vscode中go插件的helloweb来使用
+package main import ( &amp;quot;fmt&amp;quot; &amp;quot;net/http&amp;quot; &amp;quot;time&amp;quot; ) func greet(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, &amp;quot;Hello World! %s&amp;quot;, time.Now()) } func main() { http.HandleFunc(&amp;quot;/&amp;quot;, greet) http.ListenAndServe(&amp;quot;:8080&amp;quot;, nil) }  获取请求参数 对于请求数据的获取，归根结底就是要将请求到的参数解析到url.Values类型中，然后通过该类型的方法来获取数据.
+使用URL.Query方法 对于一个GET请求localhost:8080?page=1&amp;amp;per_page=15,
+func greet(w http.ResponseWriter, r *http.Request) { v := r.URL.Query() fmt.Fprintf(w, &amp;quot;page value:%s per_page value: %s&amp;quot;, v.Get(&amp;quot;page&amp;quot;), v.Get(&amp;quot;per_page&amp;quot;)) }  使用ParseForm方法 func greet(w http.ResponseWriter, r *http.Request) { err := r.ParseForm() if err != nil { log.Fatal(err) } fmt.</description>
+    </item>
     
     <item>
       <title>HTTP 请求与响应之URL</title>
