@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>To Be A Better Man</title>
-    <link>https:gru.tsecloud.club/</link>
+    <link>https://gru.tsecloud.club/</link>
     <description>Recent content on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 18 Apr 2019 00:33:34 +0800</lastBuildDate>
     
-	<atom:link href="https:gru.tsecloud.club/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://gru.tsecloud.club/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>HTTP 请求与响应之cookie的设置与获取</title>
-      <link>https:gru.tsecloud.club/go/http_cookie/</link>
+      <link>https://gru.tsecloud.club/go/http_cookie/</link>
       <pubDate>Thu, 18 Apr 2019 00:33:34 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/http_cookie/</guid>
+      <guid>https://gru.tsecloud.club/go/http_cookie/</guid>
       <description>简介 通常，它用于告知服务端两个请求是否来自同一浏览器，如保持用户的登录状态。Cookie使基于无状态的HTTP协议记录稳定的状态信息成为了可能
   会话状态管理（如用户登录状态、购物车、游戏分数或其它需要记录的信息） 个性化设置（如用户自定义设置、主题等） 浏览器行为跟踪（如跟踪分析用户行为等）   对于服务器而言，当响应一个请求的时候会通过头部设置一个Set-Cookie作为key,以cookie的名称=值的形式作为value来设置cookie 对于客户端而言，当发送一个请求的时候，会在头部设置以Cookie作为key,以分号;分隔的多个名称=值的形式， 将该路径下的cookie全部发送给服务器。
 对于cookie而言，生命周期是其一个重要的属性，按照这个属性，可以将cookie大致分为两类：
@@ -30,10 +30,10 @@ type cookie struct { Name string //名称 Value string //cookie值 Path string /
     
     <item>
       <title>HTTP 请求与响应之请求数据获取</title>
-      <link>https:gru.tsecloud.club/go/request_parse/</link>
+      <link>https://gru.tsecloud.club/go/request_parse/</link>
       <pubDate>Tue, 16 Apr 2019 22:53:16 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/request_parse/</guid>
+      <guid>https://gru.tsecloud.club/go/request_parse/</guid>
       <description>以下的几种方式都是基于vscode中go插件的helloweb来使用
 package main import ( &amp;quot;fmt&amp;quot; &amp;quot;net/http&amp;quot; &amp;quot;time&amp;quot; ) func greet(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, &amp;quot;Hello World! %s&amp;quot;, time.Now()) } func main() { http.HandleFunc(&amp;quot;/&amp;quot;, greet) http.ListenAndServe(&amp;quot;:8080&amp;quot;, nil) }  获取请求参数 对于请求数据的获取，归根结底就是要将请求到的参数解析到url.Values类型中，然后通过该类型的方法来获取数据.
 使用URL.Query方法 对于一个GET请求localhost:8080?page=1&amp;amp;per_page=15,
@@ -42,10 +42,10 @@ func greet(w http.ResponseWriter, r *http.Request) { v := r.URL.Query() fmt.Fpri
     
     <item>
       <title>HTTP 请求与响应之URL</title>
-      <link>https:gru.tsecloud.club/go/http_url/</link>
+      <link>https://gru.tsecloud.club/go/http_url/</link>
       <pubDate>Sun, 14 Apr 2019 22:46:11 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/http_url/</guid>
+      <guid>https://gru.tsecloud.club/go/http_url/</guid>
       <description>在web中，一个常见的地址格式为
 [scheme:][//[userinfo@]host][/]path[?query][#fragment]   scheme: 协议，通常为http或者https
  userinfo 请求的用户名以及用户密码信息
@@ -61,10 +61,10 @@ type URL struct { Scheme string Opaque string User *Userinfo Host string Path st
     
     <item>
       <title>Golang-Panic &amp; Recover</title>
-      <link>https:gru.tsecloud.club/go/panic_recover/</link>
+      <link>https://gru.tsecloud.club/go/panic_recover/</link>
       <pubDate>Tue, 09 Apr 2019 20:37:33 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/panic_recover/</guid>
+      <guid>https://gru.tsecloud.club/go/panic_recover/</guid>
       <description>panic panic: 终止程序继续执行, 当在一个函数中使用panic之后,将会执行一下步骤：
  程序将会停止执行 执行defer定义的语句 返回给调用该函数的地方 进程继续执行，直到在该goroutine中的所有函数全部返回 打印出panic堆栈信息 进程终止执行  func main() { defer fmt.Println(&amp;quot;end&amp;quot;) go hello() time.Sleep(2 * time.Second) fmt.Println(&amp;quot;main&amp;quot;) } func hello() { defer fmt.Println(&amp;quot;world&amp;quot;) panic(&amp;quot;this is error&amp;quot;) fmt.Println(&amp;quot;hello&amp;quot;) }  以上会打印出如下结果，验证了上面的执行顺序
 world panic: this is error goroutine 19 [running]: main.hello() C:/code/go/src/hello/main.go:18 +0xc5 created by main.main C:/code/go/src/hello/main.go:11 +0xdf  recover recover接管并处理panic，具有以下几个特点:
@@ -73,10 +73,10 @@ world panic: this is error goroutine 19 [running]: main.hello() C:/code/go/src/h
     
     <item>
       <title>Golang-Error</title>
-      <link>https:gru.tsecloud.club/go/error/</link>
+      <link>https://gru.tsecloud.club/go/error/</link>
       <pubDate>Fri, 05 Apr 2019 09:10:29 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/error/</guid>
+      <guid>https://gru.tsecloud.club/go/error/</guid>
       <description>error类型是一个内置的接口
 type error interface { Error() string }  依据接口的原则，凡是实现了接口所定义方法的类型，都可以算作是实现了该接口，因此下面是几种在程序逻辑中常用的处理错误的方式
 使用New方法创建 在Go的标准包errors中提供了创建错误的方法,那就是使用New方法,它的实现方式为
@@ -86,10 +86,10 @@ type Student struct { name string age int } func (s Student) getFullStudentInfo(
     
     <item>
       <title>Golang-Defer</title>
-      <link>https:gru.tsecloud.club/go/defer/</link>
+      <link>https://gru.tsecloud.club/go/defer/</link>
       <pubDate>Fri, 05 Apr 2019 08:27:43 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/defer/</guid>
+      <guid>https://gru.tsecloud.club/go/defer/</guid>
       <description>defer 声明总是再函数或者方法执行的最后执行，如果函数或者方法有返回值，那就是在返回之前执行
 func main() { defer fmt.Println(&amp;quot;world&amp;quot;) fmt.Println(&amp;quot;hello&amp;quot;) }  以上将会输出
 hello world  可以看到，它的执行顺序时在函数的最后执行的，那么对于一个函数中包含多个defer声明的时候，其执行顺序时怎样地的
@@ -101,10 +101,10 @@ func main() { i := 0 defer fmt.Println(i) i++ return }  虽然fmt.Println(i)虽�
     
     <item>
       <title>GoLang-Interface</title>
-      <link>https:gru.tsecloud.club/go/interface/</link>
+      <link>https://gru.tsecloud.club/go/interface/</link>
       <pubDate>Tue, 02 Apr 2019 17:06:50 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/interface/</guid>
+      <guid>https://gru.tsecloud.club/go/interface/</guid>
       <description>接口的定义 type areaAndPerimeter interface { area() float64 perimeter() float64 }  如上所示，定义一个接口的通用方式是type interfaceName interface{} ,上面的代码定义了一个名为areaAndPerimeter的接口，该接口定义了两个方法area和permimeter来计算面积和周长。
 接口的实现 要实现一个接口，只需要实现接口所定义的所有方法即可
 type quadrangle struct { width, height float64 } func (q quadrangle) area() float64 { area := q.width * q.height return area } func (q quadrangle) perimeter() float64 { perimeter := 2 * (q.width * q.height) return perimeter } type circular struct { r float64 } func (c *circular) area() float64 { area := Pi * c.</description>
@@ -112,10 +112,10 @@ type quadrangle struct { width, height float64 } func (q quadrangle) area() floa
     
     <item>
       <title>GoLang-Method</title>
-      <link>https:gru.tsecloud.club/go/method/</link>
+      <link>https://gru.tsecloud.club/go/method/</link>
       <pubDate>Sun, 31 Mar 2019 22:35:32 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/method/</guid>
+      <guid>https://gru.tsecloud.club/go/method/</guid>
       <description>函数和方法在参数的传递和值的返回方面是一致的，不同的是方法多了一个接收者
 方法的声明 // 声明四边形结构体 type quadrangle struct { width, height int } // 使用结构体作为接收者 func (q quadrangle) area() int { area := q.width * q.height return area } func main() { q := quadrangle{ width: 3, height: 4, } //直接访问方法 area := q.area() fmt.Println(area) }  在以上示例中，
  先声明一个quadrangle作为结构体，该结构体有两个字段width,height 声明一个方法area,该方法的接受是一个quadrangle类型的变量,该方法返回计算后的面积 在方法中，直接访问接收者的字段来计算面积 在mian函数中，我们使用.语法来访问一个接收者的方法  当然。一个接收者可以包含多个方法,例如，除了计算面积，还可以添加一个计算周长的方法
@@ -124,10 +124,10 @@ func (q quadrangle) perimeter() int { perimeter := 2 * (q.width * q.height) retu
     
     <item>
       <title>GoLang-Function</title>
-      <link>https:gru.tsecloud.club/go/function/</link>
+      <link>https://gru.tsecloud.club/go/function/</link>
       <pubDate>Sun, 31 Mar 2019 22:16:11 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/function/</guid>
+      <guid>https://gru.tsecloud.club/go/function/</guid>
       <description> 对于一个函数而言，其通常由三部分组成：函数名，参数，返回参数，对于某些函数，也可以没有返回参数
 函数声明 函数的声明主要使用关键字func开头，后面更上函数的参数以及参数的类型，如果由返回参数的话，还需要声明返回参数的类型,比如
 func area(width int, height int) int { area := width * height return area }  以上声明一个计算面积的函数，该函数的名称为area, 它包含两个int类型的惨呼，以及它的返回参数是int类型
@@ -139,10 +139,10 @@ func areaAndPerimeter(width, height int) (area, perimeter int) { area = width * 
     
     <item>
       <title>GoLang-结构体</title>
-      <link>https:gru.tsecloud.club/go/struct/</link>
+      <link>https://gru.tsecloud.club/go/struct/</link>
       <pubDate>Sun, 31 Mar 2019 12:45:57 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/struct/</guid>
+      <guid>https://gru.tsecloud.club/go/struct/</guid>
       <description>结构体的声明 对于结构而言，其声明方式为type StructName struct{}
 type Book struct { name string author string price int }  如上所示，我们创建了一个名字叫做Book的结构体，他包含三个自定义的字段，在声明字段的时候需要指明字段的类型以及名称，对于相同类型的字段而言，可以放在同一行，比如上面的name和author字段
 name, author string  字段的类型，除了常见的int,string等类型外，还可以是pointer,struct,slice等类型
@@ -154,10 +154,10 @@ func main() { var book Book fmt.Println(book) //将会输出:{ 0} book.name = &a
     
     <item>
       <title>GoLang-指针</title>
-      <link>https:gru.tsecloud.club/go/pointer/</link>
+      <link>https://gru.tsecloud.club/go/pointer/</link>
       <pubDate>Fri, 29 Mar 2019 23:30:52 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/pointer/</guid>
+      <guid>https://gru.tsecloud.club/go/pointer/</guid>
       <description>指针声明 在GoLang中声明指针的时候，需要表明指针所存储的内存地址对应值的类型，语法为:*T
 var p *int  在声明指针以后，可以使用&amp;amp;操作符来获取一个变量的内存地址
 var p *int fmt.Println(&amp;quot;zero value of p is &amp;quot;, p) //将会输出：zero value of p is &amp;lt;nil&amp;gt; a := 10 p = &amp;amp;a fmt.Printf(&amp;quot;type of p %T \n&amp;quot;, p) //type of p *int fmt.Println(&amp;quot;address is&amp;quot;, p) //address is 0xc000058090 fmt.Println(&amp;quot;the pointer point value is:&amp;quot;, *p) //the pointer point value is: 10   通过以上代码可以看到，对于指针来说，其零值为nil,
@@ -169,10 +169,10 @@ var p *int a := 10 p = &amp;amp;a fmt.</description>
     
     <item>
       <title>GoLang-Map</title>
-      <link>https:gru.tsecloud.club/go/map/</link>
+      <link>https://gru.tsecloud.club/go/map/</link>
       <pubDate>Thu, 28 Mar 2019 22:47:12 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/map/</guid>
+      <guid>https://gru.tsecloud.club/go/map/</guid>
       <description>map是Go语言的一种内建类型，该类型将一个键和值相互关联起来，通过该键获取其所存储的值。因此我们首先遇到的问题是，哪些类型能够作为key来进行使用,总的来说，所有可以直接使用比较操作符(比如: ==,!=,&amp;lt;,&amp;lt;=,&amp;gt;,&amp;gt;=)进行比较的类型，都可以用来作为key来使用。
  布尔值（bool） 整型（integer） 浮点型(float) 复数 字符串 指针 channel (通道)值 interface(接口) struct(结构体) array(数组)  map的声明 对于一个map来说，其元素由key和value组成，因此一个map的声明如下
 var m map[string]string  其通用表达式为map[Key_Type]value_type ,map的零值为nil ,为了验证这个问题，可以做如下的实验
@@ -184,10 +184,10 @@ var m = map[string]string{ &amp;quot;a&amp;quot;: &amp;quot;a&amp;quot;, &amp;qu
     
     <item>
       <title>GoLang-切片</title>
-      <link>https:gru.tsecloud.club/go/slice/</link>
+      <link>https://gru.tsecloud.club/go/slice/</link>
       <pubDate>Wed, 27 Mar 2019 20:10:55 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/slice/</guid>
+      <guid>https://gru.tsecloud.club/go/slice/</guid>
       <description>​ 由于数组的长度属性属于数组类型的一部分，因此限定了数组的灵活性，为了解决这个问题，Golang中引入了切片作为数组的一个补充。切片本身不存储任何的数据，它只是底层数组的一个反射，因此对于切片的修改将直接作用到底层的数组上。
 切片的属性 对于切片而言，长度，容度是我们特别重要的两个属性
  长度，指的是切片中元素的数量，可以使用len函数获取 容度，指的是切片创建的时候从切片起始位置到数组末尾所占元素的总和，可以使用cap函数获取  因此，对于一个切片而言，其长度&amp;lt;=容度
@@ -203,10 +203,10 @@ var m = map[string]string{ &amp;quot;a&amp;quot;: &amp;quot;a&amp;quot;, &amp;qu
     
     <item>
       <title>GoLang-数组</title>
-      <link>https:gru.tsecloud.club/go/array/</link>
+      <link>https://gru.tsecloud.club/go/array/</link>
       <pubDate>Tue, 26 Mar 2019 22:25:25 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/array/</guid>
+      <guid>https://gru.tsecloud.club/go/array/</guid>
       <description>数组声明 由于Go语言是一种强类型的语言，所有的变量都必须先声明后使用，因此数组的声明有以下几种方式:
  先声明数量和类型，未赋值的话，将初始化未数组元素类型的零值。
 var a [2]int  声明的时候，同时赋值,未赋值的元素，将使用元素的零值
@@ -220,10 +220,10 @@ var a = [...]int{2, 3, 4} b := a fmt.</description>
     
     <item>
       <title>Laravel 包编写(三)-服务提供者实现</title>
-      <link>https:gru.tsecloud.club/php/package-create/</link>
+      <link>https://gru.tsecloud.club/php/package-create/</link>
       <pubDate>Fri, 29 Jun 2018 11:32:11 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/package-create/</guid>
+      <guid>https://gru.tsecloud.club/php/package-create/</guid>
       <description>在这一篇我们将实现一个简单的关于文章分类的包(gru\tag),该包将会尽量涉及到包开发的各个方面
  在一个Laravel项目的根目录下面创建一个名为packages, 然后在package目录下面创建一个gru文件夹, 最后在gru文件夹下面创建一个tag文件,创建完成以后,结构如下
 -Root --gru --tag --src  之所以这样布局是因为相同作者的包,使用composer管理以后将统一放到一个目录下,而src将会作为我们代码放置的地方
@@ -242,10 +242,10 @@ php artisan make:model Tag  创建资源控制器,并迁移到src目录下,注�
     
     <item>
       <title>Laravel 包编写(二)-服务提供者</title>
-      <link>https:gru.tsecloud.club/php/package-bind/</link>
+      <link>https://gru.tsecloud.club/php/package-bind/</link>
       <pubDate>Fri, 29 Jun 2018 10:31:29 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/package-bind/</guid>
+      <guid>https://gru.tsecloud.club/php/package-bind/</guid>
       <description>创建服务提供者 在Laravel中,我们可以通过artisan命令创建一个服务提供者
 php artisan make:provider HelloServiceProvider  以上命令将会创建一个名为HelloServiceProvider的服务提供者
 服务提供者结构 &amp;lt;?php namespace App\Providers; use Illuminate\Support\ServiceProvider; class HelloServiceProvider extends ServiceProvider { public function boot(){ // TODO } public function register(){ //TODO } }  在Laravel中,服务提供者继承了Illuminate\Support\ServiceProvider类,并且包含两个方法boot和register
@@ -262,10 +262,10 @@ php artisan make:provider HelloServiceProvider  以上命令将会创建一个�
     
     <item>
       <title>Laravel 包编写(一)-Laravel启动过程</title>
-      <link>https:gru.tsecloud.club/php/package-theory/</link>
+      <link>https://gru.tsecloud.club/php/package-theory/</link>
       <pubDate>Fri, 29 Jun 2018 09:37:49 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/package-theory/</guid>
+      <guid>https://gru.tsecloud.club/php/package-theory/</guid>
       <description>在Laravel文档请求的生命周期一篇中,讲解了请求的生命周期
  首先请求进入public/index.php文件中, 该文件首先加载autoload.php文件,用于类的自动加载
 require __DIR__.&#39;/../vendor/autoload.php&#39;;  然后引入应用的初始文件,并返回一个应用的实例$app
@@ -277,10 +277,10 @@ $response = $kernel-&amp;gt;handle( $request = Illuminate\Http\Request::capture(
     
     <item>
       <title>beanstalkd-Laravel Queue</title>
-      <link>https:gru.tsecloud.club/php/beanstalkd-use/</link>
+      <link>https://gru.tsecloud.club/php/beanstalkd-use/</link>
       <pubDate>Tue, 26 Jun 2018 15:54:40 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/beanstalkd-use/</guid>
+      <guid>https://gru.tsecloud.club/php/beanstalkd-use/</guid>
       <description> 使用beanstalkd作为Laravel的队列驱动,需要安装pda/pheanstalk包
  安装依赖包
 composer require pda/pheanstalk  修改.env文件中的项目驱动为beanstalkd
@@ -296,10 +296,10 @@ QUEUE_DRIVER=beanstalkd  调整config\queue.php文件中beanstalkd数组
     
     <item>
       <title>beanstalkd-协议</title>
-      <link>https:gru.tsecloud.club/php/beanstalkd-command/</link>
+      <link>https://gru.tsecloud.club/php/beanstalkd-command/</link>
       <pubDate>Tue, 26 Jun 2018 12:06:38 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/beanstalkd-command/</guid>
+      <guid>https://gru.tsecloud.club/php/beanstalkd-command/</guid>
       <description>beanstalk协议以ASCII编码运行在TCP协议上；客户端的执行的周期为：连接服务，发送命名和数据，等待响应，关闭连接，对于一个连接而言；服务器按接收顺序依次处理命令，并以相同的顺序发送响应；所有的数字都将转换成无符号的十进制整型．
 命名，对于ASCII字符串而言，名字可以包含字母(A-Z, a-z), 数字(0-9),横线(&amp;lsquo;-&amp;rsquo;),加号(&amp;lsquo;+&amp;rsquo;), 斜线(&amp;ldquo;/&amp;rdquo;), 分号(&amp;ldquo;;&amp;rdquo;), 顿号(&amp;ldquo;.&amp;rdquo;), 美元符号(&amp;ldquo;$&amp;rdquo;),以及括号(&amp;ldquo;()&amp;rdquo;)，但是不能以横线作为开头．字符串以空白符结尾，但是每一个名字至少包含一个字符
 该协议包含两种数据格式，文本行，非结构化的数据块．其中文本行主要用于客户端命令和服务端响应，数据块常用来保存任务详情以及状态．每一个消息体 都是一个字节序列，服务端不会对消息进行检查和修改，只会原样返回,这样使得客户端能够正确的解析消息
@@ -319,10 +319,10 @@ put &amp;lt;pri&amp;gt; &amp;lt;delay&amp;gt; &amp;lt;ttr&amp;gt; &amp;lt;bytes&
     
     <item>
       <title>beanstalkd-基本概念</title>
-      <link>https:gru.tsecloud.club/php/beanstalk/</link>
+      <link>https://gru.tsecloud.club/php/beanstalk/</link>
       <pubDate>Fri, 22 Jun 2018 17:13:23 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/beanstalk/</guid>
+      <guid>https://gru.tsecloud.club/php/beanstalk/</guid>
       <description>在beanstalkd中包含几个重要的概念，如下图所示，对于一个系统消息队列系统来说 其必定有 - 一个或多个生产者(Producter), - 一个或多个消费者(Customer), - 一个消息存储系统，在这里指的是beanstalkd
 对于beanstalkd来说，以管道(Tube)作为其主要的组成部分，一个beanstalkd可以包含一个或者多个管道
 对于Tube而言,有两个队列组成，ready queue和delay queue,每一个队列里面可以包含零个或者多个任务
@@ -338,10 +338,10 @@ put &amp;lt;pri&amp;gt; &amp;lt;delay&amp;gt; &amp;lt;ttr&amp;gt; &amp;lt;bytes&
     
     <item>
       <title>基础算法-快速排序</title>
-      <link>https:gru.tsecloud.club/algorithm/fast_sort/</link>
+      <link>https://gru.tsecloud.club/algorithm/fast_sort/</link>
       <pubDate>Thu, 21 Jun 2018 22:40:41 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/algorithm/fast_sort/</guid>
+      <guid>https://gru.tsecloud.club/algorithm/fast_sort/</guid>
       <description>递归是快速排序的基础，因此想要了解快速排序，就必须得知道递归，对于递归来说有两个重要的概念
  基线条件，函数结束调用自身的条件
  递归条件，函数调用自身的条件
@@ -361,10 +361,10 @@ put &amp;lt;pri&amp;gt; &amp;lt;delay&amp;gt; &amp;lt;ttr&amp;gt; &amp;lt;bytes&
     
     <item>
       <title>Flutter 数据获取 网络</title>
-      <link>https:gru.tsecloud.club/dart/fetch_data/</link>
+      <link>https://gru.tsecloud.club/dart/fetch_data/</link>
       <pubDate>Tue, 12 Jun 2018 16:41:22 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/dart/fetch_data/</guid>
+      <guid>https://gru.tsecloud.club/dart/fetch_data/</guid>
       <description>该文章翻译自:Fetch data from the internet
  概述 从网络中获取数据一般需要以下几个步骤:
  添加网络请求库,可以在如下的http包中选择
@@ -384,10 +384,10 @@ class Post { final int userId; final int id; final String title; final String bo
     
     <item>
       <title>Laravel 数据迁移浅析 使用篇</title>
-      <link>https:gru.tsecloud.club/php/laravel-migrate/</link>
+      <link>https://gru.tsecloud.club/php/laravel-migrate/</link>
       <pubDate>Tue, 05 Jun 2018 11:53:19 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/laravel-migrate/</guid>
+      <guid>https://gru.tsecloud.club/php/laravel-migrate/</guid>
       <description>命令查看 php artisan make:migration --help  创建文件 在创建文件的时候,通过以下语句查看其创建选项
 php artisan make:migration --help  对于创建迁移文件,有用的是以下几个选项
 --create[=CREATE] The table to be created. --table[=TABLE] The table to migrate. --path[=PATH] The location where the migration file should be created.  说明:
@@ -408,10 +408,10 @@ php artisan make:migration --help  对于创建迁移文件,有用的是以下�
     
     <item>
       <title>基础算法-选择排序</title>
-      <link>https:gru.tsecloud.club/algorithm/select_sort/</link>
+      <link>https://gru.tsecloud.club/algorithm/select_sort/</link>
       <pubDate>Fri, 01 Jun 2018 22:51:07 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/algorithm/select_sort/</guid>
+      <guid>https://gru.tsecloud.club/algorithm/select_sort/</guid>
       <description>原理
 选择排序就是将一个有序的元素集合，将其第一个元素于后面的元素进行比对， 找出符合条件的的元素，并将符合条件的元素从该集合中剔除，存储到新的集合中 重复执行以上操作，直到集合中的元素全部转移到新的集合中
  时间复杂度
@@ -422,10 +422,10 @@ php artisan make:migration --help  对于创建迁移文件,有用的是以下�
     
     <item>
       <title>Flutter 路由</title>
-      <link>https:gru.tsecloud.club/dart/route/</link>
+      <link>https://gru.tsecloud.club/dart/route/</link>
       <pubDate>Thu, 31 May 2018 00:31:23 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/dart/route/</guid>
+      <guid>https://gru.tsecloud.club/dart/route/</guid>
       <description>基本概念  路由(Route),路由在Flutter中是屏幕或者页面的抽象
  导航(Navigator),导航是一个用来管理路由的组件
  Navigator通过栈的形式来管理路由对象， 由于栈有出栈和入栈两个操作，相对应的Navigator也通过pop和push来与之对应
@@ -438,30 +438,30 @@ class SecondPage extends StatelessWidget { final int backAccount; SecondPage({Ke
     
     <item>
       <title>基础算法-二分查找</title>
-      <link>https:gru.tsecloud.club/algorithm/binary_search/</link>
+      <link>https://gru.tsecloud.club/algorithm/binary_search/</link>
       <pubDate>Tue, 29 May 2018 23:38:46 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/algorithm/binary_search/</guid>
+      <guid>https://gru.tsecloud.club/algorithm/binary_search/</guid>
       <description>前提，被查找的列表必须是有序的,对于二分查找而言，其时间的复杂度为对数时间(O(log n))
 &amp;lt;?php function binary_search(array $list, int $item):int { $low = 0; $high = count($list) - 1; // 判断数组是否为空 if($high &amp;lt; 0) return -1; // 只有当范围缩小到一位时才停止循环 while ($low &amp;lt;= $high) { $mid = floor(($low + $high) / 2); //获取中间值，使用向下取整 $guess = $list[$mid]; if($guess == $item) return $mid; if($guess &amp;gt; $item) $high = $mid - 1; if($guess &amp;lt; $item) $low = $mid + 1; } return -1; } $a = [1, 3,5,7,9]; echo binary_search($a, 20);  </description>
     </item>
     
     <item>
       <title>Flutter 基础组件-表单</title>
-      <link>https:gru.tsecloud.club/dart/flutter-widget-form/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-form/</link>
       <pubDate>Tue, 29 May 2018 17:35:50 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/dart/flutter-widget-form/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-form/</guid>
       <description>TextField, FormField 对于TextField和FormField而言,只要用来接收用户的输入,以及用户输入的事件处理, 因此,可以将其分解为三个部分来说明
 样式属性 child: new TextField( autocorrect: false, // 是否自动校正 autofocus: false, //自动获取焦点 enabled: true, // 是否启用 inputFormatters: [], //对输入的文字进行限制和校验 keyboardType: TextInputType.text, //获取焦点时,启用的键盘类型 maxLines: 2, // 输入框最大的显示行数 maxLength: 3, //允许输入的字符长度/ maxLengthEnforced: false, //是否允许输入的字符长度超过限定的字符长度 obscureText: true, // 是否隐藏输入的内容 onChanged: (newValue) { // print(newValue); // 当输入内容变更时,如何处理 }, onSubmitted: (value) { // print(&amp;quot;whar&amp;quot;); // 当用户确定已经完成编辑时触发 }, style: new TextStyle( color: new Color(Colors.amberAccent.green)), // 设置字体样式 textAlign: TextAlign.center, //输入的内容在水平方向如何显示 decoration: new InputDecoration( labelText: &amp;quot;城市&amp;quot;, icon: new Icon(Icons.</description>
     </item>
     
     <item>
       <title>算法-大O表示法</title>
-      <link>https:gru.tsecloud.club/algorithm/big-o/</link>
+      <link>https://gru.tsecloud.club/algorithm/big-o/</link>
       <pubDate>Thu, 17 May 2018 00:21:51 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/algorithm/big-o/</guid>
+      <guid>https://gru.tsecloud.club/algorithm/big-o/</guid>
       <description>算法-大O表示法  大O表示法通常用来表示一个算法的执行效率， 而算法的执行效率则以相对于输入N的操作步骤来衡量，而这些步骤则考虑的是最坏情况下执行情况
  规则  忽略常量，这是因为当输入N足够大时，常量的影响则可以忽略不计， 例如： 5n-&amp;gt;O(n)
  耗时长的步骤将占主导地位, O(1) &amp;lt; O(logn) &amp;lt; O(n) &amp;lt; O(nlogn) &amp;lt; O(n^2) &amp;lt; O(2^n) &amp;lt; O(n!)
@@ -473,10 +473,10 @@ for x in range (0, n): print x; // O(1)  尽管在循环中的时间复杂度为
     
     <item>
       <title>Flutter 基础组件-按钮</title>
-      <link>https:gru.tsecloud.club/dart/flutter-widget-raisedbutton/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-raisedbutton/</link>
       <pubDate>Wed, 16 May 2018 09:37:39 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/dart/flutter-widget-raisedbutton/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-raisedbutton/</guid>
       <description>在RaisedButton组件中,有两种方式认为其是不可用的
  通过设置enabled属性为false(在beta3.0中已经去掉该属性)
  通过设置onPressed属性值为null,来禁用组件
@@ -485,10 +485,10 @@ for x in range (0, n): print x; // O(1)  尽管在循环中的时间复杂度为
     
     <item>
       <title>MySQL 中的事务编程</title>
-      <link>https:gru.tsecloud.club/sql/mysql-transaction/</link>
+      <link>https://gru.tsecloud.club/sql/mysql-transaction/</link>
       <pubDate>Tue, 15 May 2018 22:44:53 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/sql/mysql-transaction/</guid>
+      <guid>https://gru.tsecloud.club/sql/mysql-transaction/</guid>
       <description> 事务的ACID特性  A(atomicity)原子性:
  原子性指的是整个数据库事务作为一个不可分割的最小工作单位，在这个最小单位的工程中的所有步骤都当做是一个整体
  C(consistency)一致性 &amp;gt; 事务将数据库从一种状态变更为另外一种一直的状态 ，事务开始前后数据库的完整性没有被破坏
@@ -499,10 +499,10 @@ for x in range (0, n): print x; // O(1)  尽管在循环中的时间复杂度为
     
     <item>
       <title>Flutter 基础组件-图标</title>
-      <link>https:gru.tsecloud.club/dart/flutter-widget-icon/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-icon/</link>
       <pubDate>Tue, 15 May 2018 10:48:15 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/dart/flutter-widget-icon/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-icon/</guid>
       <description>对于图标组件来说其不存在交互性,如果需要使用交互性,需要使用IconButton组件
 Icon 组件 new Icon( Icons.star, // 图标数据 size: 40.0, //大小 color: Colors.red, //颜色 semanticLabel: &#39;Hello&#39;, // 图标不显示时,显示的文本 ),  IconButton 组件 new IconButton( icon: new Icon( Icons.star, // color: Colors.teal, ), // 图标 color: Colors.red, //图标显示颜色 splashColor: Colors.blue, //图标扩散时的颜色 highlightColor: Colors.yellow, //单击时轮廓颜色 disabledColor: Colors.green, //图标不可用时显示的颜色 iconSize: 80.0, //图标大小 padding: const EdgeInsets.all(20.0), //图标内边距 onPressed: () {}, // 图标点击事件 tooltip: &#39;IconButton&#39;, // 点击时的提示信息  Note:这里有一点需要注意的是,IconButton组件是否可用,取决于其onPresses属性是否为null,如果为null那么将会只显示disabledColor属性设置的颜色,其他所有的颜色将全部不显示
 外部图标 关于外部图标的引用,可以参考一下这篇文章Icons</description>
@@ -510,10 +510,10 @@ Icon 组件 new Icon( Icons.star, // 图标数据 size: 40.0, //大小 color: Co
     
     <item>
       <title>Flutter 基础组件-文本</title>
-      <link>https:gru.tsecloud.club/dart/flutter-widget-text/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-text/</link>
       <pubDate>Tue, 15 May 2018 09:08:35 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/dart/flutter-widget-text/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-text/</guid>
       <description>文本组件,常常用来显示显示文本文字,当文字长度超过父组件时是截断还是显示多行,这个取决于属性的限制
 样式规则  对于文本的样式是可选的,如果忽略将会使用与它最接近组件的默认样式
  如果设置了样式的TextStyle.inherit属性值,那么父组件的样式以及组件本身的样式将会同时作用
@@ -531,10 +531,10 @@ textScaleFactor: 1.5   Simple child: new Text( &#39;Helloaaaaaaaaaaaaaaaaaaaaaaa
     
     <item>
       <title>Flutter 基础组件-图像</title>
-      <link>https:gru.tsecloud.club/dart/flutter-widget-image/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-image/</link>
       <pubDate>Mon, 14 May 2018 23:30:51 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/dart/flutter-widget-image/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-image/</guid>
       <description>  本文章主要翻译于Widgets: Image
  对于图像组件而言,其提供了以下几种方式来获取图片 - Image,从一个图片提供者(ImageProvider)处获取图片
  Image.assert 从(AssertBundle)处使用key来获取图片
@@ -552,10 +552,10 @@ textScaleFactor: 1.5   Simple child: new Text( &#39;Helloaaaaaaaaaaaaaaaaaaaaaaa
     
     <item>
       <title>MySQL中的约束</title>
-      <link>https:gru.tsecloud.club/sql/mysql-constrait/</link>
+      <link>https://gru.tsecloud.club/sql/mysql-constrait/</link>
       <pubDate>Mon, 14 May 2018 23:28:26 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/sql/mysql-constrait/</guid>
+      <guid>https://gru.tsecloud.club/sql/mysql-constrait/</guid>
       <description>NOT NULL 约束 NOT NULL约束主要是对一个数据表的列做出约束，表示该列的值不能为NULL
 首先我们创建一个articles的数据表
 create table articles( id INT NOT NULL AUTO_INCREMENT, title VARCHAR(50) NOT NULL, abstract VARCHAR(100), primary key(id) )ENGINE=InnoDB DEFAULT CHARSET=utf8;  然后我们插入执行如下的语句进行插入数据
@@ -566,10 +566,10 @@ mysql&amp;gt; INSERT INTO articles(id, title, abstract) VALUES (NULL, NULL, &amp
     
     <item>
       <title>Flutter 基础组件-行</title>
-      <link>https:gru.tsecloud.club/dart/flutter-widget-row/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-row/</link>
       <pubDate>Fri, 11 May 2018 23:17:47 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/dart/flutter-widget-row/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-row/</guid>
       <description>本文章主要翻译于Widgets: Row
  Row组件主要用来在水平方向显示其子组件， 当组件作为子组件被放置在Row中时，子组件不能滚动
 只显示在视图中可见的组件
@@ -580,10 +580,10 @@ new Row( children: &amp;lt;Widget&amp;gt;[ const FlutterLogo(), new Text(&amp;qu
     
     <item>
       <title>Flutter 基础组件-列</title>
-      <link>https:gru.tsecloud.club/dart/flutter-wdiget-column/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-wdiget-column/</link>
       <pubDate>Fri, 11 May 2018 23:10:25 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/dart/flutter-wdiget-column/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-wdiget-column/</guid>
       <description>本文章主要翻译于Widgets: Column
  Column组件常用来显示垂直方向的子组件列表,与Row组件一样,该组件只会显示其可见范围内的子组件,并不会滚动显示其子组件
 如下,可以创建一个具有三个子组件的Column组件
@@ -601,10 +601,10 @@ textDirection: TextDirection.ltr  verticalDirection 子组件在垂直方向上�
     
     <item>
       <title>Flutter 基础组件-容器</title>
-      <link>https:gru.tsecloud.club/dart/flutter-widget-continer/</link>
+      <link>https://gru.tsecloud.club/dart/flutter-widget-continer/</link>
       <pubDate>Thu, 10 May 2018 22:58:56 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/dart/flutter-widget-continer/</guid>
+      <guid>https://gru.tsecloud.club/dart/flutter-widget-continer/</guid>
       <description>Container Widget  本文章主要翻译于Widgets: Container
  特点  该组件常常用来包含子组件,同时其本身也包含一些样式属性, 如果没有包含子组件的时候,将会自动填充屏幕上给定的区域 如果设定了长度和宽度,将会作用域其子组件  假定我们创建了如下一个示例
 @override Widget build(BuildContext context) { return new MaterialApp( title: &#39;Flutter Demo&#39;, home: new Scaffold( appBar: new AppBar( title: new Text(&#39;Flutter Container&#39;), ), body: new Container( width: 200.0, height: 200.0, color: Colors.amber.shade400, child: Container( width: 100.0, height: 100.0, color: Colors.greenAccent.shade200, )), )); }  以上我们先创建一个容器,并设定其宽度和高度分别为200.0和200.0, 指定其填充色为橘黄色
@@ -617,10 +617,10 @@ padding: const EdgeInsets.only(top: 10.</description>
     
     <item>
       <title>Laravel 队列使用-Redis作为驱动</title>
-      <link>https:gru.tsecloud.club/php/laravel-event-redis/</link>
+      <link>https://gru.tsecloud.club/php/laravel-event-redis/</link>
       <pubDate>Mon, 07 May 2018 22:23:05 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/laravel-event-redis/</guid>
+      <guid>https://gru.tsecloud.club/php/laravel-event-redis/</guid>
       <description>准备工作  安装相对应的Redis包
 $ composer require composer require predis/predis  修改配置文件.env,设置驱动
 QUEUE_DRIVER=redis REDIS_HOST=redis REDIS_PASSWORD=null REDIS_PORT=6379  修改config/queue.php文件中redis队列连详情
@@ -633,10 +633,10 @@ queues:happybird:delayed  执行时间为Sort Sets的score</description>
     
     <item>
       <title>Laravel 队列使用-队列失败任务处理</title>
-      <link>https:gru.tsecloud.club/php/laravel-job-fail/</link>
+      <link>https://gru.tsecloud.club/php/laravel-job-fail/</link>
       <pubDate>Fri, 04 May 2018 21:57:38 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/laravel-job-fail/</guid>
+      <guid>https://gru.tsecloud.club/php/laravel-job-fail/</guid>
       <description>在config/queue.php文件的failed字段里面,可以配置失败任务的连接以及数据的存储
 &#39;failed&#39; =&amp;gt; [ &#39;database&#39; =&amp;gt; env(&#39;DB_CONNECTION&#39;, &#39;mysql&#39;), &#39;table&#39; =&amp;gt; &#39;failed_jobs&#39;, ],  在使用artisan命令来执行队列任务的时候,如果没有指定任务失败的次数,那么任务将会一直尝试 例如在HappybirdJob类的handle函数中添加如下代码
 public function handle() { $data = []; $data[3]; }  当执行的时候,将会一直不断的尝试执行而不会停止,如果指定了--tries次数,那么任务将会在执行指定的次数之后删除任务并将任务放置到失败的任务表中 &amp;gt; Note: 任务序列化存储的时候只会存储对应的上下文环境,但是不包括handle中的业务逻辑,所以测试的时候需要注意这一点
@@ -648,10 +648,10 @@ public function __construct($connectionName, $job, $data, $failedId = null) { $t
     
     <item>
       <title>Laravel 队列使用-队列的触发与守护</title>
-      <link>https:gru.tsecloud.club/php/laravel-job-triger/</link>
+      <link>https://gru.tsecloud.club/php/laravel-job-triger/</link>
       <pubDate>Thu, 03 May 2018 23:07:15 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/laravel-job-triger/</guid>
+      <guid>https://gru.tsecloud.club/php/laravel-job-triger/</guid>
       <description>触发 任务的触发,主要的实现是在Illuminate\Foundation\Bus\DispatchesJobs这个trait中实现的,其只包含两个方法
 protected function dispatch($job){ return app(Dispatcher::class)-&amp;gt;dispatch($job); } protected function dispatchNow($job){ return app(Dispatcher::class)-&amp;gt;dispatchNow($job); }  这两个方法的区别就在于时间上,一个是推送到队列,另外一个是推送并立即执行,依据前面的traitQueueable可知,我们可以在对任务进行设置,例如
 protected function hpJob(){ $job = (new HappybirdJob(5))-&amp;gt;onConnection(&amp;quot;other&amp;quot;) -&amp;gt;onQueue(&amp;quot;happybird&amp;quot;) -&amp;gt;delay(5); }  以上例子表示,我们使用other的连接在happybird队列中设置一个延迟时间为5s的HappybirdJob任务
@@ -664,10 +664,10 @@ public function dispatchNow($command) { return $this-&amp;gt;pipeline-&amp;gt;se
     
     <item>
       <title>Laravel 队列使用-队列的同步与异步</title>
-      <link>https:gru.tsecloud.club/php/laravel-job-part1/</link>
+      <link>https://gru.tsecloud.club/php/laravel-job-part1/</link>
       <pubDate>Wed, 02 May 2018 22:42:46 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/laravel-job-part1/</guid>
+      <guid>https://gru.tsecloud.club/php/laravel-job-part1/</guid>
       <description>关于Laravle所支持的驱动类型以及对应驱动的配置,请查看Laravel Queue, 在这里将会使用以数据库作为驱动来说明,Laravel队列的使用
 准备工作  设置驱动类型,修改.env文件中配置选项
 QUEUE_DRIVER=database  生成任务表并执行迁移
@@ -681,10 +681,10 @@ App\Jobs\HappybirdSyncJob.php文件的内容如下
     
     <item>
       <title>Laravel 事件监听简单使用</title>
-      <link>https:gru.tsecloud.club/php/laravel-event/</link>
+      <link>https://gru.tsecloud.club/php/laravel-event/</link>
       <pubDate>Fri, 27 Apr 2018 23:35:21 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/laravel-event/</guid>
+      <guid>https://gru.tsecloud.club/php/laravel-event/</guid>
       <description>定义事件与事件监听器, 在App\Providers\EventServiceProvider.php类的$listen中定义事件与事件监听者的关系
 protected $listen = [ &#39;App\Events\HappybirdEvent&#39; =&amp;gt; [ &#39;App\Listeners\HappybirdListener&#39;, ], ];  创建事件和事件监听器, 在终端中执行artisan命令来创建
 $ php artisan event:generate​
@@ -695,10 +695,10 @@ $ php artisan event:generate​
     
     <item>
       <title>Laravel中安装和使用Redis作为会话和缓存的载体</title>
-      <link>https:gru.tsecloud.club/php/redis/</link>
+      <link>https://gru.tsecloud.club/php/redis/</link>
       <pubDate>Thu, 08 Mar 2018 23:27:06 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/redis/</guid>
+      <guid>https://gru.tsecloud.club/php/redis/</guid>
       <description>本人使用的是Laradock 作为开发环境
  predis的安装  安装依赖包predis/predis  composer require predis/predis  重新生成自动加载文件  composer dumpautoload 修改配置 修改.env文件中的缓存驱动,会话驱动,redis连接设置 &amp;lt;?php#缓存驱动#CACHE_DRIVER=arrayCACHE_DRIVER=redis#会话驱动#SESSION_DRIVER=fileSESSION_DRIVER=redis#redis连接驱动REDIS_HOST=redisREDIS_PASSWORD=nullREDIS_PORT=6379  配置session和cache使用不同的数据库 之所以这样做是避免清除缓存的时候，用户会话也一并清除
  修改config/database.php文件中的redis数组，复制一份default的配置，并依据需要修改其中的参数,这里最主要的两点是索引名称和database选项的修改
@@ -709,10 +709,10 @@ $ php artisan event:generate​
     
     <item>
       <title>Laravel自带的登录注册组件简单说明</title>
-      <link>https:gru.tsecloud.club/php/register/</link>
+      <link>https://gru.tsecloud.club/php/register/</link>
       <pubDate>Wed, 07 Mar 2018 21:48:05 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/php/register/</guid>
+      <guid>https://gru.tsecloud.club/php/register/</guid>
       <description>在这里我们需要理解Laravle中两个名词 - Guards:定义了对于每一个请求，如何对用户进行认证 - Providers: 定义了从哪里获取用户
 使用脚手架生成登录注册页面 php artisan make:auth 查看配置config/auth.php, 该文件用于配置如何登录,注册,重置密码 Providers Config &amp;lt;?php&amp;#39;providers&amp;#39; =&amp;gt; [&amp;#39;users&amp;#39; =&amp;gt; [&amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;eloquent&amp;#39;,&amp;#39;model&amp;#39; =&amp;gt; App\User::class,],// &amp;#39;users&amp;#39; =&amp;gt; [ // &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;database&amp;#39;, // &amp;#39;table&amp;#39; =&amp;gt; &amp;#39;users&amp;#39;, // ],],  在Providers中，定义了两个数组,　一个是以Eloquent模型作为驱动，并且使用App\Users这个数据模型作为存储用户数据的载体，当然也可以使用database作为驱动,直接指明table作为存储载体
 指定了如何获取到用户数据以后，接下来就需要配置如何验证用户
@@ -721,10 +721,10 @@ Guards Config &amp;lt;?php&amp;#39;guards&amp;#39; =&amp;gt; [&amp;#39;web&amp
     
     <item>
       <title>Goroutine</title>
-      <link>https:gru.tsecloud.club/go/goruotine/</link>
+      <link>https://gru.tsecloud.club/go/goruotine/</link>
       <pubDate>Tue, 13 Feb 2018 21:52:57 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/goruotine/</guid>
+      <guid>https://gru.tsecloud.club/go/goruotine/</guid>
       <description>Goroutines  Goroutine是由Go runtime管理的轻量级线程，开启一个新的Goroutine只需要使用go关键字，由于Goroutine运行在相同的地址空间，因此需要通过共享内存实现同步，包sync提供了基本的同步操作
  Channels  Channel是一种管道类型，使用它可以通过箭头操作符(&amp;lt;-)发送和接受数据
  默认情况下通过Channel发送、接收是阻塞的，也就是说，Channel的容量是1，举例来说，假设你通过channel发送一个值，如果另外一端不读取数据，那么再次发送数据就是阻塞的，必须等到另外一端接受数据后才能继续发送数据，该机制能够保证数据的同步不需要依赖于显示锁或者是状态值
@@ -736,10 +736,10 @@ func main() {c := make(chan int)for i := 0; i &amp;lt; 3; i++ {signCapChan(i,
     
     <item>
       <title>The HTTP Caddyfile</title>
-      <link>https:gru.tsecloud.club/go/http-caddyfile/</link>
+      <link>https://gru.tsecloud.club/go/http-caddyfile/</link>
       <pubDate>Tue, 06 Feb 2018 23:54:27 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/http-caddyfile/</guid>
+      <guid>https://gru.tsecloud.club/go/http-caddyfile/</guid>
       <description>站点地址(Site Addresses) HTTP服务使用站点地址作为labels层，地址的形式为scheme://host:port/path,当你填写地址的时候，可以选择其中的 一部分进行使用
 host:port通常是localhost或者是站点的域名，如果使用默认的https模式(此时端口号为：443),那么默认的端口号是2015 在某种意义上来说，协议代表着所使用的端口号，比如：http代表使用80端口， https代表使用443端口，如果协议和端口号都进行 指定，那么指定的优先级将会高于协议所默认的端口号。如下表格假设使用了自动使用https模式下，指定不同的格式所使用的端口号
 :2015 # Host: (any), Port: 2015 localhost # Host: localhost; Port: 2015 localhost:8080 # Host: localhost; Port: 8080 example.com # Host: example.com; Ports: 80-&amp;gt;443 http://example.com # Host: example.com; Port: 80 https://example.com # Host: example.com; Ports: 80-&amp;gt;443 http://example.com:1234 # Host: example.com; Port: 1234 https://example.com:80 # Error! HTTPS on port 80 *.example.com # Hosts: *.example.com; Port: 2015 example.com/foo/ # Host: example.com; Ports: 80, 443; Path: /foo/ /foo/ # Host: (any), Port: 2015, Path: /foo/  需要注意的是，站点域名地址必须唯一，对同一个域名的配置，必须放在相同的语句块内</description>
@@ -747,10 +747,10 @@ host:port通常是localhost或者是站点的域名，如果使用默认的https
     
     <item>
       <title>Golang Middleware Part 1</title>
-      <link>https:gru.tsecloud.club/go/middleware_part_1/</link>
+      <link>https://gru.tsecloud.club/go/middleware_part_1/</link>
       <pubDate>Tue, 06 Feb 2018 23:30:40 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/middleware_part_1/</guid>
+      <guid>https://gru.tsecloud.club/go/middleware_part_1/</guid>
       <description>如何在Golang中实现中间件-Part 1 当使用net/http包实现服务的时候，一般使用的是如下的两中处理方式:
  http.HandleFunc http.Handle  http.HandleFunc 分析 当使用这种方式的时候，其接受两个参数，一个是字符串格式的匹配符(pattern),另外一个就是func(ResponWrite, *Request), 因此只要我们的中间件中返回该类型，那么中间件就是可以实现的
 func main(){http.HandleFunc(&amp;#34;/&amp;#34;, Hello)http.ListenAndServe(&amp;#34;:8080&amp;#34;, nil)}func Hello(w http.ResponseWriter, r *http.Request) {fmt.Print(&amp;#34;hello&amp;#34;)} 当我们运行如上的程序的时候，就会打印出hello这个结果，说明我们的写法是没有问题的
@@ -763,10 +763,10 @@ type Handler interface {ServeHTTP(ResponseWriter, *Request)} 因此我们最�
     
     <item>
       <title>Caddyfile</title>
-      <link>https:gru.tsecloud.club/go/caddyfile/</link>
+      <link>https://gru.tsecloud.club/go/caddyfile/</link>
       <pubDate>Wed, 31 Jan 2018 23:07:05 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/go/caddyfile/</guid>
+      <guid>https://gru.tsecloud.club/go/caddyfile/</guid>
       <description>该文章将会向你展示使用Caddyfile配置Caddy是一件十分简单的事情
 Caddyfile是一个文本文件，用来配置Caddy如何运行
 该文件的第一行永远是服务站点的地址，比如:
@@ -784,10 +784,10 @@ example.com/static, *.example.com { .</description>
     
     <item>
       <title>mysqldump备份工具的简单使用</title>
-      <link>https:gru.tsecloud.club/sql/sqldump/</link>
+      <link>https://gru.tsecloud.club/sql/sqldump/</link>
       <pubDate>Wed, 31 Jan 2018 20:40:58 +0800</pubDate>
       
-      <guid>https:gru.tsecloud.club/sql/sqldump/</guid>
+      <guid>https://gru.tsecloud.club/sql/sqldump/</guid>
       <description> 导出某个数据库中的所有数据表,不包含表中的数据
 mysqldump -hlocalhost -utest -p -P3306 -d database_name &amp;gt; /path  导出数据库中某张表的结构,不包含表中的数据
 mysqldump -hlocalhost -utest -p -P3306 -d database_name table_name &amp;gt; /path  导出数据库中的所有数据表及表中所包含的数据
