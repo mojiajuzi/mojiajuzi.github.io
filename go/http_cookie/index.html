@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>HTTP 请求与响应之cookie的设置与获取 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https:gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https:gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https:gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https:gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https:gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https:gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>HTTP 请求与响应之cookie的设置与获取</h1>
+  <time datetime=2019-04-18T00:33:34&#43;0800 class="post-date">Thu, Apr 18, 2019</time>
+  
+
+<h3 id="简介">简介</h3>
+
+<p>通常，它用于告知服务端两个请求是否来自同一浏览器，如保持用户的登录状态。Cookie使基于无状态的HTTP协议记录稳定的状态信息成为了可能</p>
+
+<blockquote>
+<ul>
+<li>会话状态管理（如用户登录状态、购物车、游戏分数或其它需要记录的信息）</li>
+<li>个性化设置（如用户自定义设置、主题等）</li>
+<li>浏览器行为跟踪（如跟踪分析用户行为等）</li>
+</ul>
+</blockquote>
+
+<p>对于服务器而言，当响应一个请求的时候会通过头部设置一个<code>Set-Cookie</code>作为key,以cookie的<code>名称=值</code>的形式作为value来设置cookie
+对于客户端而言，当发送一个请求的时候，会在头部设置以<code>Cookie</code>作为key,以分号<code>;</code>分隔的多个<code>名称=值</code>的形式，
+将该路径下的cookie全部发送给服务器。</p>
+
+<p>对于cookie而言，生命周期是其一个重要的属性，按照这个属性，可以将cookie大致分为两类：</p>
+
+<ul>
+<li>会话期cookie，关闭浏览器则自动被删除。</li>
+<li>持久性cookie,在指定的有效期一直有效，直到其过期。</li>
+</ul>
+
+<p>在go的http包中cookie是一个结构体</p>
+
+<pre><code class="language-go">type cookie struct {
+    Name string  //名称
+    Value string  //cookie值
+    Path string  //作用域
+    Domain string 
+    Expires time.Time
+    RawExpires string
+    MaxAge int
+    Secure bool
+    HttpOnly bool
+    SameSite SameSite
+    Raw string
+    Unparsed []string
+}
+</code></pre>
+
+<p>对于其中的字段而言，其说明如下：</p>
+
+<ul>
+<li><p><code>Name</code>， <code>Value</code>分别为cookie的名称和值</p></li>
+
+<li><p><code>Path(路径)</code>,<code>Domain(域名)</code>，两者规定了cookie的作用域。
+默认情况下只有当前域名有效，如果设置Domain为<code>example.com</code>那么，该域名下的的所有子域名都可以访问到该cookie
+默认情况下全站都可以访问，如果指定了具体路径，比如：<code>/admin</code>, 那么就只有在admin以及该路径下的子路径才能有效</p></li>
+
+<li><p><code>Expires(过期时间)</code>,<code>MaxAge(有效期)</code>，两者设置了cookie的声明周期，其中MaxAge的优先级高于Expires,
+当MaxAge=0时,表示删除
+MaxAge<0时，表示关闭浏览器的时候，将会清除这个cookie
+MaxAge>0时，cookie并不随着浏览器的关闭而删除，而是在到达设定的时间时自动删除</p></li>
+
+<li><p><code>Secure</code>,<code>HttpOnly</code>,<code>SameSite</code>，三者与Cookie的安全相关。
+Secure：规定了cookie是否只能使用https协议进行传输。
+HttpOnly：是否禁止客户端脚本调用cookie
+SameSite：防止跨站请求时发送cookie</p></li>
+</ul>
+
+<h3 id="使用">使用</h3>
+
+<h4 id="设置cookie">设置cookie</h4>
+
+<pre><code class="language-go">func greet(w http.ResponseWriter, r *http.Request) {
+	c := http.Cookie{Name: &quot;hello&quot;, Value: &quot;world&quot;}
+	http.SetCookie(w, &amp;c)
+	fmt.Fprintf(w, &quot;set cookie success,cookie name:%s, value:%s&quot;, c.Name, c.Value)
+}
+</code></pre>
+
+<p>使用<code>http.Cookie</code>创建一个实例，然后使用<code>http.SetCookie</code>方法将cookie写入到响应中</p>
+
+<h4 id="获取cookie">获取cookie</h4>
+
+<pre><code class="language-go">func getCookie(w http.ResponseWriter, r *http.Request) {
+
+	c1, err := r.Cookie(&quot;hello&quot;)
+	if err != nil {
+		fmt.Fprintf(w, err.Error())
+		return
+	}
+	fmt.Fprintf(w, &quot;get cookie success,cookie name:%s, value:%s&quot;, c1.Name, c1.Value)
+}
+</code></pre>
+
+<p>使用<code>r.cookie</code>可以直接通过cookie的名称获取对应的cookie结构实例,当然还可以通过使用<code>r.Cookies</code>方法，将全部的cookie解析到一个切片中</p>
+
+<h4 id="删除cookie">删除cookie</h4>
+
+<pre><code class="language-go">func delCookie(w http.ResponseWriter, r *http.Request) {
+
+	c1, err := r.Cookie(&quot;hello&quot;)
+	if err != nil {
+		fmt.Fprintf(w, &quot;get cookie fail&quot;)
+	}
+	c1.MaxAge = -1
+	http.SetCookie(w, c1)
+	fmt.Fprintf(w, &quot;del cookie success,cookie name:%s, value:%s&quot;, c1.Name, c1.Value)
+}
+</code></pre>
+
+<p>cookie不能直接删除，只能通过设置其过期时间Expires和MaxAge两个属性来使其过期。</p>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

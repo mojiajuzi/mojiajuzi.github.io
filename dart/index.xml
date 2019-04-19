@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Darts on To Be A Better Man</title>
-    <link>https://gru.tsecloud.club/dart/</link>
+    <link>https:gru.tsecloud.club/dart/</link>
     <description>Recent content in Darts on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 12 Jun 2018 16:41:22 +0800</lastBuildDate>
     
-	<atom:link href="https://gru.tsecloud.club/dart/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https:gru.tsecloud.club/dart/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Flutter 数据获取 网络</title>
-      <link>https://gru.tsecloud.club/dart/fetch_data/</link>
+      <link>https:gru.tsecloud.club/dart/fetch_data/</link>
       <pubDate>Tue, 12 Jun 2018 16:41:22 +0800</pubDate>
       
-      <guid>https://gru.tsecloud.club/dart/fetch_data/</guid>
+      <guid>https:gru.tsecloud.club/dart/fetch_data/</guid>
       <description>该文章翻译自:Fetch data from the internet
  概述 从网络中获取数据一般需要以下几个步骤:
  添加网络请求库,可以在如下的http包中选择
@@ -36,10 +36,10 @@ class Post { final int userId; final int id; final String title; final String bo
     
     <item>
       <title>Flutter 路由</title>
-      <link>https://gru.tsecloud.club/dart/route/</link>
+      <link>https:gru.tsecloud.club/dart/route/</link>
       <pubDate>Thu, 31 May 2018 00:31:23 +0800</pubDate>
       
-      <guid>https://gru.tsecloud.club/dart/route/</guid>
+      <guid>https:gru.tsecloud.club/dart/route/</guid>
       <description>基本概念  路由(Route),路由在Flutter中是屏幕或者页面的抽象
  导航(Navigator),导航是一个用来管理路由的组件
  Navigator通过栈的形式来管理路由对象， 由于栈有出栈和入栈两个操作，相对应的Navigator也通过pop和push来与之对应
@@ -52,20 +52,20 @@ class SecondPage extends StatelessWidget { final int backAccount; SecondPage({Ke
     
     <item>
       <title>Flutter 基础组件-表单</title>
-      <link>https://gru.tsecloud.club/dart/flutter-widget-form/</link>
+      <link>https:gru.tsecloud.club/dart/flutter-widget-form/</link>
       <pubDate>Tue, 29 May 2018 17:35:50 +0800</pubDate>
       
-      <guid>https://gru.tsecloud.club/dart/flutter-widget-form/</guid>
+      <guid>https:gru.tsecloud.club/dart/flutter-widget-form/</guid>
       <description>TextField, FormField 对于TextField和FormField而言,只要用来接收用户的输入,以及用户输入的事件处理, 因此,可以将其分解为三个部分来说明
 样式属性 child: new TextField( autocorrect: false, // 是否自动校正 autofocus: false, //自动获取焦点 enabled: true, // 是否启用 inputFormatters: [], //对输入的文字进行限制和校验 keyboardType: TextInputType.text, //获取焦点时,启用的键盘类型 maxLines: 2, // 输入框最大的显示行数 maxLength: 3, //允许输入的字符长度/ maxLengthEnforced: false, //是否允许输入的字符长度超过限定的字符长度 obscureText: true, // 是否隐藏输入的内容 onChanged: (newValue) { // print(newValue); // 当输入内容变更时,如何处理 }, onSubmitted: (value) { // print(&amp;quot;whar&amp;quot;); // 当用户确定已经完成编辑时触发 }, style: new TextStyle( color: new Color(Colors.amberAccent.green)), // 设置字体样式 textAlign: TextAlign.center, //输入的内容在水平方向如何显示 decoration: new InputDecoration( labelText: &amp;quot;城市&amp;quot;, icon: new Icon(Icons.</description>
     </item>
     
     <item>
       <title>Flutter 基础组件-按钮</title>
-      <link>https://gru.tsecloud.club/dart/flutter-widget-raisedbutton/</link>
+      <link>https:gru.tsecloud.club/dart/flutter-widget-raisedbutton/</link>
       <pubDate>Wed, 16 May 2018 09:37:39 +0800</pubDate>
       
-      <guid>https://gru.tsecloud.club/dart/flutter-widget-raisedbutton/</guid>
+      <guid>https:gru.tsecloud.club/dart/flutter-widget-raisedbutton/</guid>
       <description>在RaisedButton组件中,有两种方式认为其是不可用的
  通过设置enabled属性为false(在beta3.0中已经去掉该属性)
  通过设置onPressed属性值为null,来禁用组件
@@ -74,10 +74,10 @@ class SecondPage extends StatelessWidget { final int backAccount; SecondPage({Ke
     
     <item>
       <title>Flutter 基础组件-图标</title>
-      <link>https://gru.tsecloud.club/dart/flutter-widget-icon/</link>
+      <link>https:gru.tsecloud.club/dart/flutter-widget-icon/</link>
       <pubDate>Tue, 15 May 2018 10:48:15 +0800</pubDate>
       
-      <guid>https://gru.tsecloud.club/dart/flutter-widget-icon/</guid>
+      <guid>https:gru.tsecloud.club/dart/flutter-widget-icon/</guid>
       <description>对于图标组件来说其不存在交互性,如果需要使用交互性,需要使用IconButton组件
 Icon 组件 new Icon( Icons.star, // 图标数据 size: 40.0, //大小 color: Colors.red, //颜色 semanticLabel: &#39;Hello&#39;, // 图标不显示时,显示的文本 ),  IconButton 组件 new IconButton( icon: new Icon( Icons.star, // color: Colors.teal, ), // 图标 color: Colors.red, //图标显示颜色 splashColor: Colors.blue, //图标扩散时的颜色 highlightColor: Colors.yellow, //单击时轮廓颜色 disabledColor: Colors.green, //图标不可用时显示的颜色 iconSize: 80.0, //图标大小 padding: const EdgeInsets.all(20.0), //图标内边距 onPressed: () {}, // 图标点击事件 tooltip: &#39;IconButton&#39;, // 点击时的提示信息  Note:这里有一点需要注意的是,IconButton组件是否可用,取决于其onPresses属性是否为null,如果为null那么将会只显示disabledColor属性设置的颜色,其他所有的颜色将全部不显示
 外部图标 关于外部图标的引用,可以参考一下这篇文章Icons</description>
@@ -85,10 +85,10 @@ Icon 组件 new Icon( Icons.star, // 图标数据 size: 40.0, //大小 color: Co
     
     <item>
       <title>Flutter 基础组件-文本</title>
-      <link>https://gru.tsecloud.club/dart/flutter-widget-text/</link>
+      <link>https:gru.tsecloud.club/dart/flutter-widget-text/</link>
       <pubDate>Tue, 15 May 2018 09:08:35 +0800</pubDate>
       
-      <guid>https://gru.tsecloud.club/dart/flutter-widget-text/</guid>
+      <guid>https:gru.tsecloud.club/dart/flutter-widget-text/</guid>
       <description>文本组件,常常用来显示显示文本文字,当文字长度超过父组件时是截断还是显示多行,这个取决于属性的限制
 样式规则  对于文本的样式是可选的,如果忽略将会使用与它最接近组件的默认样式
  如果设置了样式的TextStyle.inherit属性值,那么父组件的样式以及组件本身的样式将会同时作用
@@ -106,10 +106,10 @@ textScaleFactor: 1.5   Simple child: new Text( &#39;Helloaaaaaaaaaaaaaaaaaaaaaaa
     
     <item>
       <title>Flutter 基础组件-图像</title>
-      <link>https://gru.tsecloud.club/dart/flutter-widget-image/</link>
+      <link>https:gru.tsecloud.club/dart/flutter-widget-image/</link>
       <pubDate>Mon, 14 May 2018 23:30:51 +0800</pubDate>
       
-      <guid>https://gru.tsecloud.club/dart/flutter-widget-image/</guid>
+      <guid>https:gru.tsecloud.club/dart/flutter-widget-image/</guid>
       <description>  本文章主要翻译于Widgets: Image
  对于图像组件而言,其提供了以下几种方式来获取图片 - Image,从一个图片提供者(ImageProvider)处获取图片
  Image.assert 从(AssertBundle)处使用key来获取图片
@@ -127,10 +127,10 @@ textScaleFactor: 1.5   Simple child: new Text( &#39;Helloaaaaaaaaaaaaaaaaaaaaaaa
     
     <item>
       <title>Flutter 基础组件-行</title>
-      <link>https://gru.tsecloud.club/dart/flutter-widget-row/</link>
+      <link>https:gru.tsecloud.club/dart/flutter-widget-row/</link>
       <pubDate>Fri, 11 May 2018 23:17:47 +0800</pubDate>
       
-      <guid>https://gru.tsecloud.club/dart/flutter-widget-row/</guid>
+      <guid>https:gru.tsecloud.club/dart/flutter-widget-row/</guid>
       <description>本文章主要翻译于Widgets: Row
  Row组件主要用来在水平方向显示其子组件， 当组件作为子组件被放置在Row中时，子组件不能滚动
 只显示在视图中可见的组件
@@ -141,10 +141,10 @@ new Row( children: &amp;lt;Widget&amp;gt;[ const FlutterLogo(), new Text(&amp;qu
     
     <item>
       <title>Flutter 基础组件-列</title>
-      <link>https://gru.tsecloud.club/dart/flutter-wdiget-column/</link>
+      <link>https:gru.tsecloud.club/dart/flutter-wdiget-column/</link>
       <pubDate>Fri, 11 May 2018 23:10:25 +0800</pubDate>
       
-      <guid>https://gru.tsecloud.club/dart/flutter-wdiget-column/</guid>
+      <guid>https:gru.tsecloud.club/dart/flutter-wdiget-column/</guid>
       <description>本文章主要翻译于Widgets: Column
  Column组件常用来显示垂直方向的子组件列表,与Row组件一样,该组件只会显示其可见范围内的子组件,并不会滚动显示其子组件
 如下,可以创建一个具有三个子组件的Column组件
@@ -162,10 +162,10 @@ textDirection: TextDirection.ltr  verticalDirection 子组件在垂直方向上�
     
     <item>
       <title>Flutter 基础组件-容器</title>
-      <link>https://gru.tsecloud.club/dart/flutter-widget-continer/</link>
+      <link>https:gru.tsecloud.club/dart/flutter-widget-continer/</link>
       <pubDate>Thu, 10 May 2018 22:58:56 +0800</pubDate>
       
-      <guid>https://gru.tsecloud.club/dart/flutter-widget-continer/</guid>
+      <guid>https:gru.tsecloud.club/dart/flutter-widget-continer/</guid>
       <description>Container Widget  本文章主要翻译于Widgets: Container
  特点  该组件常常用来包含子组件,同时其本身也包含一些样式属性, 如果没有包含子组件的时候,将会自动填充屏幕上给定的区域 如果设定了长度和宽度,将会作用域其子组件  假定我们创建了如下一个示例
 @override Widget build(BuildContext context) { return new MaterialApp( title: &#39;Flutter Demo&#39;, home: new Scaffold( appBar: new AppBar( title: new Text(&#39;Flutter Container&#39;), ), body: new Container( width: 200.0, height: 200.0, color: Colors.amber.shade400, child: Container( width: 100.0, height: 100.0, color: Colors.greenAccent.shade200, )), )); }  以上我们先创建一个容器,并设定其宽度和高度分别为200.0和200.0, 指定其填充色为橘黄色
