@@ -6,10 +6,28 @@
     <description>Recent content on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Apr 2019 23:46:33 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 20 Apr 2019 21:56:46 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>HTTP 请求与响应之响应</title>
+      <link>https://gru.tsecloud.club/go/http_response/</link>
+      <pubDate>Sat, 20 Apr 2019 21:56:46 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/http_response/</guid>
+      <description>一个响应可以由一下几个部分,协议，状态码，状态消息，响应头，消息体组成。
+在go中的http.ResponseWriter是一个接口,它的原型如下：
+type ResponseWriter interface { Header() Header Write([]byte) (int, error) WriteHeader(statusCode int) }   Header() 方法主要用来设置请求的头部信息
+ Write() 方法主要用来设置响应的消息体
+ WriteHeader主要用来设置响应的状态码，值范围1xx-5xx
+  状态以及状态码 func greet(w http.ResponseWriter, r *http.Request) { w.WriteHeader(200) }  这里只需要传递对应的数值就可以了，对应的状态说明包会自动添加
+请求头 请求头是一个type Header map[string][]string类型，该类型实现了和之前说的请求头的获取中的方法因此
+func greet(w http.ResponseWriter, r *http.Request) { w.Header().Add(&amp;quot;Serve&amp;quot;, &amp;quot;Go web server&amp;quot;) }  消息体 消息体是一个[]byte类型，因此在发送消息体之前需要将消息体转换成该格式,
+对于消息体而言其主要有以下几种格式：string，JSON,XML,FILE
+字符串 func greet(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, &amp;quot;response string type&amp;quot;) w.Write([]byte(&amp;quot;hello Golang&amp;quot;)) }  JSON func greet(w http.</description>
+    </item>
     
     <item>
       <title>HTTP 请求与响应之请求过程</title>

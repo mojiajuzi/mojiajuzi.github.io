@@ -61,6 +61,8 @@
   <time datetime=2019-04-19T23:46:33&#43;0800 class="post-date">Fri, Apr 19, 2019</time>
   
 
+<p><img src="/go/images/http_request.png" alt="request_message" /></p>
+
 <p>一个HTTP 请求的大致流程如下：</p>
 
 <pre><code>      Request                                     Response
@@ -202,6 +204,14 @@ func main() {
 	http.ListenAndServe(&quot;:8080&quot;, mux)
 }
 </code></pre>
+
+<h4 id="参考文档">参考文档</h4>
+
+<ul>
+<li><p><a href="https://rickyanto.com/understanding-go-standard-http-libraries-servemux-handler-handle-and-handlefunc/">Understanding Go Standard Http Libraries : ServeMux, Handler, Handle and HandleFunc</a></p></li>
+
+<li><p><a href="https://www.jianshu.com/p/be3d9cdc680b">Golang构建HTTP服务（一）&mdash; net/http库源码笔记</a></p></li>
+</ul>
 
 </div>
 

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://gru.tsecloud.club/go/http_response/</loc>
+    <lastmod>2019-04-20T21:56:46+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://gru.tsecloud.club/go/http_request/</loc>
     <lastmod>2019-04-19T23:46:33+08:00</lastmod>
   </url>
@@ -289,7 +294,7 @@
   
   <url>
     <loc>https://gru.tsecloud.club/go/</loc>
-    <lastmod>2019-04-19T23:46:33+08:00</lastmod>
+    <lastmod>2019-04-20T21:56:46+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -337,7 +342,7 @@
   
   <url>
     <loc>https://gru.tsecloud.club/</loc>
-    <lastmod>2019-04-19T23:46:33+08:00</lastmod>
+    <lastmod>2019-04-20T21:56:46+08:00</lastmod>
     <priority>0</priority>
   </url>
   

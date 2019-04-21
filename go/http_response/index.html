@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>HTTP 请求与响应之响应 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>HTTP 请求与响应之响应</h1>
+  <time datetime=2019-04-20T21:56:46&#43;0800 class="post-date">Sat, Apr 20, 2019</time>
+  
+
+<p><img src="/go/images/http_response.png" alt="request_message" /></p>
+
+<p><img src="/go/images/http_message.png" alt="request_message" /></p>
+
+<p>一个响应可以由一下几个部分,协议，状态码，状态消息，响应头，消息体组成。</p>
+
+<p>在go中的<code>http.ResponseWriter</code>是一个接口,它的原型如下：</p>
+
+<pre><code class="language-go">type ResponseWriter interface {
+    Header() Header
+
+    Write([]byte) (int, error)
+
+    WriteHeader(statusCode int)
+}
+</code></pre>
+
+<ul>
+<li><p><code>Header()</code> 方法主要用来设置请求的头部信息</p></li>
+
+<li><p><code>Write()</code> 方法主要用来设置响应的消息体</p></li>
+
+<li><p><code>WriteHeader</code>主要用来设置响应的状态码，值范围1xx-5xx</p></li>
+</ul>
+
+<h3 id="状态以及状态码">状态以及状态码</h3>
+
+<pre><code class="language-go">func greet(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(200)
+}
+</code></pre>
+
+<p>这里只需要传递对应的数值就可以了，对应的状态说明包会自动添加</p>
+
+<h3 id="请求头">请求头</h3>
+
+<p>请求头是一个<code>type Header map[string][]string</code>类型，该类型实现了和之前说的请求头的获取中的方法因此</p>
+
+<pre><code class="language-go">func greet(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add(&quot;Serve&quot;, &quot;Go web server&quot;)
+}
+</code></pre>
+
+<h3 id="消息体">消息体</h3>
+
+<p>消息体是一个<code>[]byte</code>类型，因此在发送消息体之前需要将消息体转换成该格式,</p>
+
+<p>对于消息体而言其主要有以下几种格式：string，JSON,XML,FILE</p>
+
+<h4 id="字符串">字符串</h4>
+
+<pre><code class="language-go">func greet(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, &quot;response string type&quot;)
+	w.Write([]byte(&quot;hello Golang&quot;))
+}
+</code></pre>
+
+<h4 id="json">JSON</h4>
+
+<pre><code class="language-go">func greet(w http.ResponseWriter, r *http.Request) {
+	var s = make(map[string]string)
+	s[&quot;a&quot;] = &quot;a&quot;
+	s[&quot;b&quot;] = &quot;b&quot;
+
+	res, err := json.Marshal(s)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+    }
+    w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+	w.Write(res)
+}
+</code></pre>
+
+<p>需要注意的是:</p>
+
+<ul>
+<li>这里遇到错误的话，需要<code>return</code>返回，不然的话，程序将会继续执行下面的语句，导致错误的发生</li>
+
+<li><p>对于<code>w.write</code>而言，可以多次使用，添加多条响应,需要注意的是，消息体应该是最后添加的，如果在<code>w.write</code>之前添加，会不起作用。</p></li>
+
+<li><p>使用<code>http.Error</code>响应程序的错误</p></li>
+</ul>
+
+<h4 id="file">File</h4>
+
+<p>使用<code>http.ServeFile</code>方法可以直接读取并返回文件的内容</p>
+
+<pre><code class="language-go">func greet(w http.ResponseWriter, r *http.Request) {
+	filePath := path.Join(&quot;.&quot;, &quot;index.text&quot;)
+	http.ServeFile(w, r, filePath)
+}
+</code></pre>
+
+<p>单然设置特定的头部信息，可以作为一个静态文件来下载</p>
+
+<pre><code class="language-go">func greet(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set(&quot;Content-Disposition&quot;, &quot;attachment; filename=index.text&quot;)
+
+	filePath := path.Join(&quot;.&quot;, &quot;index.text&quot;)
+	http.ServeFile(w, r, filePath)
+}
+</code></pre>
+
+<h4 id="参考文档">参考文档</h4>
+
+<ul>
+<li><p><a href="https://www.alexedwards.net/blog/golang-response-snippets">Golang Response Snippets: JSON, XML and more</a></p></li>
+
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Overview">HTTP OVERVIEW</a></p></li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>
