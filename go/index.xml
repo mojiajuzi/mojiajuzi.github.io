@@ -6,10 +6,25 @@
     <description>Recent content in Gos on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Apr 2019 21:56:46 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 21 Apr 2019 17:58:21 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/go/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>在go程序中使用请求和响应</title>
+      <link>https://gru.tsecloud.club/go/http_response_use/</link>
+      <pubDate>Sun, 21 Apr 2019 17:58:21 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/http_response_use/</guid>
+      <description>在程序中经常需要请求其他的API接口来获取数据或者授权，因此在go中发送和接收请求是重要的一个环节。
+发送请求 使用http.Client 使用client.GET func greet(w http.ResponseWriter, r *http.Request) { client := new(http.Client) uri := &amp;quot;http://www.example.com&amp;quot; // 设置请求参数 v := url.Values{} v.Add(&amp;quot;q&amp;quot;, &amp;quot;golang&amp;quot;) query := v.Encode() url := uri + &amp;quot;?&amp;quot; + query resp, err := client.Get(url) if err != nil { http.Error(w, err.Error(), http.StatusBadRequest) } defer resp.Body.Close() fmt.Fprintf(w, &amp;quot;request uyrl is:%s&amp;quot;, url) }   先实例化一个client结构体
+ 然后使用url.Values类型添加请求参数，并编码成字符串
+ 然后使用client.GET方法发送一个请求
+ 定义了一个defer结构来关闭响应的消息体
+  Note: 需要注意的是，当使用client.GET方法发送的时候是无法设置请求头的。
+使用client.Post client := new(http.</description>
+    </item>
     
     <item>
       <title>HTTP 请求与响应之响应</title>
