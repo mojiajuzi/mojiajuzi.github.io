@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>HTTP响应与请求简单实践 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.clubcss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.clubcss/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.clubcss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.clubcss/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>HTTP响应与请求简单实践</h1>
+  <time datetime=2019-05-01T10:34:06&#43;0800 class="post-date">Wed, May 1, 2019</time>
+  <p>在这里使用go的包<a href="https://github.com/PuerkitoBio/goquery">PuerkitoBio/goquery</a>来处理获取请求以后的页面处理</p>
+
+<p>首先定义一个结构体，为了方便起见，只规定三个字段,分别是排名，名称，封面</p>
+
+<pre><code class="language-go">type Movie struct {
+	Order string
+	Name  string
+	Cover string
+}
+</code></pre>
+
+<p>为了加快抓取的速度，使用go的并发效果，并且使用有缓存的chan来进行通信</p>
+
+<pre><code class="language-go">func greet(w http.ResponseWriter, r *http.Request) {
+    //初始化时间，便于计算页面请求所需要的时间
+    t1 := time.Now()
+    
+    //初始化一个请求的客户端,便于后面公用
+    c := http.Client{}
+    
+    //初始化chan
+    ch := make(chan Movie, 250)
+    
+    //由于要获取所有的数据，因此需要等待所有的数据获取完之后再输出
+    wg := sync.WaitGroup{}
+    
+    //分析页面的请求地址结构组成，开多个goroutine
+	for index := 0; index &lt;= 225; index += 25 {
+		wg.Add(1)
+		go movie(c, index, &amp;wg, ch)
+	}
+    wg.Wait()
+    
+    //获取chan中的全部数据
+	list := make([]Movie, 250)
+	for index := 0; index &lt; 250; index++ {
+		list[index] = &lt;-ch
+    }
+    
+    //对于数据进行json化处理，便于输出
+	data, err := json.Marshal(list)
+	if err != nil {
+		http.Error(w, err.Error(), 400)
+	}
+	defer close(ch)
+	t2 := time.Now()
+
+	fmt.Print(t1.Sub(t2))
+	w.Write(data)
+}
+</code></pre>
+
+<p>接下来就是具体的请求处理</p>
+
+<pre><code class="language-go">func movie(c http.Client, page int, wg *sync.WaitGroup, ch chan Movie) {
+
+    //构建请求参数与地址
+	v := url.Values{}
+	v.Set(&quot;start&quot;, strconv.Itoa(page))
+	url := &quot;https://movie.douban.com/top250&quot; + &quot;?&quot; + v.Encode()
+	resp, err := c.Get(url)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer resp.Body.Close()
+
+    //如果请求成功，则解析获取到的结果
+	if resp.StatusCode == 200 {
+		doc, err := goquery.NewDocumentFromReader(resp.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+        //使用goquery来解析获取到的消息体
+		doc.Find(&quot;.article .grid_view li&quot;).Each(func(i int, s *goquery.Selection) {
+			movie := Movie{}
+			movie.Order = s.Find(&quot;.item .pic em&quot;).Text()
+			movie.Cover, _ = s.Find(&quot;.item .pic a img&quot;).Attr(&quot;src&quot;)
+            movie.Name, _ = s.Find(&quot;.item .pic a img&quot;).Attr(&quot;alt&quot;)
+            
+            //将获取到的数据写入chan
+			ch &lt;- movie
+		})
+
+	} else {
+		fmt.Printf(&quot;获取内容失败,状态码为:%s&quot;, resp.Status)
+    }
+    //无论如何都需要关闭，否则程序将会一直等待
+	defer wg.Done()
+}
+</code></pre>
+
+<p>完整的代码如下:</p>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;encoding/json&quot;
+	&quot;fmt&quot;
+	&quot;log&quot;
+	&quot;net/http&quot;
+	&quot;net/url&quot;
+	&quot;strconv&quot;
+	&quot;sync&quot;
+	&quot;time&quot;
+
+	&quot;github.com/PuerkitoBio/goquery&quot;
+)
+
+
+
+func main() {
+	http.HandleFunc(&quot;/&quot;, greet)
+	http.ListenAndServe(&quot;:8080&quot;, nil)
+}
+
+
+
+
+type Movie struct {
+	Order string
+	Name  string
+	Cover string
+}
+
+func greet(w http.ResponseWriter, r *http.Request) {
+	t1 := time.Now()
+	c := http.Client{}
+	ch := make(chan Movie, 250)
+	wg := sync.WaitGroup{}
+	for index := 0; index &lt;= 225; index += 25 {
+		wg.Add(1)
+		go movie(c, index, &amp;wg, ch)
+	}
+	wg.Wait()
+	list := make([]Movie, 250)
+	for index := 0; index &lt; 250; index++ {
+		list[index] = &lt;-ch
+	}
+	data, err := json.Marshal(list)
+	if err != nil {
+		http.Error(w, err.Error(), 400)
+	}
+	defer close(ch)
+	t2 := time.Now()
+
+	fmt.Print(t1.Sub(t2))
+	w.Write(data)
+}
+
+func movie(c http.Client, page int, wg *sync.WaitGroup, ch chan Movie) {
+	v := url.Values{}
+	v.Set(&quot;start&quot;, strconv.Itoa(page))
+	url := &quot;https://movie.douban.com/top250&quot; + &quot;?&quot; + v.Encode()
+	resp, err := c.Get(url)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode == 200 {
+		doc, err := goquery.NewDocumentFromReader(resp.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		doc.Find(&quot;.article .grid_view li&quot;).Each(func(i int, s *goquery.Selection) {
+			movie := Movie{}
+			movie.Order = s.Find(&quot;.item .pic em&quot;).Text()
+			movie.Cover, _ = s.Find(&quot;.item .pic a img&quot;).Attr(&quot;src&quot;)
+			movie.Name, _ = s.Find(&quot;.item .pic a img&quot;).Attr(&quot;alt&quot;)
+			ch &lt;- movie
+		})
+
+	} else {
+		fmt.Printf(&quot;获取内容失败,状态码为:%s&quot;, resp.Status)
+	}
+	defer wg.Done()
+}
+</code></pre>
+
+<p>经过实验发现，获取全部页面的结果大概在500ms左右</p>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

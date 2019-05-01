@@ -6,10 +6,22 @@
     <description>Recent content on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Apr 2019 17:58:21 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 01 May 2019 10:34:06 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>HTTP响应与请求简单实践</title>
+      <link>https://gru.tsecloud.club/go/http_practice/</link>
+      <pubDate>Wed, 01 May 2019 10:34:06 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/http_practice/</guid>
+      <description>在这里使用go的包PuerkitoBio/goquery来处理获取请求以后的页面处理
+首先定义一个结构体，为了方便起见，只规定三个字段,分别是排名，名称，封面
+type Movie struct { Order string Name string Cover string }  为了加快抓取的速度，使用go的并发效果，并且使用有缓存的chan来进行通信
+func greet(w http.ResponseWriter, r *http.Request) { //初始化时间，便于计算页面请求所需要的时间 t1 := time.Now() //初始化一个请求的客户端,便于后面公用 c := http.Client{} //初始化chan ch := make(chan Movie, 250) //由于要获取所有的数据，因此需要等待所有的数据获取完之后再输出 wg := sync.WaitGroup{} //分析页面的请求地址结构组成，开多个goroutine for index := 0; index &amp;lt;= 225; index += 25 { wg.Add(1) go movie(c, index, &amp;amp;wg, ch) } wg.Wait() //获取chan中的全部数据 list := make([]Movie, 250) for index := 0; index &amp;lt; 250; index++ { list[index] = &amp;lt;-ch } //对于数据进行json化处理，便于输出 data, err := json.</description>
+    </item>
     
     <item>
       <title>在go程序中使用请求和响应</title>
