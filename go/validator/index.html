@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>使用validator.v9验证请求数据并转换成特定验证信息 &middot; To Be A Better Man</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://gru.tsecloud.club/css/hyde.css">
+  <link href="https://cdn.bootcss.com/highlight.js/9.15.6/styles/androidstudio.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/php.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/go.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.6/languages/sql.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="To Be A Better Man" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://gru.tsecloud.club/"><h1>To Be A Better Man</h1></a>
+      <p class="lead">
+       In me the tiger sniffs the rose 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://gru.tsecloud.club/">Home</a> </li>
+        <li><a href="/algorithm"> ALGORITHM </a></li><li><a href="/dart"> Dart </a></li><li><a href="/go"> Golang </a></li><li><a href="/sql"> MySQL </a></li><li><a href="/php"> PHP </a></li>
+      </ul>
+    </nav>
+
+    <p>Copyright (c) 2017, Mo Jinhua</p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>使用validator.v9验证请求数据并转换成特定验证信息</h1>
+  <time datetime=2019-09-05T22:46:30&#43;0800 class="post-date">Thu, Sep 5, 2019</time>
+  
+
+<p>在实际项目中，验证请求的数据并将验证的结果返回是一项必须的操作。
+下面介绍一下使用<code>gin</code>框架并配合使用<code>validator.v9</code>来验证数据。</p>
+
+<p>Note: 为了演示方便，将以一个不完善简单的用户注册流程来进行说明</p>
+
+<ol>
+<li><p>建立用户结构体，并在<code>Tag</code>中添加验证条件,详细的验证规则，请参考<a href="https://godoc.org/gopkg.in/go-playground/validator.v9">包文档</a></p>
+
+<pre><code class="language-go">type User struct {
+    Email    string `validate:&quot;required,email&quot;`
+    Name     string `validate:&quot;required,min=6,max=20&quot;`
+    Password string `validate:&quot;required,min=6,max=20&quot;`
+}
+</code></pre></li>
+
+<li><p>将数据绑定到结构体实例</p>
+
+<pre><code class="language-go">//Register 用户注册
+func Register(c *gin.Context) {
+    u := db.User{}
+    c.BindJSON(&amp;u)
+    ....
+}
+</code></pre></li>
+
+<li><p>导入验证包</p>
+
+<pre><code class="language-go">zhongwen &quot;github.com/go-playground/locales/zh&quot;
+ut &quot;github.com/go-playground/universal-translator&quot;
+validator &quot;gopkg.in/go-playground/validator.v9&quot;
+zh_translations &quot;gopkg.in/go-playground/validator.v9/translations/zh&quot;
+</code></pre></li>
+
+<li><p>创建包全局变量，在<code>init</code>方法中实例该结构体</p>
+
+<pre><code class="language-go">var (
+    validate *validator.Validate
+    trans    ut.Translator
+)
+
+func init() {
+    //实例化需要转换的语言
+    zh := zhongwen.New() 
+    uni := ut.New(zh, zh)
+    trans, _ = uni.GetTranslator(&quot;zh&quot;)
+    validate = validator.New()
+
+    //注册转换的语言为默认语言
+    zh_translations.RegisterDefaultTranslations(validate, trans)
+}
+</code></pre></li>
+
+<li><p>验证绑定的模型数据</p>
+
+<pre><code class="language-go">//Register 用户注册
+func Register(c *gin.Context) {
+    u := db.User{}
+    c.BindJSON(&amp;u)
+    err := validate.Struct(u)
+    if err != nil {
+        errors := NewValidatorError(err, u.FieldTrans())
+        ...
+    }
+}
+</code></pre></li>
+
+<li><p>为<code>User</code>结构体添加字段对应的转换字段名称</p>
+
+<pre><code class="language-go">//ModelFieldTran 模型名称转换
+type ModelFieldTran map[string]string
+
+//FieldTrans 模型字段转换
+func (u User) FieldTrans() ModelFieldTran {
+    m := ModelFieldTran{}
+    m[&quot;Name&quot;] = &quot;用户名&quot;
+    m[&quot;Password&quot;] = &quot;用户密码&quot;
+    m[&quot;Email&quot;] = &quot;邮箱&quot;
+    return m
+}
+</code></pre></li>
+
+<li><p>转换错误信息</p>
+
+<pre><code class="language-go">//CommonError 错误格式
+type CommonError map[string]interface{}
+
+func NewValidatorError(err error, m db.ModelFieldTran) CommonError {
+    res := CommonError{}
+    errs := err.(validator.ValidationErrors)
+    for _, e := range errs {
+        transtr := e.Translate(trans)
+        //将结构体字段转换map中的key为小写
+        f := strings.ToLower(e.Field())
+
+        //判断错误字段是否在命名中，如果在，则替换错误信息中的字段
+        if rp, ok := m[e.Field()]; ok {
+            res[f] = strings.Replace(transtr, e.Field(), rp, 1)
+        } else {
+            res[f] = transtr
+        }
+    }
+    //返回错误信息
+    return res
+}
+</code></pre></li>
+
+<li><p>设置响应结构体</p>
+
+<pre><code class="language-go">//ForumResp 响应结构体
+type ForumResp struct {
+    Status  bool        `json:&quot;status&quot;`
+    Data    interface{} `json:&quot;data&quot;`
+    Msg     string      `json:&quot;msg&quot;`
+    ErrCode int         `json:&quot;err_code&quot;`
+    Errors  CommonError `json:&quot;errors&quot;`
+}
+
+//Success 成功响应
+func (f *ForumResp) Success(msg string, content interface{}) {
+    f.Status = true
+    f.ErrCode = 0
+    f.Msg = msg
+    f.Data = content
+}
+
+//Error 失败响应
+func (f *ForumResp) Error(code int, msg string, err CommonError) {
+    f.Status = false
+    f.ErrCode = code
+    f.Msg = msg
+    f.Errors = err
+}
+</code></pre></li>
+
+<li><p>返回响应</p>
+
+<pre><code class="language-go">//Register 用户注册
+func Register(c *gin.Context) {
+    u := db.User{}
+    c.BindJSON(&amp;u)
+    err := validate.Struct(u)
+    if err != nil {
+        errors := NewValidatorError(err, u.FieldTrans())
+        resp := ForumResp{}
+        resp.Error(http.StatusBadRequest, validateError, errors)
+        c.JSON(500, resp)
+        return
+    }
+}
+</code></pre></li>
+
+<li><p>如果验证失败了，我们将会得到形式如下的错误信息</p>
+
+<pre><code class="language-json">{
+    &quot;status&quot;: false,
+    &quot;data&quot;: null,
+    &quot;msg&quot;: &quot;验证失败&quot;,
+    &quot;err_code&quot;: 400,
+    &quot;errors&quot;: {
+        &quot;email&quot;: &quot;邮箱为必填字段&quot;,
+        &quot;name&quot;: &quot;用户名为必填字段&quot;
+    }
+}
+</code></pre></li>
+</ol>
+
+<h2 id="参考资料">参考资料</h2>
+
+<ul>
+<li><p><a href="https://godoc.org/gopkg.in/go-playground/validator.v9">package validator</a></p></li>
+
+<li><p><a href="https://github.com/go-playground/validator/blob/v9/_examples/translations/main.go">translations/main.go</a></p></li>
+
+<li><p><a href="https://xguox.me/go-gin-validator.html/">Gin 模型验证 Validator</a></p></li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>
