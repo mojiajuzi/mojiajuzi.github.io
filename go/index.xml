@@ -6,10 +6,24 @@
     <description>Recent content in Gos on To Be A Better Man</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Sep 2019 22:46:30 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 17 Sep 2019 18:06:05 +0800</lastBuildDate>
     
 	<atom:link href="https://gru.tsecloud.club/go/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Jwt鉴权</title>
+      <link>https://gru.tsecloud.club/go/jwt/</link>
+      <pubDate>Tue, 17 Sep 2019 18:06:05 +0800</pubDate>
+      
+      <guid>https://gru.tsecloud.club/go/jwt/</guid>
+      <description>在应用中通过使用jwt来进行接口的限定访问，可以增加接口的安全性。
+ 安装gin-jwt
+go get github.com/appleboy/gin-jwt  导入jin-jwt,并命名为:jwt
+import jwt &amp;quot;github.com/appleboy/gin-jwt&amp;quot;  实例化GinJWTMiddleware结构体,完整的结构体字段可以查看对应的结构体
+func JwtMiddleware() *jwt.GinJWTMiddleware { return &amp;amp;jwt.GinJWTMiddleware{ Realm: &amp;quot;forum&amp;quot;, //展示给用户的字段名称 Key: []byte(config.Config(&amp;quot;JWT_KEY&amp;quot;, &amp;quot;helloginjwt&amp;quot;)), //用户加密的密钥 Timeout: time.Hour, //过期时间 MaxRefresh: time.Hour, //允许客户端刷新的最大时间 Authenticator: authCallback, //回调函数，用于验证用户是否存在 Authorizator: authPrivCallback, //回调函数，用户验证用户的权限 Unauthorized: unAuthFunc, //验证失败的错误信息返回 TokenLookup: &amp;quot;header: Authorization, query: token, cookie: jwt&amp;quot;, //请求携带token的请求头字段名称 TokenHeadName: &amp;quot;Bearer&amp;quot;,//token前缀 TimeFunc: time.Now,//提供当前时间 SigningAlgorithm: &amp;quot;HS256&amp;quot;,//加密算法，必填，否则会导致错误 PayloadFunc: payloadFunc,//回调函数，添加具体的字段到加密中 } }  在路由中使用
+auth := r.Group(&amp;quot;/auth&amp;quot;) //添加分组 jwt := middleware.JwtMiddleware() //实例化jwt对象 r.</description>
+    </item>
     
     <item>
       <title>使用validator.v9验证请求数据并转换成特定验证信息</title>
